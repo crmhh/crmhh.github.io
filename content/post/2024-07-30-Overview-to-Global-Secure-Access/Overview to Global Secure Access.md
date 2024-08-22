@@ -5,7 +5,7 @@ subtitle:   "Global Secure Access is a comprehensive solution for secure network
 date:       2024-07-30
 author:     "Chris Brumm"
 URL:        "/2024/07/30/Overview-to-Global-Secure-Access/"
-image:      "/post/2024-07-30-Overview-to-Global-Secure-Access/images/GSA-Overview.png"
+#image:      "/post/2024-07-30-Overview-to-Global-Secure-Access/images/GSA-Overview.png"
 tags:
     - Entra
     - Global Secure Access
