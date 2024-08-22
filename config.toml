@@ -15,7 +15,7 @@ home = ["HTML", "RSS", "Algolia"]
 [params]
   header_image = "img/nick-scheerbart-speicherstadt.jpg"
   SEOTitle = "Chris Brumm's Blog"
-  description = ""
+  description = "My learnings on Identity and Security topics in the Microsoft cloud world"
   keyword = ""
   slogan = ""
   upstreamAttribution = true
