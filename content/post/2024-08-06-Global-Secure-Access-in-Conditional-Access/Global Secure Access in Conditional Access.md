@@ -272,6 +272,7 @@ It also became very clear to me during the preparation of this blog that the imp
 
 [Manage access to custom security attributes in Microsoft Entra ID
 ](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-manage?tabs=admin-center)
+
 [How to configure per-app access using Global Secure Access applications
 ](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-configure-per-app-access)
 [AADOps: Operationalization of Azure AD Conditional Access](https://www.cloud-architekt.net/aadops-conditional-access/)
