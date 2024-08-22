@@ -269,15 +269,15 @@ Global Secure Access already has a lot to offer in the initial version and I am 
 
 ## **Attribution and References**
 
-[Microsoft Entra Private Access: An Identity-Centric Zero Trust Network Access Solution](https://techcommunity.microsoft.com/t5/microsoft-entra-blog/microsoft-entra-private-access-an-identity-centric-zero-trust/ba-p/3905451)
-[Microsoft Entra Private Access for on-prem users
+- [Microsoft Entra Private Access: An Identity-Centric Zero Trust Network Access Solution](https://techcommunity.microsoft.com/t5/microsoft-entra-blog/microsoft-entra-private-access-an-identity-centric-zero-trust/ba-p/3905451)
+- [Microsoft Entra Private Access for on-prem users
 ](https://techcommunity.microsoft.com/t5/microsoft-entra-blog/microsoft-entra-private-access-for-on-prem-users/ba-p/3905450)
-[Microsoft Security Service Edge now generally available
+- [Microsoft Security Service Edge now generally available
 ](https://techcommunity.microsoft.com/t5/microsoft-entra-blog/microsoft-security-service-edge-now-generally-available/ba-p/3847828)
-[Microsoft Entra Suite now generally available
+- [Microsoft Entra Suite now generally available
 ](https://techcommunity.microsoft.com/t5/microsoft-entra-blog/microsoft-entra-suite-now-generally-available/ba-p/2520427)
-[Simplified Zero Trust security with the Microsoft Entra Suite and unified security operations platform, now generally available](https://www.microsoft.com/en-us/security/blog/2024/07/11/simplified-zero-trust-security-with-the-microsoft-entra-suite-and-unified-security-operations-platform-now-generally-available/)
-[Microsoft Entra Internet Access: An identity-centric Secure Web Gateway solution
+- [Simplified Zero Trust security with the Microsoft Entra Suite and unified security operations platform, now generally available](https://www.microsoft.com/en-us/security/blog/2024/07/11/simplified-zero-trust-security-with-the-microsoft-entra-suite-and-unified-security-operations-platform-now-generally-available/)
+- [Microsoft Entra Internet Access: An identity-centric Secure Web Gateway solution
 ](https://techcommunity.microsoft.com/t5/microsoft-entra-blog/microsoft-entra-internet-access-an-identity-centric-secure-web/ba-p/3922548)
 
 > 🙏 A big thank you to [Peter Lenzke](https://www.linkedin.com/in/peter-lenzke-bb95813a/) for proofreading this blog.
