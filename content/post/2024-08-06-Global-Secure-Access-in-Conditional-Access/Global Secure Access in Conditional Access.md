@@ -19,8 +19,8 @@ A few days ago, Microsoft announced that Global Secure Access is now generally a
 
 Here is an overview of the parts (planned so far):
 
-1. [Overview to Global Secure Access](https://www.notion.so/Overview-to-Global-Secure-Access-316326e010a94d36841ab9ff9ac2d7c4?pvs=21)
-2. [Global Secure Access in Conditional Access](https://www.notion.so/Global-Secure-Access-in-Conditional-Access-0760efe4dd8f4e4e9cd6fcec4af9183f?pvs=21)
+1. [Overview to Global Secure Access](https://chris-brumm.com/2024/07/30/Overview-to-Global-Secure-Access/)
+2. [Global Secure Access in Conditional Access](https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/)
 3. Deep Dive DNS in Entra Private Access
 4. Deep Dive SSO in Entra Private Access 
 
