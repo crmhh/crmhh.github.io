@@ -300,7 +300,4 @@ https://www.microsoft.com/en-us/security/blog/2024/07/11/simplified-zero-trust-s
 
 https://techcommunity.microsoft.com/t5/microsoft-entra-blog/microsoft-entra-internet-access-an-identity-centric-secure-web/ba-p/3922548
 
-<aside>
-🙏 A big thank you to [Peter Lenzke](https://www.linkedin.com/in/peter-lenzke-bb95813a/) for proofreading this blog.
-
-</aside>
+> 🙏 A big thank you to [Peter Lenzke](https://www.linkedin.com/in/peter-lenzke-bb95813a/) for proofreading this blog.
