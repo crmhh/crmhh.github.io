@@ -2,50 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://chris-brumm.com/categories/</loc>
     <lastmod>2024-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://chris-brumm.com/</loc>
     <lastmod>2024-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/conditional-access/</loc>
+    <loc>https://chris-brumm.com/tags/conditional-access/</loc>
     <lastmod>2024-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/entra/</loc>
+    <loc>https://chris-brumm.com/tags/entra/</loc>
     <lastmod>2024-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/global-secure-access/</loc>
+    <loc>https://chris-brumm.com/tags/global-secure-access/</loc>
     <lastmod>2024-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/global-secure-access/</loc>
+    <loc>https://chris-brumm.com/categories/global-secure-access/</loc>
     <lastmod>2024-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/2024/08/06/Global-Secure-Access-in-Conditional-Access/</loc>
+    <loc>https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/</loc>
     <lastmod>2024-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/</loc>
+    <loc>https://chris-brumm.com/post/</loc>
     <lastmod>2024-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://chris-brumm.com/tags/</loc>
     <lastmod>2024-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/2024/07/30/Overview-to-Global-Secure-Access/</loc>
+    <loc>https://chris-brumm.com/2024/07/30/Overview-to-Global-Secure-Access/</loc>
     <lastmod>2024-07-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/ztna/</loc>
+    <loc>https://chris-brumm.com/tags/ztna/</loc>
     <lastmod>2024-07-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/readme/</loc>
+    <loc>https://chris-brumm.com/post/readme/</loc>
     <lastmod>2019-01-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://chris-brumm.com/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/</loc>
+    <loc>https://chris-brumm.com/notes/</loc>
   </url><url>
-    <loc>http://localhost:1313/search/placeholder/</loc>
+    <loc>https://chris-brumm.com/search/placeholder/</loc>
   </url><url>
-    <loc>http://localhost:1313/archive/</loc>
+    <loc>https://chris-brumm.com/archive/</loc>
   </url><url>
-    <loc>http://localhost:1313/search/</loc>
+    <loc>https://chris-brumm.com/search/</loc>
   </url>
 </urlset>

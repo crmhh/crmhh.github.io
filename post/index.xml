@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Chris Brumm&#39;s Blog</title>
-    <link>http://localhost:1313/post/</link>
+    <link>https://chris-brumm.com/post/</link>
     <description>Recent content in Posts on Chris Brumm&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 06 Aug 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://chris-brumm.com/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Global Secure Access in Conditional Access</title>
-      <link>http://localhost:1313/2024/08/06/Global-Secure-Access-in-Conditional-Access/</link>
+      <link>https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/</link>
       <pubDate>Tue, 06 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/2024/08/06/Global-Secure-Access-in-Conditional-Access/</guid>
+      <guid>https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/</guid>
       <description>Global Secure Access in Conditional Access A few days ago, Microsoft announced that Global Secure Access is now generally available. Since I have been working with the product for some time now and more and more proof of concepts are being launched, it is high time for me to do a blog series about it.&#xA;Here is an overview of the parts (planned so far):&#xA;Overview to Global Secure Access Global Secure Access in Conditional Access Deep Dive DNS in Entra Private Access Deep Dive SSO in Entra Private Access In the overview to Global Secure Access, I particularly emphasized the good integration in Conditional Access for both Microsoft Entra Internet Access and Microsoft Entra Private Access.</description>
     </item>
     <item>
       <title>Overview to Global Secure Access</title>
-      <link>http://localhost:1313/2024/07/30/Overview-to-Global-Secure-Access/</link>
+      <link>https://chris-brumm.com/2024/07/30/Overview-to-Global-Secure-Access/</link>
       <pubDate>Tue, 30 Jul 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/2024/07/30/Overview-to-Global-Secure-Access/</guid>
+      <guid>https://chris-brumm.com/2024/07/30/Overview-to-Global-Secure-Access/</guid>
       <description>Overview to Global Secure Access A few days ago, Microsoft announced that Global Secure Access is now generally available. Since I have been working with the product for some time now and more and more proof of concepts are being launched, it is high time for me to do a blog series about it.&#xA;Here is an overview of the parts (planned so far):&#xA;Overview to Global Secure Access Global Secure Access in Conditional Access Deep Dive DNS in Entra Private Access Deep Dive SSO in Entra Private Access What is Global Secure Access?</description>
     </item>
     <item>
       <title>Clean White Theme for Hugo</title>
-      <link>http://localhost:1313/post/readme/</link>
+      <link>https://chris-brumm.com/post/readme/</link>
       <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/readme/</guid>
+      <guid>https://chris-brumm.com/post/readme/</guid>
       <description>Clean White Theme for Hugo CleanWhite is a clean, elegant, but fully functional blog theme for Hugo. Here is a live demo site using this theme.&#xA;It is based on huxblog Jekyll Theme and Clean Blog Jekyll Theme.&#xA;These two upstream projects have done awesome jobs to create a blog theme, what I&amp;rsquo;m doing here is porting it to Hugo, of which I like the simplicity and the much faster compiling speed.</description>
     </item>
   </channel>
