@@ -13,7 +13,7 @@ hasCJKLanguage = false
 home = ["HTML", "RSS", "Algolia"]
 
 [params]
-  header_image = "img/nick-scheerbart-speicherstadt.jpg"
+  header_image = "img/cdx-speicherstadt.jpg"
   SEOTitle = "Chris Brumm's Blog"
   description = "My learnings on Identity and Security topics in the Microsoft cloud world"
   keyword = ""
