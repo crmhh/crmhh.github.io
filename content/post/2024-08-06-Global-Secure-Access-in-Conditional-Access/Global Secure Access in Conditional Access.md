@@ -270,19 +270,18 @@ It also became very clear to me during the preparation of this blog that the imp
 
 ## **Attribution and References**
 
-[Manage access to custom security attributes in Microsoft Entra ID
+- [Manage access to custom security attributes in Microsoft Entra ID
 ](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-manage?tabs=admin-center)
-
-[How to configure per-app access using Global Secure Access applications
+- [How to configure per-app access using Global Secure Access applications
 ](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-configure-per-app-access)
-[AADOps: Operationalization of Azure AD Conditional Access](https://www.cloud-architekt.net/aadops-conditional-access/)
-[User condition change flow
+- [AADOps: Operationalization of Azure AD Conditional Access](https://www.cloud-architekt.net/aadops-conditional-access/)
+- [User condition change flow
 ](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow)
-[Entra ID Conditional Access Policy Design Baseline with Automatic Deployment Support](https://danielchronlund.com/2020/11/26/azure-ad-conditional-access-policy-design-baseline-with-automatic-deployment-support/)
-[Claus Jesperson: ConditionalAccessforZeroTrustResources
+- [Entra ID Conditional Access Policy Design Baseline with Automatic Deployment Support](https://danielchronlund.com/2020/11/26/azure-ad-conditional-access-policy-design-baseline-with-automatic-deployment-support/)
+- [Claus Jesperson: ConditionalAccessforZeroTrustResources
 ](https://github.com/clajes/ConditionalAccessforZeroTrustResources)
-[Kenneth van Surksum: December 2022 update of the conditional access demystified whitepaper and workflow cheat sheet](https://www.vansurksum.com/2022/12/15/december-2022-update-of-the-conditional-access-demystified-whitepaper-and-workflow-cheat-sheet/)
-[How to use Microsoft Entra | Internet Access to prevent AiTM attack(s)](https://derkvanderwoude.medium.com/microsoft-entra-internet-access-to-prevent-aitm-attack-s-31171db43a83)
-[Fabian Bader: Continuous access evaluation](https://cloudbrothers.info/continuous-access-evaluation)
+- [Kenneth van Surksum: December 2022 update of the conditional access demystified whitepaper and workflow cheat sheet](https://www.vansurksum.com/2022/12/15/december-2022-update-of-the-conditional-access-demystified-whitepaper-and-workflow-cheat-sheet/)
+- [How to use Microsoft Entra | Internet Access to prevent AiTM attack(s)](https://derkvanderwoude.medium.com/microsoft-entra-internet-access-to-prevent-aitm-attack-s-31171db43a83)
+- [Fabian Bader: Continuous access evaluation](https://cloudbrothers.info/continuous-access-evaluation)
  
 >🙏 A big thank you to [Peter Lenzke](https://www.linkedin.com/in/peter-lenzke-bb95813a/) for proofreading this blog.
