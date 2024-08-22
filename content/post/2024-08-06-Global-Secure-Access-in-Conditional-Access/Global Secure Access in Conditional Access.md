@@ -46,10 +46,9 @@ On this occasion, the network-relevant conditions were also moved from the Condi
 
 Even if access to Entra ID integrated apps can then be linked to the use of GSA, Conditional Access cannot, of course, restrict access at network level. Instead, it only controls the issuing of OAuth2/SAML tokens. We are therefore not automatically protected against token replay by GSA, but are still dependent on features such as Continuous Access Evaluation and Token Protection. 
 
-<aside>
-💡 The restriction to Compliant Network Control acts as a [User Condition Change](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow) for CAE-capable applications and therefore forces instant re-authentication - so the combination of both features provides very effective protection against token replay!
+>💡 The restriction to Compliant Network Control acts as a [User Condition Change](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow) for CAE-capable applications and therefore forces instant re-authentication - so the combination of both features provides very effective protection against token replay!
 
-</aside>
+
 
 ### Incompatible Conditional Access control configuration elements
 
@@ -73,10 +72,9 @@ In the Target Resources, it is now possible to switch from Cloud Apps to Global 
 
 The selection of Global Secure Access as a target is also necessary in order to use the security profiles described below in the session controls.
 
-<aside>
-💡 Policies with Global Secure Access as a target are of course only effective if we can enforce them through the client. If the user is able to deactivate the client (which requires admin rights), the policies have no effect.
+>💡 Policies with Global Secure Access as a target are of course only effective if we can enforce them through the client. If the user is able to deactivate the client (which requires admin rights), the policies have no effect.
 
-</aside>
+
 
 ### Incompatible Conditional Access configuration elements
 
@@ -133,10 +131,9 @@ The profiles are attached to Conditional Access Policies as described above and 
 
 ![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%204.png)
 
-<aside>
-💡 **Baseline Security Profile**: As remote networks also allow devices without the GSA client and without user awareness to run through the solution, Microsoft has created a solution to enforce certain rules for everyone as a baseline. It makes sense to be economical with rules here, as these also apply to all devices with a client and would otherwise have to be overwritten in other profiles.
+>💡 **Baseline Security Profile**: As remote networks also allow devices without the GSA client and without user awareness to run through the solution, Microsoft has created a solution to enforce certain rules for everyone as a baseline. It makes sense to be economical with rules here, as these also apply to all devices with a client and would otherwise have to be overwritten in other profiles.
 
-</aside>
+
 
 ### Comparison of Global Secure Access and Microsoft Defender for Endpoint
 
@@ -144,10 +141,9 @@ With Web Content Filtering, Microsoft for Endpoint also has a feature for blocki
 
 Both products (like also the Azure Firewall) use the same engine for categorization and I think Microsoft will keep both functions, as it is not to be expected that both functions will always be used.
 
-<aside>
-💡 Because the same lists are used, [the lookup function of the Azure Firewall](https://learn.microsoft.com/en-us/azure/firewall/premium-features#web-category-search) can also be used to find out which category a URL belongs to.
+>💡 Because the same lists are used, [the lookup function of the Azure Firewall](https://learn.microsoft.com/en-us/azure/firewall/premium-features#web-category-search) can also be used to find out which category a URL belongs to.
 
-</aside>
+
 
 On closer inspection, however, there is a significant difference: while MDE enforces filtering completely independently of the logged-in user at device level, GSA works at the level of the logged-in user.
 
@@ -171,10 +167,9 @@ As described above, we can use Private Access to group resources - i.e. the comb
 
 Like all other enterprise apps, these apps can also be selected in several Conditional Access policies and, because they are included in All Cloud Apps, this is very likely to be the case in every environment. This fact should also ensure good basic protection - consisting of Compliant Device and MFA - with a solid rule set.
 
-<aside>
-💡 This diagram also clearly shows the relationship between the GSA Apps, the App Segments and the Connector Groups. Both the app (assignment and CA) and the Connector Group (routing) are decided on the basis of an addressed App Segment (IP+Port).
+>💡 This diagram also clearly shows the relationship between the GSA Apps, the App Segments and the Connector Groups. Both the app (assignment and CA) and the Connector Group (routing) are decided on the basis of an addressed App Segment (IP+Port).
 
-</aside>
+
 
 ### Use of custom security attributes
 
@@ -200,14 +195,13 @@ Unfortunately, relatively high rights are still required at the moment, e.g. to 
 - Cloud Application Administrator
 - Attribute Assignment Administrator
 
-<aside>
-💡 In the model of division of work described above, I recommend assigning the role of Cloud Application Administrator not at tenant level but only for the respective apps, since this role is really powerful and should be avoided (at the tenant level) .
+>💡 In the model of division of work described above, I recommend assigning the role of Cloud Application Administrator not at tenant level but only for the respective apps, since this role is really powerful and should be avoided (at the tenant level) .
 
 The procedure for the assignment is described [here](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/assign-roles-different-scopes#assign-roles-scoped-to-an-app-registration).
 
 ![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%2011.png)
 
-</aside>
+
 
 ## Access to Microsoft 365 resources
 
@@ -215,10 +209,9 @@ When accessing M365, the CA Compliant Networks feature described above already o
 
 Although we have seen a further increase in password-based attacks in the [Microsoft Digital Defense Report](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023) for 2023, we can already see that we are also increasingly having to deal with more complex attacks.   
 
-<aside>
-💡 Not directly Conditional Access features but further advantages of using Global Secure Access for M365 are the features Tenant Restrictions, IP restoration and M365 log enrichment which I described in the first blog of this series.
+>💡 Not directly Conditional Access features but further advantages of using Global Secure Access for M365 are the features Tenant Restrictions, IP restoration and M365 log enrichment which I described in the first blog of this series.
 
-</aside>
+
 
 ### Defense against AiTM attacks
 
@@ -258,10 +251,9 @@ To integrate systems that do not support device compliance, the Trusted Network 
 
 It is now possible to include the Compliant Network Condition in the Conditional Access rule set for Entra integrated apps, but at the moment it makes little sense as the devices must be managed (and CAE is currently only supported for Exchange and Sharepoint). We can therefore also use Device Compliance directly in the rule set.
 
-<aside>
-💡 But this is just a snapshot and can of course change quickly with additional features.
+>💡 But this is just a snapshot and can of course change quickly with additional features.
 
-</aside>
+
 
 # Summary
 
@@ -296,8 +288,4 @@ https://derkvanderwoude.medium.com/microsoft-entra-internet-access-to-prevent-ai
 
 https://cloudbrothers.info/continuous-access-evaluation
  
-
-<aside>
-🙏 A big thank you to [Peter Lenzke](https://www.linkedin.com/in/peter-lenzke-bb95813a/) for proofreading this blog.
-
-</aside>
+>🙏 A big thank you to [Peter Lenzke](https://www.linkedin.com/in/peter-lenzke-bb95813a/) for proofreading this blog.

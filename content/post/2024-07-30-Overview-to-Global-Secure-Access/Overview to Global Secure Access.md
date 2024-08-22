@@ -34,10 +34,7 @@ In addition, broad platform support and good integration with both the identity 
 
 ![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/GSA-Overview.png)
 
-<aside>
-💡 Of course, Microsoft is keeping Microsoft Defender for Cloud Apps (MDA) as a CASB and is not building this function into Global Secure Access again. An integration between MDA and GSA has been announced but is not yet concrete at this time.
-
-</aside>
+>💡 Of course, Microsoft is keeping Microsoft Defender for Cloud Apps (MDA) as a CASB and is not building this function into Global Secure Access again. An integration between MDA and GSA has been announced but is not yet concrete at this time.
 
 ## Isn't that actually called SASE?
 
@@ -50,12 +47,8 @@ The Microsoft documentation contains very good deployment guides, so I will only
 
 The different services are activated via traffic forwarding profiles. In addition to a variety of other settings (which currently vary for each profile), the profiles can be assigned to individual users or non-nested security groups.
 
-<aside>
-💡 The profiles are processed in the following order:
+> 💡 The profiles are processed in the following order:
 Microsoft 365 access profile → Private access profile → Internet access profile
-
-</aside>
-
    
 
 ![[https://learn.microsoft.com/en-us/entra/architecture/media/sse-deployment-guide-intro/traffic-forwarding-profile-enabled-expanded.png#lightbox](https://learn.microsoft.com/en-us/entra/architecture/media/sse-deployment-guide-intro/traffic-forwarding-profile-enabled-expanded.png#lightbox)](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Traffic-Forwarding.png)
@@ -78,10 +71,7 @@ In addition to the typical features such as web filtering based on categories as
 
 For non-M365 traffic, the web content filter is currently the relevant use case. We have a [broad selection of categories](https://learn.microsoft.com/en-us/entra/global-secure-access/reference-web-content-filtering-categories), can build very flexible policies and assign them as session control via conditional access.
 
-<aside>
-💡 You can find a detailed description of the configuration in my blog on the Conditional Access integration of GSA.
-
-</aside>
+> 💡 You can find a detailed description of the configuration in my blog on the Conditional Access integration of GSA.
 
 ## Microsoft Entra Internet Access for M365
 
@@ -100,10 +90,9 @@ After setting up a policy (1), a login (3) with a user from a tenant that has no
 
 Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-universal-tenant-restrictions/tenant-restrictions-v-2-universal-tenant-restrictions-flow.png](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-universal-tenant-restrictions/tenant-restrictions-v-2-universal-tenant-restrictions-flow.png)
 
-<aside>
-💡 Especially in combination with the (Outbound) Guest Restriction controls and the other filter capabilities of Entra Internet Access this is a very powerful Data Loss Prevention Feature.
+>💡 Especially in combination with the (Outbound) Guest Restriction controls and the other filter capabilities of Entra Internet Access this is a very powerful Data Loss Prevention Feature.
 
-</aside>
+
 
 ### Source IP Restoration
 
@@ -115,12 +104,11 @@ The first thing that comes to mind here is of course Entra Identity Protection, 
 - User irritation, as the [Additional Context](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-mfa-additional-context) feature cannot be used in the Authenticator app.
 - difficult situations during troubleshooting, due to the modification of the IP address.
 
-<aside>
-💡  Why is this a problem at all? Why can't the proxy simply set the [X-Forwarded-For](https://en.wikipedia.org/wiki/X-Forwarded-For) header, for example?
+>💡  Why is this a problem at all? Why can't the proxy simply set the [X-Forwarded-For](https://en.wikipedia.org/wiki/X-Forwarded-For) header, for example?
 
 In Identity Protection (and often also in Conditional Access), the IP address is security-relevant information and a high level of trust is required. At the moment, Microsoft can only ensure this trust relationship within its own infrastructure and therefore has a unique selling point with this feature!
 
-</aside>
+
 
 ### M365 Log Enrichment
 
@@ -134,10 +122,9 @@ With regard to the question with which devices and under which circumstances the
 
 In summary, this feature provides us with more detailed audit logs more quickly in relation to access to the M365 service.
 
-<aside>
-💡 A more detailed overview can be found in the [MS documentation](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-view-enriched-logs) and [this blog](https://www.invictus-ir.com/news/the-mystery-of-the-enrichedoffice365auditlogs-solved).
+>💡 A more detailed overview can be found in the [MS documentation](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-view-enriched-logs) and [this blog](https://www.invictus-ir.com/news/the-mystery-of-the-enrichedoffice365auditlogs-solved).
 
-</aside>
+
 
 # Microsoft Entra Private Access
 
@@ -157,10 +144,9 @@ In contrast to classic VPN solutions, there is no IP address pool that is assign
 
 Another important difference to VPN solutions is that the client's connections do not terminate at the gateways in one or more of the data centers, but in Microsoft's globally distributed network and the Entra Private Network Connectors configured for the target network establish a connection (also outgoing HTTPs) to the Microsoft network to fetch the packets. This allows you to transparently integrate destinations from different environments that are not connected to the headquarters.
 
-<aside>
-💡 If you have already worked with the Entra App Proxy in the past, you will recognize the connector used. With version [1.5.3829.0 from 2.4.2024](https://learn.microsoft.com/en-us/entra/global-secure-access/reference-version-history#version-1538290), the App proxy connector becomes the Entra private network connector and, in addition to the customization of various names (of files, processes, folders, ...), also includes UDP and DNS support, which is currently in preview and makes Entra Private Access really usable for most people.
+>💡 If you have already worked with the Entra App Proxy in the past, you will recognize the connector used. With version [1.5.3829.0 from 2.4.2024](https://learn.microsoft.com/en-us/entra/global-secure-access/reference-version-history#version-1538290), the App proxy connector becomes the Entra private network connector and, in addition to the customization of various names (of files, processes, folders, ...), also includes UDP and DNS support, which is currently in preview and makes Entra Private Access really usable for most people.
 
-</aside>
+
 
 Here is a non-exhaustive list of the differences:
 
@@ -182,10 +168,9 @@ For Entra Private Access, Microsoft has defined a new type of Enterprise Applica
 
 Each tenant contains a special app called Quick Access. This is intended for a quick start (e.g. as a VPN replacement) in which all relevant networks are entered and the app segments are successively moved to dedicated enterprise apps in order to control access more granularly. An Application Discovery section has already been prepared in the portal to support this workflow and the Quick Access app is the only one allowed to overlap with other apps.
 
-<aside>
-💡 You can find a detailed description how to use the Per-App access in my blog on the Conditional Access integration of GSA.
+>💡 You can find a detailed description how to use the Per-App access in my blog on the Conditional Access integration of GSA.
 
-</aside>
+
 
 ## **Private Access for on-prem users**
 
@@ -213,10 +198,9 @@ The client includes a detailed health status on configuration and connectivity. 
 
 ![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%208.png)
 
-<aside>
-💡 If you install the client on a standard Windows client, you will immediately see some errors. The necessary steps to disable [IPv6 and secure DNS](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-install-windows-client#disable-ipv6-and-secure-dns) and [QUIC](https://learn.microsoft.com/en-us/troubleshoot/azure/entra/global-secure-access/troubleshoot-global-secure-access-client-windows-issues#:~:text=Disable%20QUIC%20in%20a%20web%20browser) can be found in the documentation.
+>💡 If you install the client on a standard Windows client, you will immediately see some errors. The necessary steps to disable [IPv6 and secure DNS](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-install-windows-client#disable-ipv6-and-secure-dns) and [QUIC](https://learn.microsoft.com/en-us/troubleshoot/azure/entra/global-secure-access/troubleshoot-global-secure-access-client-windows-issues#:~:text=Disable%20QUIC%20in%20a%20web%20browser) can be found in the documentation.
 
-</aside>
+
 
 ## The effective configuration
 
@@ -226,10 +210,9 @@ The separate configuration for every traffic/forwarding profile is full visible 
 
 As you can see, each rule has a priority. These are processed in ascending order (to find the corresponding app) and the rules from Quick Access always come last. 
 
-<aside>
-💡 Note that all configured app segments currently end up in the client configuration - regardless of whether the app is assigned to the logged-in user.
+>💡 Note that all configured app segments currently end up in the client configuration - regardless of whether the app is assigned to the logged-in user.
 
-</aside>
+
 
 ## Real-time logging for name resolution and network traffic
 
@@ -258,10 +241,9 @@ On Android, the client is integrated into the Microsoft Defender for Endpoint ap
 
 Nothing needs to be configured centrally, the user only needs to activate Global Secure Access and the same policies as for the Windows client are active.
 
-<aside>
-💡 At the moment, the range of functions (no DNS, no SSO) is still somewhat limited - I will look into it again at a later date…
+>💡 At the moment, the range of functions (no DNS, no SSO) is still somewhat limited - I will look into it again at a later date…
 
-</aside>
+
 
 ![Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-install-android-client/defender-global-secure-access-disabled.png](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-install-android-client/defender-global-secure-access-disabled.png)](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%2014.png)
 
@@ -275,10 +257,9 @@ In addition to the client option, Global Secure Access offers the option of usin
 
 Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-simulate-remote-network/simulate-remote-network.png#lightbox](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-simulate-remote-network/simulate-remote-network.png#lightbox)
 
-<aside>
-💡 As of today the Remote Networks feature is only supported for Entra Internet Access for M365.
+>💡 As of today the Remote Networks feature is only supported for Entra Internet Access for M365.
 
-</aside>
+
 
 # Summary
 
