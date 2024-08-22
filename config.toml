@@ -69,7 +69,7 @@ home = ["HTML", "RSS", "Algolia"]
 
   [params.social]
   rss            = true 
-  email          = "mail@chris-brumm.com"
+  email          = "blog@brumm.cc"
   #facebook      = "full profile url in facebook"
   #googleplus    = "full profile url in googleplus"
   twitter        = "https://twitter.com/cbrhh"
