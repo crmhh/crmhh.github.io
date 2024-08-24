@@ -23,11 +23,11 @@
       <description>Overview to Global Secure Access A few days ago, Microsoft announced that Global Secure Access is now generally available. Since I have been working with the product for some time now and more and more proof of concepts are being launched, it is high time for me to do a blog series about it.&#xA;Here is an overview of the parts (planned so far):&#xA;Overview to Global Secure Access Global Secure Access in Conditional Access Deep Dive DNS in Entra Private Access Deep Dive SSO in Entra Private Access What is Global Secure Access?</description>
     </item>
     <item>
-      <title>Clean White Theme for Hugo</title>
-      <link>https://chris-brumm.com/post/readme/</link>
-      <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://chris-brumm.com/post/readme/</guid>
-      <description>Clean White Theme for Hugo CleanWhite is a clean, elegant, but fully functional blog theme for Hugo. Here is a live demo site using this theme.&#xA;It is based on huxblog Jekyll Theme and Clean Blog Jekyll Theme.&#xA;These two upstream projects have done awesome jobs to create a blog theme, what I&amp;rsquo;m doing here is porting it to Hugo, of which I like the simplicity and the much faster compiling speed.</description>
+      <title>Microsoft Entra MFA Fraud Deep Dive</title>
+      <link>https://chris-brumm.com/2023/10/07/Microsoft-Entra-MFA-Fraud-Deep-Dive/</link>
+      <pubDate>Sat, 07 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://chris-brumm.com/2023/10/07/Microsoft-Entra-MFA-Fraud-Deep-Dive/</guid>
+      <description>Microsoft Entra MFA Fraud Deep Dive Tags: Entra, ITDR, MFA Published at: October 7, 2023 Summary:&#xA;Recently, Microsoft released the new feature Report suspicious activity for Entra ID. Since I see this feature as a significant improvement and have faced some challenges with the old feature in the past, I have decided to delve deeper into the topic and share my findings here.&#xA;Now, you might be wondering what makes this feature special.</description>
     </item>
   </channel>
 </rss>

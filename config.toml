@@ -135,3 +135,14 @@ params = ["categories", "tags"]
     startLevel = 1
   [markup.highlight]
     style = "dracula"
+
+[module]
+    [[module.imports]]
+        path = "github.com/divinerites/plausible-hugo"
+
+#theme = ["plausible-hugo"]  # Add this theme to your already existing other themes
+[params.plausible]
+  enable = true  # Whether to enable plausible tracking
+  domain = "chris-brumm.com"  # Plausible "domain" name/id in your dashboard
+  debug = true  # debug mode
+

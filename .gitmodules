@@ -1,6 +1,4 @@
 [submodule "themes/cleanwhite"]
 	path = themes/cleanwhite
 	url = https://github.com/zhaohuabing/hugo-theme-cleanwhite.git
-[submodule "themes/plausible-hugo"]
-	path = themes/plausible-hugo
-	url = https://github.com/divinerites/plausible-hugo
+	

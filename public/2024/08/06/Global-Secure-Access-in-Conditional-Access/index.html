@@ -10,8 +10,8 @@
     <meta property="og:type" content="article">
 
     
-    <meta property="og:image" content="https://chris-brumm.com//img/nick-scheerbart-speicherstadt.jpg">
-    <meta property="twitter:image" content="https://chris-brumm.com//img/nick-scheerbart-speicherstadt.jpg" />
+    <meta property="og:image" content="https://chris-brumm.com//img/cdx-speicherstadt.jpg">
+    <meta property="twitter:image" content="https://chris-brumm.com//img/cdx-speicherstadt.jpg" />
     
 
     
@@ -21,9 +21,9 @@
     
 
     
-    <meta name="description" content="">
-    <meta property="og:description" content="" />
-    <meta property="twitter:description" content="" />
+    <meta name="description" content="My learnings on Identity and Security topics in the Microsoft cloud world">
+    <meta property="og:description" content="My learnings on Identity and Security topics in the Microsoft cloud world" />
+    <meta property="twitter:description" content="My learnings on Identity and Security topics in the Microsoft cloud world" />
     
 
     
@@ -70,6 +70,50 @@
     
     
 
+    
+
+
+
+
+   
+   <!-- Thanks for using github/divinerites/plausible-hugo v1.20.0. Please, consider leaving a star on Github if you like it. -->
+
+
+
+
+
+
+
+
+
+
+
+    
+        <link rel="preconnect" href="https://plausible.io">
+    
+        
+            
+            <script defer  data-domain="chris-brumm.com" src="https://plausible.io/js/script.js" ></script>
+
+<!-- If you are using Content-Security-Policy, do not forget to add this code to your CSP : 
+  script-src 'unsafe-inline' https://plausible.io
+  connect-src 'unsafe-inline' https://plausible.io
+  or just add the partial 'plausible_csp.html' to those 2 csp directives in your 'index.headers' file
+-->
+
+
+
+    
+    <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+    <script>
+         
+         
+         
+    </script>
+
+    
+
+    
 </head>
 
 
@@ -156,7 +200,7 @@
 
 <style type="text/css">
     header.intro-header {
-        background-image: url('/img/nick-scheerbart-speicherstadt.jpg')
+        background-image: url('/img/cdx-speicherstadt.jpg')
     }
 </style>
 
@@ -220,8 +264,8 @@
 <p>A few days ago, Microsoft announced that Global Secure Access is now generally available. Since I have been working with the product for some time now and more and more proof of concepts are being launched, it is high time for me to do a blog series about it.</p>
 <p>Here is an overview of the parts (planned so far):</p>
 <ol>
-<li><a href="https://www.notion.so/Overview-to-Global-Secure-Access-316326e010a94d36841ab9ff9ac2d7c4?pvs=21">Overview to Global Secure Access</a></li>
-<li><a href="https://www.notion.so/Global-Secure-Access-in-Conditional-Access-0760efe4dd8f4e4e9cd6fcec4af9183f?pvs=21">Global Secure Access in Conditional Access</a></li>
+<li><a href="https://chris-brumm.com/2024/07/30/Overview-to-Global-Secure-Access/">Overview to Global Secure Access</a></li>
+<li><a href="https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/">Global Secure Access in Conditional Access</a></li>
 <li>Deep Dive DNS in Entra Private Access</li>
 <li>Deep Dive SSO in Entra Private Access</li>
 </ol>
@@ -239,8 +283,9 @@
 </p>
 <h3 id="protection-provided-by-the-compliant-network-control">Protection provided by the Compliant Network Control</h3>
 <p>Even if access to Entra ID integrated apps can then be linked to the use of GSA, Conditional Access cannot, of course, restrict access at network level. Instead, it only controls the issuing of OAuth2/SAML tokens. We are therefore not automatically protected against token replay by GSA, but are still dependent on features such as Continuous Access Evaluation and Token Protection.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<blockquote>
+<p>💡 The restriction to Compliant Network Control acts as a <a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow">User Condition Change</a> for CAE-capable applications and therefore forces instant re-authentication - so the combination of both features provides very effective protection against token replay!</p>
+</blockquote>
 <h3 id="incompatible-conditional-access-control-configuration-elements">Incompatible Conditional Access control configuration elements</h3>
 <p>At the moment, the following conditions cannot be selected when GSA is selected as the target:</p>
 <ul>
@@ -263,8 +308,9 @@
 
 </p>
 <p>The selection of Global Secure Access as a target is also necessary in order to use the security profiles described below in the session controls.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<blockquote>
+<p>💡 Policies with Global Secure Access as a target are of course only effective if we can enforce them through the client. If the user is able to deactivate the client (which requires admin rights), the policies have no effect.</p>
+</blockquote>
 <h3 id="incompatible-conditional-access-configuration-elements">Incompatible Conditional Access configuration elements</h3>
 <p>At the moment, the following conditions cannot be selected when GSA is selected as the target:</p>
 <ul>
@@ -306,13 +352,15 @@
   <img src="/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%204.png" alt="Untitled">
 
 </p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<blockquote>
+<p>💡 <strong>Baseline Security Profile</strong>: As remote networks also allow devices without the GSA client and without user awareness to run through the solution, Microsoft has created a solution to enforce certain rules for everyone as a baseline. It makes sense to be economical with rules here, as these also apply to all devices with a client and would otherwise have to be overwritten in other profiles.</p>
+</blockquote>
 <h3 id="comparison-of-global-secure-access-and-microsoft-defender-for-endpoint">Comparison of Global Secure Access and Microsoft Defender for Endpoint</h3>
 <p>With Web Content Filtering, Microsoft for Endpoint also has a feature for blocking categories and can block URLs as custom indicators (which can also be managed by MDA), which raises the question of the relationship between the two functions.</p>
 <p>Both products (like also the Azure Firewall) use the same engine for categorization and I think Microsoft will keep both functions, as it is not to be expected that both functions will always be used.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<blockquote>
+<p>💡 Because the same lists are used, <a href="https://learn.microsoft.com/en-us/azure/firewall/premium-features#web-category-search">the lookup function of the Azure Firewall</a> can also be used to find out which category a URL belongs to.</p>
+</blockquote>
 <p>On closer inspection, however, there is a significant difference: while MDE enforces filtering completely independently of the logged-in user at device level, GSA works at the level of the logged-in user.</p>
 <p><em>In my opinion, GSA has a clear advantage when it comes to modeling complex rule sets!</em></p>
 <h3 id="forcing-special-controls-when-accessing-traffic-profiles">Forcing special controls when accessing traffic profiles</h3>
@@ -333,8 +381,9 @@
 
 </p>
 <p>Like all other enterprise apps, these apps can also be selected in several Conditional Access policies and, because they are included in All Cloud Apps, this is very likely to be the case in every environment. This fact should also ensure good basic protection - consisting of Compliant Device and MFA - with a solid rule set.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<blockquote>
+<p>💡 This diagram also clearly shows the relationship between the GSA Apps, the App Segments and the Connector Groups. Both the app (assignment and CA) and the Connector Group (routing) are decided on the basis of an addressed App Segment (IP+Port).</p>
+</blockquote>
 <h3 id="use-of-custom-security-attributes">Use of custom security attributes</h3>
 <p>Instead of direct selection in Conditional Access Policies, I also think it makes a lot of sense to use Custom Security Attributes for this, as this reduces the likelihood of misconfigurations and makes it easier to implement a separation of duties in administration.</p>
 <p>
@@ -362,18 +411,20 @@
 <li>Cloud Application Administrator</li>
 <li>Attribute Assignment Administrator</li>
 </ul>
-<!-- raw HTML omitted -->
+<blockquote>
+<p>💡 In the model of division of work described above, I recommend assigning the role of Cloud Application Administrator not at tenant level but only for the respective apps, since this role is really powerful and should be avoided (at the tenant level) .</p>
+</blockquote>
 <p>The procedure for the assignment is described <a href="https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/assign-roles-different-scopes#assign-roles-scoped-to-an-app-registration">here</a>.</p>
 <p>
   <img src="/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%2011.png" alt="Untitled">
 
 </p>
-<!-- raw HTML omitted -->
 <h2 id="access-to-microsoft-365-resources">Access to Microsoft 365 resources</h2>
 <p>When accessing M365, the CA Compliant Networks feature described above already offers some interesting new capabilities that help us prepare our environments for a changing threat situation.</p>
 <p>Although we have seen a further increase in password-based attacks in the <a href="https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023">Microsoft Digital Defense Report</a> for 2023, we can already see that we are also increasingly having to deal with more complex attacks.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<blockquote>
+<p>💡 Not directly Conditional Access features but further advantages of using Global Secure Access for M365 are the features Tenant Restrictions, IP restoration and M365 log enrichment which I described in the first blog of this series.</p>
+</blockquote>
 <h3 id="defense-against-aitm-attacks">Defense against AiTM attacks</h3>
 <p>The last few months have been characterized by the increasing prevalence of AiTM attacks (e.g. with Evilginx2) and I am very curious to see the next figures on this topic, because my personal experience has often shown me how effective this attack is.</p>
 <p>The existing defense mechanisms of phishing-resistant authentication methods (caution: Evilginx can now automatically downgrade) and device compliance are now joined by the Compliant Networks Condition.</p>
@@ -402,8 +453,9 @@
 </p>
 <h2 id="access-to-entra-id-integrated-apps">Access to Entra ID integrated apps</h2>
 <p>It is now possible to include the Compliant Network Condition in the Conditional Access rule set for Entra integrated apps, but at the moment it makes little sense as the devices must be managed (and CAE is currently only supported for Exchange and Sharepoint). We can therefore also use Device Compliance directly in the rule set.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<blockquote>
+<p>💡 But this is just a snapshot and can of course change quickly with additional features.</p>
+</blockquote>
 <h1 id="summary">Summary</h1>
 <p>As I hope to show in this blog, Global Secure Access has really good conditional access integration - much more than the SAML integrations I&rsquo;ve seen in other vendors&rsquo; products.</p>
 <p>It also became very clear to me during the preparation of this blog that the importance of conditional access will continue to grow significantly. It is vitally important</p>
@@ -414,58 +466,25 @@
 <p><em>In any case, I am convinced that this is just the beginning and that we will see various other use cases and improvements in the combination of Global Secure Access and Conditional Access.</em></p>
 <p><em>My next blog in this series will be a deep dive regarding DNS in Entra Private Access!</em></p>
 <h2 id="attribution-and-references"><strong>Attribution and References</strong></h2>
-<p><a href="https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-manage?tabs=admin-center">https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-manage?tabs=admin-center</a></p>
-<p><a href="https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-configure-per-app-access">https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-configure-per-app-access</a></p>
-<p><a href="https://www.cloud-architekt.net/aadops-conditional-access/">https://www.cloud-architekt.net/aadops-conditional-access/</a></p>
-<p><a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow">https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow</a></p>
-<p><a href="https://danielchronlund.com/2020/11/26/azure-ad-conditional-access-policy-design-baseline-with-automatic-deployment-support/">https://danielchronlund.com/2020/11/26/azure-ad-conditional-access-policy-design-baseline-with-automatic-deployment-support/</a></p>
-<p><a href="https://github.com/clajes/ConditionalAccessforZeroTrustResources">https://github.com/clajes/ConditionalAccessforZeroTrustResources</a></p>
-<p><a href="https://www.vansurksum.com/2022/12/15/december-2022-update-of-the-conditional-access-demystified-whitepaper-and-workflow-cheat-sheet/">https://www.vansurksum.com/2022/12/15/december-2022-update-of-the-conditional-access-demystified-whitepaper-and-workflow-cheat-sheet/</a></p>
-<p><a href="https://derkvanderwoude.medium.com/microsoft-entra-internet-access-to-prevent-aitm-attack-s-31171db43a83">https://derkvanderwoude.medium.com/microsoft-entra-internet-access-to-prevent-aitm-attack-s-31171db43a83</a></p>
-<p><a href="https://cloudbrothers.info/continuous-access-evaluation">https://cloudbrothers.info/continuous-access-evaluation</a></p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-manage?tabs=admin-center">Manage access to custom security attributes in Microsoft Entra ID
+</a></li>
+<li><a href="https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-configure-per-app-access">How to configure per-app access using Global Secure Access applications
+</a></li>
+<li><a href="https://www.cloud-architekt.net/aadops-conditional-access/">AADOps: Operationalization of Azure AD Conditional Access</a></li>
+<li><a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow">User condition change flow
+</a></li>
+<li><a href="https://danielchronlund.com/2020/11/26/azure-ad-conditional-access-policy-design-baseline-with-automatic-deployment-support/">Entra ID Conditional Access Policy Design Baseline with Automatic Deployment Support</a></li>
+<li><a href="https://github.com/clajes/ConditionalAccessforZeroTrustResources">Claus Jesperson: ConditionalAccessforZeroTrustResources
+</a></li>
+<li><a href="https://www.vansurksum.com/2022/12/15/december-2022-update-of-the-conditional-access-demystified-whitepaper-and-workflow-cheat-sheet/">Kenneth van Surksum: December 2022 update of the conditional access demystified whitepaper and workflow cheat sheet</a></li>
+<li><a href="https://derkvanderwoude.medium.com/microsoft-entra-internet-access-to-prevent-aitm-attack-s-31171db43a83">How to use Microsoft Entra | Internet Access to prevent AiTM attack(s)</a></li>
+<li><a href="https://cloudbrothers.info/continuous-access-evaluation">Fabian Bader: Continuous access evaluation</a></li>
+</ul>
+<blockquote>
+<p>🙏 A big thank you to <a href="https://www.linkedin.com/in/peter-lenzke-bb95813a/">Peter Lenzke</a> for proofreading this blog.</p>
+</blockquote>
 
-
-                
-                
-<div class="entry-shang text-center">
-    
-	    <p>「真诚赞赏，手留余香」</p>
-	
-	<button class="zs show-zs btn btn-bred">赞赏支持</button>
-</div>
-<div class="zs-modal-bg"></div>
-<div class="zs-modal-box">
-	<div class="zs-modal-head">
-		<button type="button" class="close">×</button>
-		<span class="author"><a href="https://chris-brumm.com/"><img src="/img/favicon.png" />Chris Brumm&#39;s Blog</a></span>
-        
-	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
-		
- 
-	</div>
-	<div class="zs-modal-body">
-		<div class="zs-modal-btns">
-			<button class="btn btn-blink" data-num="2">2元</button>
-			<button class="btn btn-blink" data-num="5">5元</button>
-			<button class="btn btn-blink" data-num="10">10元</button>
-			<button class="btn btn-blink" data-num="50">50元</button>
-			<button class="btn btn-blink" data-num="100">100元</button>
-			<button class="btn btn-blink" data-num="1">任意金额</button>
-		</div>
-		<div class="zs-modal-pay">
-			<button class="btn btn-bred" id="pay-text">2元</button>
-			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
-			<img src="/img/reward/wechat-2.png"  id="pay-image"/>
-		</div>
-	</div>
-	<div class="zs-modal-footer">
-		<label><input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked"><span ><span class="zs-wechat"><img src="/img/reward/wechat-btn.png"/></span></label>
-		<label><input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay"><img src="/img/reward/alipay-btn.png"/></span></label>
-	</div>
-</div>
-<script type="text/javascript" src="/js/reward.js"></script>
 
                 
 
@@ -534,6 +553,10 @@
                         
                         
                         
+                        
+                        
+                        
+                        
                     </div>
                 </section>
                 
@@ -567,7 +590,7 @@
                 <ul class="list-inline text-center">                  
                     
                     <li>
-                        <a href="mailto:mail@chris-brumm.com">
+                        <a href="mailto:blog@brumm.cc">
                             <span class="fa-stack fa-lg">
                                 <i class="fas fa-circle fa-stack-2x"></i>
                                 <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>

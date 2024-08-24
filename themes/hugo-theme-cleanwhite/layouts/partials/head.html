@@ -90,6 +90,8 @@
     <script src="{{ . | absURL }}"></script>
     {{ end }}
 
+    {{ partial "plausible_head.html" . }}
+    
 </head>
 
 {{ if .Site.Config.Services.GoogleAnalytics.ID }}
