@@ -21,3 +21,6 @@ Responsibility for the content of external links (to web pages of third parties)
 ## Copyright
 
 Our web pages and their contents are subject to German copyright law. Unless expressly permitted by law, every form of utilizing, reproducing or processing works subject to copyright protection on our web pages requires the prior consent of the respective owner of the rights. Individual reproductions of a work are only allowed for private use. The materials from these pages are copyrighted and any unauthorized use may violate copyright laws.
+
+Source:
+[https://www.e-recht24.de](https://www.e-recht24.de)
