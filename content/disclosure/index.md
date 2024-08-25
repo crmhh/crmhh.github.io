@@ -6,7 +6,7 @@ multilingual: false
 # Legal Disclosure
 
 Information in accordance with Section 5 TMG
-![/static/img/chris-address.png](/static/img/chris-address.png)
+![chris-address.png](../static/img/chris-address.png)
 
 # Disclaimer
 

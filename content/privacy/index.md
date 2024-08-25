@@ -43,7 +43,7 @@ Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ern
 
 Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
 
-![/static/img/chris-address.png](/static/img/chris-address.png)
+![chris-address.png](../static/img/chris-address.png)
 
 Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten (z. B. Namen, E-Mail-Adressen o. Ä.) entscheidet.
 
