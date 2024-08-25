@@ -145,4 +145,5 @@ params = ["categories", "tags"]
   enable = true  # Whether to enable plausible tracking
   domain = "chris-brumm.com"  # Plausible "domain" name/id in your dashboard
   debug = true  # debug mode
+  custom_js_domain = "plausible.cloudbrothers.info"
 
