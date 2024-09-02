@@ -30,14 +30,13 @@ home = ["HTML", "RSS", "Algolia"]
   leancloud_app_key = ""
 
   # algolia site search
-  algolia_search = true
+  algolia_search = false
   algolia_appId = ""
   algolia_indexName = ""
   algolia_apiKey = ""
 
   # Sidebar settings
   sidebar_about_description = "IT Security guy specialized in Microsoft Identity topics"
-  #sidebar_avatar = "img/avatar-zhaohuabing.jpg"      # use absolute URL, seeing it's used in both `/` and `/about/`
   sidebar_avatar = "img/chris-bw.jpg"      # use absolute URL, seeing it's used in both `/` and `/about/`
 
   featured_tags = true 
@@ -60,7 +59,7 @@ home = ["HTML", "RSS", "Algolia"]
   # reward_guide = "如果这篇文章对你有用,请随意打赏" 
 
   friends = true
-  bookmarks = false
+  bookmarks = true
   about_me = true
 
   # Include any custom CSS and/or JS files, url or relative to /static folder
@@ -97,17 +96,9 @@ home = ["HTML", "RSS", "Algolia"]
 
 
   [[params.bookmark_link]]
-  title =  "Martin Fowler"
-  href =  "https://martinfowler.com"
-  [[params.bookmark_link]]
-  title = "ServiceMesher"
-  href =  "http://www.servicemesher.com"
-  [[params.bookmark_link]]
-  title =  "Pxhere"
-  href = "https://pxhere.com"
-  [[params.bookmark_link]]
-  title = "unsplash"
-  href = "https://unsplash.com"
+  title =  "Microsoft Entra ID - Attack and Defense Playbook"
+  href =  "https://github.com/Cloud-Architekt/AzureAD-Attack-Defense"
+ 
   
   [[params.addtional_menus]]
   title =  "ARCHIVE"
