@@ -13,15 +13,13 @@ tags:
 categories: [ Global Secure Access ]
 ---
 
-# Overview to Global Secure Access
-
 A few days ago, Microsoft announced that Global Secure Access is now generally available. Since I have been working with the product for some time now and more and more proof of concepts are being launched, it is high time for me to do a blog series about it.
 
 Here is an overview of the parts (planned so far):
 
 1. [Overview to Global Secure Access](https://chris-brumm.com/2024/07/30/Overview-to-Global-Secure-Access/)
 2. [Global Secure Access in Conditional Access](https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/)
-3. Deep Dive DNS in Entra Private Access
+3. [Deep Dive DNS in Entra Private Access](https://chris-brumm.com/2024/09/07/Deep-Dive-DNS-in-Entra-Private-Access/)
 4. Deep Dive SSO in Entra Private Access 
 
 # What is Global Secure Access?

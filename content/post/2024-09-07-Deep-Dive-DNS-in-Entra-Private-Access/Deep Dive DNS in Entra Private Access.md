@@ -12,8 +12,6 @@ tags:
 categories: [ Global Secure Access ]
 ---
 
-# Deep Dive DNS in Entra Private Access
-
 A few days ago, Microsoft announced that Global Secure Access is now generally available. Since I have been working with the product for some time now and more and more proof of concepts are being launched, it is high time for me to do a blog series about it.
 
 Here is an overview of the parts (planned so far):
