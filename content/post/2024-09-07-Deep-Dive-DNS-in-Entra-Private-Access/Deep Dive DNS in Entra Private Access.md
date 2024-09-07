@@ -1,6 +1,6 @@
 ---
 layout:     post 
-title:      "Global Secure Access in Conditional Access"
+title:      "Deep Dive DNS in Entra Private Access"
 subtitle:   "The blog explores the challenges of DNS in Entra Private Access and provides solutions for split DNS and disconnected environments."
 date:       2024-09-07
 author:     "Chris Brumm"
