@@ -269,4 +269,4 @@ Regardless of this, I am curious to see how Entra Private Access develops and ma
 - [4sysops: Split-brain DNS deployment using Windows Server DNS policy](https://4sysops.com/archives/split-brain-dns-deployment-using-windows-server-dns-policy/)
 - [Practical365: Use the same internal and external HTTPS names with Exchange Server](https://practical365.com/use-the-same-internal-and-external-https-names-with-exchange-server/)
 
->🙏 Again big thanks to Peter Lenzke for proofreading this blog.
+>🙏 Again big thanks to [Peter Lenzke](https://www.linkedin.com/in/peter-lenzke-bb95813a/) for proofreading this blog.
