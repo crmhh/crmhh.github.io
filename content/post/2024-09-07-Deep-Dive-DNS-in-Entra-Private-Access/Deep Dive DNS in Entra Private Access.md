@@ -259,7 +259,7 @@ Regardless of this, I am curious to see how Entra Private Access develops and ma
 
 *My next blog will be a deep dive to Single Sign On in Entra Private Access*
 
-## **Attribution and References**
+## Attribution and References
 
 - [Microsoft Learn: Publish DNS Suffixes](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-configure-kerberos-sso#publish-dns-suffixes)
 - [Microsoft Learn: The NRPT](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/dn593632(v=ws.11))
@@ -268,3 +268,5 @@ Regardless of this, I am curious to see how Entra Private Access develops and ma
 - [Microsoft Learn: Use DNS Policy for Split-Brain DNS Deployment](https://learn.microsoft.com/en-us/windows-server/networking/dns/deploy/split-brain-dns-deployment)
 - [4sysops: Split-brain DNS deployment using Windows Server DNS policy](https://4sysops.com/archives/split-brain-dns-deployment-using-windows-server-dns-policy/)
 - [Practical365: Use the same internal and external HTTPS names with Exchange Server](https://practical365.com/use-the-same-internal-and-external-https-names-with-exchange-server/)
+
+>🙏 Again big thanks to Peter Lenzke for proofreading this blog.
