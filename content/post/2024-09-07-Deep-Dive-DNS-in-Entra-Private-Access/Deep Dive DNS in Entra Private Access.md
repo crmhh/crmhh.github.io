@@ -261,6 +261,7 @@ Regardless of this, I am curious to see how Entra Private Access develops and ma
 
 ## **Attribution and References**
 
+- [Microsoft Learn: Publish DNS Suffixes](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-configure-kerberos-sso#publish-dns-suffixes)
 - [Microsoft Learn: The NRPT](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/dn593632(v=ws.11))
 - [Callan Halls-Palmer: Report on DNS Policy with PowerShell](https://hallspalmer.wordpress.com/2020/04/22/report-on-dns-policy-with-powershell/)
 - [VCLOUDNINE: Setting up split DNS using Windows DNS server](https://vcloudnine.de/setting-up-split-dns-using-windows-dns-server/)
