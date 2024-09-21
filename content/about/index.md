@@ -13,6 +13,7 @@ This is not my first blog. Until summer 2024 I've used to blog on Medium. Curren
 
 Over time I reviewed some articles in the [Microsoft Entra ID - Attack and Defense Playbook](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense) and in July 2024 I've added there an appendix about [How to prevent lateral movement to Entra ID when your Active Directory has fallen](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense/blob/main/LateralMovementADEID.md) 
 
+And you will find articles from me on the [blog of glueckkanja AG](https://www.glueckkanja.com/en/authors/christopher-brumm/)
 
 ## Community Talks (Selected)
 |Year         |City        |Conference  | Title      |Slides      |
