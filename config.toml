@@ -98,6 +98,8 @@ home = ["HTML", "RSS", "Algolia"]
   [[params.bookmark_link]]
   title =  "Microsoft Entra ID - Attack and Defense Playbook"
   href =  "https://github.com/Cloud-Architekt/AzureAD-Attack-Defense"
+  
+  [[params.bookmark_link]]
   title =  "My other (old) blog on medium.com"
   href =  "https://chris-brumm.medium.com/"
  
