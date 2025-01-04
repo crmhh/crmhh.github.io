@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Chris Brumm&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="http://localhost:1313//img/cdx-speicherstadt.jpg">
+    <meta property="twitter:image" content="http://localhost:1313//img/cdx-speicherstadt.jpg" />
+    
+
+    
+    <meta name="title" content="Deep Dive SSO in Entra Private Access" />
+    <meta property="og:title" content="Deep Dive SSO in Entra Private Access" />
+    <meta property="twitter:title" content="Deep Dive SSO in Entra Private Access" />
+    
+
+    
+    <meta name="description" content="My learnings on Identity and Security topics in the Microsoft cloud world">
+    <meta property="og:description" content="My learnings on Identity and Security topics in the Microsoft cloud world" />
+    <meta property="twitter:description" content="My learnings on Identity and Security topics in the Microsoft cloud world" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Deep Dive SSO in Entra Private Access | </title>
+
+    <link rel="canonical" href="/2024/09/14/Deep-Dive-SSO-in-Entra-Private-Access/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link rel="stylesheet" href="/css/font-awesome.all.min.css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+    <script defer data-domain="chris-brumm.com" src="https://plausible.cloudbrothers.info/js/script.js"></script>
+    
+</head>
+
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Chris Brumm&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/global-secure-access/">global secure access</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive//">ARCHIVE</a></li>
+                    
+                        <li><a href="/about//">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/cdx-speicherstadt.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/entra" title="Entra">
+                            Entra
+                        </a>
+                        
+                        <a class="tag" href="/tags/global-secure-access" title="Global Secure Access">
+                            Global Secure Access
+                        </a>
+                        
+                        <a class="tag" href="/tags/entra-private-access" title="Entra Private Access">
+                            Entra Private Access
+                        </a>
+                        
+                    </div>
+                    <h1>Deep Dive SSO in Entra Private Access</h1>
+                    <h2 class="subheading">This blog post explores the deep dive into Single Sign-On (SSO) in Entra Private Access, discussing the features, configuration, and benefits of SSO with Active Directory and Entra ID.</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Chris Brumm
+                             
+                            on 
+                            Saturday, September 14, 2024
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>A few days ago, Microsoft announced that Global Secure Access is now generally available. Since I have been working with the product for some time now and more and more proof of concepts are being launched, it is high time for me to do a blog series about it.</p>
+<p>Here is an overview of the parts (planned so far):</p>
+<ol>
+<li><a href="https://chris-brumm.com/2024/07/30/Overview-to-Global-Secure-Access/">Overview to Global Secure Access</a></li>
+<li><a href="https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/">Global Secure Access in Conditional Access</a></li>
+<li><a href="https://chris-brumm.com/2024/09/07/Deep-Dive-DNS-in-Entra-Private-Access/">Deep Dive DNS in Entra Private Access</a></li>
+<li><a href="https://chris-brumm.com/2024/09/14/Deep-Dive-SSO-in-Entra-Private-Access/">Deep Dive SSO in Entra Private Access</a></li>
+</ol>
+<p>With the addition of both UDP and DNS support to Entra Private Access, the vast majority of scenarios that VPN has been used for in the past can be covered - including Single Sign On with Kerberos. To enable a high level of user-friendliness and security, single sign-on is an important component and Global Secure Access really has a lot to offer here!</p>
+<p>So I decided to write a blog post on this topic to show how the different SSO features of Active Directory and Entra ID can work together in a Entra Private Access scenario. After that I will show how a KDC proxy can be used to improve the security and stability of this scenario even more and compare both deployment variants.</p>
+<p>But before I compare the different variants, I would first like to briefly discuss the most important components. If you want to delve deeper into these basics, you should definitely read this Deep Dive blog by Fabian (which is also the foundation of this blog 🙏):</p>
+<p><a href="https://cloudbrothers.info/windows-business-cloud-trust-kdc-proxy/">Windows Hello for Business Cloud Trust and KDC proxy</a></p>
+<h2 id="sso-for-entra-id-through-wam-support">SSO for Entra ID through WAM Support</h2>
+<p>The Global Secure Access Client is able to use the <a href="https://learn.microsoft.com/en-us/entra/identity-platform/scenario-desktop-acquire-token-wam">Windows Web Account Manager (WAM</a>). By using this built-in authentication broker, access to the already stored key material such as the Primary Refresh Token is possible and makes further password entries on the clients unnecessary. In addition to very good usability, the integration enables support for Windows Hello, Conditional Access, and FIDO keys.</p>
+<h2 id="sso-for-active-directory-through-cloud-kerberos-trust">SSO for Active Directory through Cloud Kerberos Trust</h2>
+<p>Cloud Kerberos Trust is not a GSA component, but it is such an important piece of the puzzle for the overall construct that I would like to briefly discuss it again here.</p>
+<p>During setup, Entra ID is registered as a read-only domain controller in the Active Directory and can therefore also issue (3) a rudimentary TGT for the user after authentication (1) based on the user&rsquo;s domain (2) with the PRT, which can then be exchanged for a new TGT with all SIDs at a domain controller (or a KDC proxy) (4+5).</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/Cloud-Kerberos-Trust.png" alt="Cloud-Kerberos-Trust">
+
+</p>
+<p>This procedure also enables SSO against AD with Entra Joined Devices without logging in with a password - i.e. with Windows Hello for Business or FIDO2.</p>
+<blockquote>
+<p>💡 Of course, the Key Trust variant can also perform the same task, but I would advise anyone still using Key Trust today to migrate, as this variant is much more robust.
+Good comparison of both variants: <a href="https://msendpointmgr.com/2023/03/04/cloud-kerberos-trust-part-1/">https://msendpointmgr.com/2023/03/04/cloud-kerberos-trust-part-1/</a></p>
+</blockquote>
+<h2 id="domain-controller-connectivity">Domain Controller Connectivity</h2>
+<p>For single sign-on via Kerberos against an Active Directory, in addition to the connection to the resource, access to at least one of the domain controllers is also required. To select a suitable DC, the DC Locator Process is used, in which a prioritized list of domain controllers is first queried via DNS (1), then the IP address of the preferred DC is queried (2) and then first a so-called LDAP ping and then a NetLogon query (3) is performed to check which domain controller is the closest.</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/DCLocator.png" alt="DCLocator">
+
+</p>
+<p>This results in the following requirements for SSO to work:</p>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Protocol</strong></th>
+          <th><strong>Port</strong></th>
+          <th>L4-Protocol</th>
+          <th>Target</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>DNS</td>
+          <td>53</td>
+          <td>UDP</td>
+          <td>DCs at the site of the connector</td>
+          <td>Optional: is usually done by the Built-In Resolver of the Quick Access App.</td>
+      </tr>
+      <tr>
+          <td>LDAP</td>
+          <td>389</td>
+          <td>TCP+UDP</td>
+          <td>DCs at the site of the connector</td>
+          <td>The LDAP ping takes place via UDP. LDAP itself uses TCP</td>
+      </tr>
+      <tr>
+          <td>Kerberos</td>
+          <td>88</td>
+          <td>TCP</td>
+          <td>DCs at the site of the connector</td>
+          <td>/</td>
+      </tr>
+  </tbody>
+</table>
+<p><em>In addition, it must be ensured in the NRPT of the client that the subdomain _msdcs of the AD domain is resolved internally in addition to the DNS entries of the resources.</em></p>
+<p>Here is an example in which the DC(s) are made available as a separate app segment via Entra Private Access:</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/DCPublish.png" alt="DCPublish">
+
+</p>
+<p>The configuration in the portal is really easy. Just create 2 new enterprise applications, give them proper names and select your connector group. For the application segments ensure that there is no overlapping in the IP ranges and configure the needed ports.</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/NewApp.png" alt="NewApp">
+
+</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/DCAppSegment.png" alt="App Segment for a Domain Controller">
+
+</p>
+<p>App Segment for a Domain Controller</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/WebAppSegment.png" alt="App Segment for a Member/Web Server">
+
+</p>
+<p>App Segment for a Member/Web Server</p>
+<h2 id="extending-the-scenario-with-the-kdc-proxy">Extending the scenario with the KDC Proxy</h2>
+<p>Instead of direct communication with a DC, the entire configuration can also run via a proxy. This is already available on every Windows server and only needs to be configured and activated.</p>
+<h3 id="how-it-works">How it works</h3>
+<p>The KDC supports all common Kerberos scenarios, such as initial registration and issuance of a TGT (a), renewal of a TGT (b) or issuance of a TGS (c)</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/KDCProxy.png" alt="KDCProxy">
+
+</p>
+<ol>
+<li>To decide whether a KDC proxy is used, the client checks whether a proxy configuration is available.</li>
+<li>Then the client establishes a connection to the proxy via HTTPs (if it trusts the certificate) and
+<ol>
+<li>logs on there to obtain a TGT</li>
+<li>renews its TGT</li>
+<li>requests a TGS</li>
+</ol>
+</li>
+<li>The proxy determines the best domain controller if needed and establishes a connection to it via Kerberos</li>
+<li>The domain controller
+<ol>
+<li>checks the credentials / certificate and issues a TGT</li>
+<li>renews valid TGTs</li>
+<li>looks up the SPN and issues a TGS</li>
+</ol>
+</li>
+<li>The respective ticket is transmitted to the KDC proxy</li>
+<li>and transmitted to the client in the HTTPs session.</li>
+</ol>
+<blockquote>
+<p>💡 At this point I would like to refer once again to Fabian&rsquo;s blog (see above), which also describes the configuration parameter DisallowUnprotectedPasswordAuth of the KDC proxy, which makes it possible to switch off the more insecure variant (a).</p>
+</blockquote>
+<h3 id="combination-with-cloud-kerberos-trust">Combination with Cloud Kerberos Trust</h3>
+<p>In the schematic representation of the functionality above, I have also described the scenario for renewing the TGT (b). This scenario is used - as described above - by Cloud Kerberos Trust to be able to use SSO to AD after Windows Hello login on the client.</p>
+<p>The entire process is identical to the above, with the addition that the TGT issued by Entra ID is sent to the KDC proxy (4), which then establishes the connection to a suitable DC (5) and transmits the renewed TGT to the client (6).</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/Cloud-Kerberos-Trust-KDC.png" alt="Cloud-Kerberos-Trust-KDC">
+
+</p>
+<blockquote>
+<p>💡 In addition to the improved user experience, we also have the opportunity to massively increase security by making use of the DisallowUnprotectedPasswordAuth configuration parameter to restrict strong login methods!</p>
+</blockquote>
+<h3 id="usage-in-combination-with-private-access">Usage in combination with Private Access</h3>
+<p>The systems on which the Entra Private Network Connectors run are very suitable for providing the KDC proxies and there are two options for making the KDC proxies accessible to the clients.</p>
+<p>Publishing can take place within Entra Private Access as a separate GSA app or as an app segment in an existing GSA app. This gives us the full control options of Conditional Access and can ensure, for example, that only compliant devices can establish a connection to the KDC proxy.</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/KDCAppSegment.png" alt="KDCAppSegment">
+
+</p>
+<p>#1 KDC proxy in Entra Private Access</p>
+<p>Alternatively, a separate publication as an Entra App Proxy App is also possible. This must be done without pre-authentication, as the client component does not support this, but the disabling of password-based login described above means that there is only a very small attack surface.</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/KDCAppProxy.png" alt="KDCAppProxy">
+
+</p>
+<p>#2 KDC published via App Proxy</p>
+<h3 id="how-to-deploy">How to deploy?</h3>
+<ul>
+<li>
+<p>For the KDC proxy config follow the guidance <a href="https://cloudbrothers.info/windows-business-cloud-trust-kdc-proxy/#kdc-proxy">here</a></p>
+</li>
+<li>
+<p>For option #1: Create an App Segment with the IPs of the KDC proxies and TCP/443</p>
+</li>
+<li>
+<p>For option #2: Publish the KDC proxies (you should have two of them) via App Proxy following the guidance <a href="https://learn.microsoft.com/en-us/entra/identity/app-proxy/application-proxy-add-on-premises-application#add-an-on-premises-app-to-microsoft-entra-id">here</a> and ensure to select “Passthrough” for Pre Authentication since your Kerberos client is not able to do Pre Authentication.</p>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/AppProxyConfig.png" alt="AppProxyConfig">
+
+</p>
+</li>
+<li>
+<p>For the client config follow the guidance <a href="https://cloudbrothers.info/windows-business-cloud-trust-kdc-proxy/#client">here</a> and use the (for #2 external) URLs of the KDC proxies.
+The <a href="https://admx.help/?Category=Windows_10_2016&amp;Policy=Microsoft.Policies.Kerberos::KdcProxyServer">proxy entries are just separated by a blank character</a>, like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Value: &lt;https [proxy1.contoso.com](http://proxy1.contoso.com/) [proxy2.contoso.com](http://proxy2.contoso.com/) /&gt;
+</span></span></code></pre></div></li>
+</ul>
+<h1 id="choosing-your-variant">Choosing your variant</h1>
+<p>First of all, by combining the features discussed, a solution can be implemented that combines a passwordless SSO experience for the user with a previously impossible level of security:</p>
+<ul>
+<li>Usage of the PRT enables Device Authentication, Windows Hello and FIDO</li>
+<li>Device compliance and MFA enforcement through conditional access</li>
+<li>Continuous Access Evaluation (not yet available)</li>
+<li>Separate tunnels with their own authentication per app</li>
+<li>Restriction of access to the accessed IPs and ports per user</li>
+<li>No direct connection to a domain controller necessary</li>
+</ul>
+<p>
+  <img src="/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/SecurityFeatures.png" alt="SecurityFeatures">
+
+</p>
+<blockquote>
+<p>💡 Some of the features discussed here can also be implemented with hybrid-joined clients, but due to the various necessary connections to the Active Directory, Entra joined clients are required for the final step towards extensive separation in the sense of Zero Trust Network Access.</p>
+</blockquote>
+<p>I would like to take a closer look at the last point &ldquo;No direct connection to a domain controller necessary&rdquo; and compare the variants with and without KDC proxy from there.</p>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Topic</strong></th>
+          <th><strong>Domain Controller</strong></th>
+          <th><strong>Kerberos Proxy</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Deployment</td>
+          <td>no additional components needed</td>
+          <td>At least 2 proxy instances should be configured but are easy to enable on the Entra Network Connector</td>
+      </tr>
+      <tr>
+          <td>Attack Surface</td>
+          <td><em><strong>Connections to DCs are</strong></em> <em><strong>needed</strong></em></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>but can be restricted to Kerberos+LDAP</td>
+          <td>No direct connections to any Domain Controller, only HTTPs to the proxies</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>In addition: With the parameter DisallowUnprotectedPasswordAuth the authentication can be restricted to FIDO2, WHfB or certificate based authentication only |
+| Redundancy and Scalability | Both is Builtin in AD - you don’t need to do anything | At least 2 proxy instances should be configured, but you don’t need Loadbalancer, Sync or similar… |
+| Flexibility | Because of the usage of the DC locator process the local DC at the connector group can be used.  | It is only possible to deploy one Kerberos Proxy config per client |
+| Stability | Timeouts because of Negative DC locator caching can happen | Since no DC Locator process is used, the solution should be more stable. |</p>
+<h3 id="timeouts-because-of-negative-dc-locator-caching">Timeouts because of Negative DC locator caching</h3>
+<p>A common problem with VPN and also ZTNA solutions are timeouts because of Negative DC locator caching - described in combination with Entra Private Access <a href="https://mortenknudsen.net/?p=2965">in this blog by Morten Knudsen</a>.
+In summary, it can happen that Windows does not use Kerberos for a period of 10 minutes (by default) if the DC locator process has failed. To mitigate the problem, the time period for negative caching can be reduced.</p>
+<h2 id="summary">Summary</h2>
+<p>The SSO capabilities of and with Global Secure Access really impressed me and the agent will probably be invisible to most users. Entra Private Access fits really well into the existing architecture in many environments with Windows Hello and Cloud Kerberos Trust and allows a high level of usability and security.</p>
+<h2 id="attribution-and-references">Attribution and References</h2>
+<ul>
+<li><a href="https://cloudbrothers.info/windows-business-cloud-trust-kdc-proxy/#disallowunprotectedpasswordauth">Fabian Bader: Windows Hello for Business Cloud Trust and KDC proxy</a></li>
+<li><a href="https://msendpointmgr.com/2023/03/04/cloud-kerberos-trust-part-1/">Ben Whitmore + Michael Mardahl: Simplify Windows Hello for Business SSO with Cloud Kerberos Trust – Part 1</a></li>
+<li><a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/how-domain-controllers-are-located">Microsoft Learn: How domain controllers are located in Windows</a></li>
+<li><a href="https://learn.microsoft.com/en-us/entra/global-secure-access/concept-connectors">Microsoft Learn: Understand the Microsoft Entra private network connector</a></li>
+<li><a href="https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-configure-kerberos-sso">Microsoft Learn: Use Kerberos for single sign-on (SSO) to your resources with Microsoft Entra Private Access</a></li>
+</ul>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2024/09/07/Deep-Dive-DNS-in-Entra-Private-Access/" data-toggle="tooltip" data-placement="top" title="Deep Dive DNS in Entra Private Access">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+                
+
+                
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/entra" title="entra">
+                            entra
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/entra-private-access" title="entra private access">
+                            entra private access
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/global-secure-access" title="global secure access">
+                            global secure access
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://cloudbrothers.info/">Fabian</a></li>
+                        
+                        <li><a target="_blank" href="https://www.cloud-architekt.net/">Thomas</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:blog@brumm.cc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    <li>
+                        <a href="https://twitter.com/cbrhh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/crmhh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/christopherbrumm">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://infosec.exchange/@cbrhh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-mastodon fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Chris Brumm&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    <a href="https://chris-brumm.com/privacy">Privacy policy</a> - <a href="https://chris-brumm.com/disclosure/">Legal Disclosure</a><br>
+                    Copyright &copy; Chris Brumm&#39;s Blog 2025
+                    
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
