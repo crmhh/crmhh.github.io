@@ -86,6 +86,7 @@ home = ["HTML", "RSS", "Algolia"]
   #keybase       = "full profile url in keybase"
   #xing          = "https://www.xing.com/profile/yourxingid"
   #git           = "full profile url for git user"
+  sessionize     = "https://sessionize.com/ChrisBrumm/"
   
   [[params.friend_link]]
   title = "Fabian"
@@ -94,6 +95,9 @@ home = ["HTML", "RSS", "Algolia"]
   title = "Thomas"
   href =  "https://www.cloud-architekt.net/"
 
+  [[params.bookmark_link]]
+  title =  "Chris on Sessionize"
+  href =  "https://sessionize.com/ChrisBrumm/"
 
   [[params.bookmark_link]]
   title =  "Microsoft Entra ID - Attack and Defense Playbook"
@@ -103,6 +107,17 @@ home = ["HTML", "RSS", "Algolia"]
   title =  "My other (old) blog on medium.com"
   href =  "https://chris-brumm.medium.com/"
  
+  [[params.publications.items]]
+  title = "Certified Information System Security Professional"
+  image = "/img/certified-information-systems-security-professional-cissp_badgespace.png"
+  href = "https://www.credly.com/badges/4c9130f7-8048-49b0-8fb1-484fe2b3acab/public_url"
+
+  [[params.publications.items]]
+  title = "Microsoft Security MVP"
+  #image = "/img/MVP_Badge_Avatar_Preferred_Blue3005_RGB.png"
+  image = "/img/MVP_Badge_Avatar_badgespace.png"
+  href = "https://mvp.microsoft.com/en-US/MVP/profile/cad9c18c-40fe-475d-b9d9-dbec9bce58c3"
+
   
   [[params.addtional_menus]]
   title =  "ARCHIVE"
