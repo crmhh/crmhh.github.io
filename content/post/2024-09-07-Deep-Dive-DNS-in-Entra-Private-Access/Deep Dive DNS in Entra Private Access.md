@@ -20,6 +20,7 @@ Here is an overview of the parts (planned so far):
 2. [Global Secure Access in Conditional Access](https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/)
 3. [Deep Dive DNS in Entra Private Access](https://chris-brumm.com/2024/09/07/Deep-Dive-DNS-in-Entra-Private-Access/)
 4. [Deep Dive SSO in Entra Private Access](https://chris-brumm.com/2024/09/14/Deep-Dive-SSO-in-Entra-Private-Access/) 
+5. [Entra Private Access and the future of the Entra App Proxy](https://chris-brumm.com/2025/04/06/Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/)
 
 With the extension of Entra Private Access, which introduces both UDP and DNS support, the vast majority of scenarios for which VPN was used in the past can be covered.
 
