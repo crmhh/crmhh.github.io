@@ -128,7 +128,7 @@ Currently, Entra Private Access does not support B2B accounts. So if I want to p
 
 Especially [in B2B scenarios](https://learn.microsoft.com/en-us/entra/external-id/hybrid-cloud-to-on-premises), I have seen (and built) environments in the past that used a combination of App Proxy, Kerberos Constrained Delegation and a script to sync B2B accounts into the OnPrem AD (https://github.com/Azure-Samples/B2B-to-AD-Sync) and thus achieved a high level of security and usability.
 
-![B2B-2-AD](/post/2025/04/06/Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/B2B-2-AD.png)
+![B2B-2-AD](/post/2025-04-06-Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/B2B-2-AD.png)
 
 >🚧In my opinion, access from unmanaged environments should be avoided as far as possible. So if you want to let guests access your environment (whether on-prem or in the cloud), take a look at one of my favorite features in Entra ID: the [cross-tenant access settings](https://learn.microsoft.com/en-us/entra/external-id/cross-tenant-access-settings-b2b-collaboration), which can be used to enforce device compliance for B2B access, for example.
 
