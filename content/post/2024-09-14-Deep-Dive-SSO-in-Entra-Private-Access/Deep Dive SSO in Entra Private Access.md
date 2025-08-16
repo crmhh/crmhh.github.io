@@ -166,8 +166,7 @@ I would like to take a closer look at the last point "No direct connection to a 
 | **Topic** | **Domain Controller** | **Kerberos Proxy** |
 | --- | --- | --- |
 | Deployment | no additional components needed | At least 2 proxy instances should be configured but are easy to enable on the Entra Network Connector |
-| Attack Surface | ***Connections to DCs are*** ***needed***
-but can be restricted to Kerberos+LDAP | No direct connections to any Domain Controller, only HTTPs to the proxies
+| Attack Surface | Connections to DCs are needed but can be restricted to Kerberos+LDAP | No direct connections to any Domain Controller, only HTTPs to the proxies
 
 In addition: With the parameter DisallowUnprotectedPasswordAuth the authentication can be restricted to FIDO2, WHfB or certificate based authentication only |
 | Redundancy and Scalability | Both is Builtin in AD - you don’t need to do anything | At least 2 proxy instances should be configured, but you don’t need Loadbalancer, Sync or similar… |
