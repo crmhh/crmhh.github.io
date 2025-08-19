@@ -4,7 +4,7 @@ title:      "A first look at Microsoft Entra Private Access for Active Directory
 subtitle:   "This blog post is about the new Private Access Sensor for Domain Controller and the option to restrict Kerberos SSO to clients using Entra Private Access"
 date:       2025-08-19
 author:     "Chris Brumm"
-URL:        "/2025/08/19/Deep-Dive-SSO-in-Entra-Private-Access/"
+URL:        "/2025/08/19/A-first-look-at-EPA4DC/"
 tags:
     - Entra
     - Global Secure Access
