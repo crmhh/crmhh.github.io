@@ -117,9 +117,9 @@ In my example, I use quite a few Entra functions. I know that not everyone needs
 ### User Experience (Video)
 
 In the first video the guest is requesting an Access Package to gain access to resource and in the second video we see the group activation with PIM which is needed for accessing:
-{{< video "https://github.com/crmhh/crmhh.github.io/raw/refs/heads/main/content/post/2025-12-21-Using%20Global%20Secure%20Access%20in%20Cross-Tenant%20scenarios/videos/GSA-B2B-AP.mp4" >}}
+{{< video "https://github.com/crmhh/crmhh.github.io/raw/refs/heads/main/content/post/2025-12-21-Cross-Tenant-Global-Secure-Access/videos/GSA-B2B-AP.mp4" >}}
 
-{{< video "https://github.com/crmhh/crmhh.github.io/raw/refs/heads/main/content/post/2025-12-21-Using%20Global%20Secure%20Access%20in%20Cross-Tenant%20scenarios/videos/GSA-B2B-PIM.mp4" >}}
+{{< video "https://github.com/crmhh/crmhh.github.io/raw/refs/heads/main/content/post/2025-12-21-Cross-Tenant-Global-Secure-Access/videos/GSA-B2B-PIM.mp4" >}}
 
 
 ## Limitations
