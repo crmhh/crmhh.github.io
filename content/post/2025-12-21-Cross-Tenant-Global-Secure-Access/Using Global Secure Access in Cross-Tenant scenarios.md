@@ -119,9 +119,6 @@ In my example, I use quite a few Entra functions. I know that not everyone needs
 - In ID Governance, a new catalog (EPA Guest Access) is created in which a new access package is then created for each Private Access Enterprise App. This package contains the groups for the app and for the forwarding profile, is limited to 6 months (with extension), and requires approval.
 - Conditional access enforces MFA and device compliance for access.
 
-| ![Video 1: Getting the Access Package](/post/2025-12-25-Cross-Tenant-Global-Secure-Access/videos/GSA-B2B-AP.mp4) |
-|:--:|
-| *Video 1: Getting the Access Package* |
 
 ## Limitations
 
