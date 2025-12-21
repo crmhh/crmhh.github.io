@@ -2,9 +2,9 @@
 layout:     post 
 title:      "Using Global Secure Access in Cross-Tenant scenarios"
 subtitle:   "This blog post is about the B2B capabilities of Global Secure Access that allows to access other tenants"
-date:       2025-12-25
+date:       2025-12-21
 author:     "Chris Brumm"
-URL:        "/2025/12/25/Cross-Tenant-Global-Secure-Access/"
+URL:        "/2025/12/21/Cross-Tenant-Global-Secure-Access/"
 tags:
     - Entra
     - Global Secure Access
@@ -25,30 +25,25 @@ B2B support for GSA now offers the option of combining other Entra features such
 
 Other complex scenarios involving multiple tenants can now also be resolved much more easily. Examples include tenants that only contain Azure resources, admin access, or access to partner companies.
 
-<aside>
-💡
-
-My personal favorite use case is accessing my lab, because—like many consultants—I run an extensive lab that contains various VMs, including an Active Directory. With B2B, I can now switch securely and easily from my production client to the lab tenant and access the environment there.
-
-</aside>
+>💡My personal favorite use case is accessing my lab, because—like many consultants—I run an extensive lab that contains various VMs, including an Active Directory. With B2B, I can now switch securely and easily from my production client to the lab tenant and access the environment there.
 
 ## Overview and User Experience
 
 Depending on the configuration, a Global Secure Access user is connected to the Microsoft Traffic, Internet Traffic, and Private Traffic channels in their home tenant. 
 
-| ![Picture 1: Global Secure Access Overview](/post//2025-12-25-Cross-Tenant-Global-Secure-Access/images/GSA-Overview.png) |
+| ![Picture 1: Global Secure Access Overview](/post//2025-12-21-Cross-Tenant-Global-Secure-Access/images/GSA-Overview.png) |
 |:--:|
 | *Picture 1: Global Secure Access Overview* |
 
 After successfully setting up B2B access, the user can then switch tenants in their client:
 
-| ![Picture 2: Global Secure Access Tenant Switch](/post/2025-12-25-Cross-Tenant-Global-Secure-Access/images/GSA-Tenant-Switch.gif) |
+| ![Picture 2: Global Secure Access Tenant Switch](/post/2025-12-21-Cross-Tenant-Global-Secure-Access/images/GSA-Tenant-Switch.gif) |
 |:--:|
 | *Picture 2: Global Secure Access Tenant Switch* |
 
 This switch then connects the client to the channel for private traffic in the remote resource tenant and disconnects the other two channels. Cross-tenant access policies enable a very high level of security and usability to be achieved.
 
-| ![Picture 3: Global Secure Access B2B Overview](/post/2025-12-25-Cross-Tenant-Global-Secure-Access/images/GSA-B2B-Overview.png) |
+| ![Picture 3: Global Secure Access B2B Overview](/post/2025-12-21-Cross-Tenant-Global-Secure-Access/images/GSA-B2B-Overview.png) |
 |:--:|
 | *Picture 3: Global Secure Access B2B Overview* |
 
@@ -59,7 +54,7 @@ For this blog, I have decided to first provide a rough overview of the necessary
 
 A few configurations are necessary to use this feature. Here is an overview of the steps in the order I recommend:
 
-| ![Picture 4: B2B Configuration Overview](/post//2025-12-25-Cross-Tenant-Global-Secure-Access/images/Config-Overview.png) |
+| ![Picture 4: B2B Configuration Overview](/post//2025-12-21-Cross-Tenant-Global-Secure-Access/images/Config-Overview.png) |
 |:--:|
 | *Picture 4: B2B Configuration Overview* |
 
@@ -109,7 +104,7 @@ In my example, I use quite a few Entra functions. I know that not everyone needs
 
 > In this scenario, a service provider is to be given access to several application servers, as it provides support for maintenance and troubleshooting. Access is sporadic, and the service provider has a relatively large group of people who may need access, as troubleshooting can also take place outside of typical working hours. A high level of security and control is to be enforced for access.
 
-| ![Picture 5: GSA B2B Example](/post/2025-12-25-Cross-Tenant-Global-Secure-Access/images/Example.png) |
+| ![Picture 5: GSA B2B Example](/post/2025-12-21-Cross-Tenant-Global-Secure-Access/images/Example.png) |
 |:--:|
 | *Picture 5: GSA B2B Example* |
 
@@ -118,6 +113,13 @@ In my example, I use quite a few Entra functions. I know that not everyone needs
 - In addition, a new group (sec-epa-guests-appX) is created for each Private Access Enterprise App and enabled for PIM. Activation of the group is limited to 8 hours and requires approval and authentication via passkey.
 - In ID Governance, a new catalog (EPA Guest Access) is created in which a new access package is then created for each Private Access Enterprise App. This package contains the groups for the app and for the forwarding profile, is limited to 6 months (with extension), and requires approval.
 - Conditional access enforces MFA and device compliance for access.
+
+### User Experience (Video)
+
+In the first video the guest is requesting an Access Package to gain access to resource and in the second video we see the group activation with PIM which is needed for accessing:
+{{< video "https://github.com/crmhh/crmhh.github.io/raw/refs/heads/main/content/post/2025-12-21-Using%20Global%20Secure%20Access%20in%20Cross-Tenant%20scenarios/videos/GSA-B2B-AP.mp4" >}}
+
+{{< video "https://github.com/crmhh/crmhh.github.io/raw/refs/heads/main/content/post/2025-12-21-Using%20Global%20Secure%20Access%20in%20Cross-Tenant%20scenarios/videos/GSA-B2B-PIM.mp4" >}}
 
 
 ## Limitations
@@ -129,4 +131,4 @@ In my example, I use quite a few Entra functions. I know that not everyone needs
 
 ## **Attribution and References**
 
-https://learn.microsoft.com/entra/global-secure-access/concept-b2b-guest-access?WT.mc_id=MVP_436972
+[Overview of B2B guest access with Global Secure Access (preview)](https://learn.microsoft.com/entra/global-secure-access/concept-b2b-guest-access?WT.mc_id=MVP_436972)
