@@ -36,7 +36,7 @@ An integral part of Private is the Quick Access app, with which Microsoft provid
 
 When it comes to DNS, however, the Quick Access app gets an additional role, as DNS suffixes can only be configured there. Name resolution for the configured domains is then done by the client via the internal DNS servers. 
 
-![quick-access-config](/post/2024-09-07-Deep-Dive-DNS-in-Entra-Private-Access/images/quick-access-config.png)
+![quick-access-config](/post/2024/Deep-Dive-DNS-in-Entra-Private-Access/images/quick-access-config.png)
 
 >💡 It is important to note that it is currently not possible to configure exclusions, the name resolution is done exclusively via the Connector Group configured on the Quick Access App and there is only one Quick Access App in a tenant.
 
@@ -44,7 +44,7 @@ On the (Windows) client, this then generates an entry in the Name Resolution Pol
 
 The client itself does not need a way to reach the DNS server - so the DNS protocol (UDP/53) does not have to be stored in the Quick Access app.
 
-![overview-dns-quick-access](/post/2024-09-07-Deep-Dive-DNS-in-Entra-Private-Access/images/overview-dns-quick-access.png)
+![overview-dns-quick-access](/post/2024/Deep-Dive-DNS-in-Entra-Private-Access/images/overview-dns-quick-access.png)
 
 >💡 In contrast to a VPN with IP address pools for the clients - as with any DNS forwarder - it is not clear from the DNS server's point of view where the DNS request originally comes from.
 
@@ -64,7 +64,7 @@ Here is an example of how to read out the current rule set:
 Get-DnsClientNrptRule | select Name, Namespace, NameServers, Comment | fl
 ```
 
-![read-nrpt](/post/2024-09-07-Deep-Dive-DNS-in-Entra-Private-Access/images/read-nrpt.png)
+![read-nrpt](/post/2024/Deep-Dive-DNS-in-Entra-Private-Access/images/read-nrpt.png)
 
 >💡 The existing CMDlets contain many parameters that were relevant to Direct Access. For Entra Private Access, we technically only need the Namespace and Nameserver parameters.
 
@@ -98,14 +98,14 @@ When handling split DNS a fundamental decision has to be made and I want to brie
 
 *Should all requests for the domain in question be sent to the private DNS server and exceptions defined if necessary, or should only the requests for the necessary resources be included?*   
 
-![dns-choice](/post/2024-09-07-Deep-Dive-DNS-in-Entra-Private-Access/images//dns-choice.png)
+![dns-choice](/post/2024/Deep-Dive-DNS-in-Entra-Private-Access/images//dns-choice.png)
 
 In order to follow an include approach, in which only the required FQDNs are sent to the private DNS server, I think two conditions must be met:
 
 - There is no need to queries against the domain itself, e.g. to determine domain controllers. → This is only the case if I have Entra ID Joined Devices and do not use SSO or use a KDC proxy.
 - The amount of resources accessed and thus resolved is manageable.
 
-![split-dns-flow](/post/2024-09-07-Deep-Dive-DNS-in-Entra-Private-Access/images/split-dns-flow.png)
+![split-dns-flow](/post/2024/Deep-Dive-DNS-in-Entra-Private-Access/images/split-dns-flow.png)
 
 >💡 **Why don't we use the internal DNS servers exclusively for the entire DNS resolution?** 
 This solution was popular when VPN was still operating in "full tunnel" mode and all traffic went through the data center. But I haven't seen a VPN for a long time that doesn't run in "Split Tunnel" mode, where the connections are only routed into the tunnel when needed. 
@@ -149,11 +149,11 @@ DNS policies are a rather unknown feature of Active Directory, which allows the 
 
 Depending on the requested name, the following logic then results for the answers:
 
-![nrpt-lookup-flow](/post/2024-09-07-Deep-Dive-DNS-in-Entra-Private-Access/images/nrpt-lookup-flow.png)
+![nrpt-lookup-flow](/post/2024/Deep-Dive-DNS-in-Entra-Private-Access/images/nrpt-lookup-flow.png)
 
 Here is a practical example with an ADFS server (from time to time I see one of them and offer to help with the migration to PHS) where the scenario can be shown wonderfully. While the internal client accesses the ADFS server via the private IP, the client connects to the ADFS proxy via the public IP on the Internet. 
 
-![overview-split-dns](/post/2024-09-07-Deep-Dive-DNS-in-Entra-Private-Access/images/overview-split-dns.png)
+![overview-split-dns](/post/2024/Deep-Dive-DNS-in-Entra-Private-Access/images/overview-split-dns.png)
 
 Unfortunately, there is no graphical configuration option for DNS policies and the configuration is a bit cumbersome in my opinion, but I wrote a [small script](https://github.com/crmhh/GSAHelper/blob/2944969dd9d99f2ac3d8635390bc3715addb1a53/scripts/new-EPASplitDNSZone.ps1) that does the above necessary things for our use case.
 
@@ -211,7 +211,7 @@ The only problem at the moment is the limitation that only the one Quick Access 
 
 A possible solution to this problem is to include DNS servers in the app segment for all environments (which are not accessible via the Quick Access app) and to set additional entries in the NRPT.
 
-![overview-disconnected](/post/2024-09-07-Deep-Dive-DNS-in-Entra-Private-Access/images/overview-disconnected.png)
+![overview-disconnected](/post/2024/Deep-Dive-DNS-in-Entra-Private-Access/images/overview-disconnected.png)
 
 >💡 By the way, this strategy is also great for accessing private endpoints in Azure.
 
@@ -230,7 +230,7 @@ Add-DnsClientNrptRule @Rule
 
 If a network connection from the DNS servers used by the Connector Group on the Quick Access App to the other DNS servers is possible, the problem can also be easily solved with conditional forwarders or possibly stub zones ([here is a comparison](https://www.linkedin.com/advice/1/what-differences-similarities-between-stub-zones-conditional)).   
 
-![conditional-forwarder](/post/2024-09-07-Deep-Dive-DNS-in-Entra-Private-Access/images/conditional-forwarder.png)
+![conditional-forwarder](/post/2024/Deep-Dive-DNS-in-Entra-Private-Access/images/conditional-forwarder.png)
 
 ### Comparison of both solutions
 

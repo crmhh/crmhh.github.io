@@ -5,7 +5,7 @@ subtitle:   "Global Secure Access is a comprehensive solution for secure network
 date:       2024-07-30
 author:     "Chris Brumm"
 URL:        "/2024/07/30/Overview-to-Global-Secure-Access/"
-#image:      "/post/2024-07-30-Overview-to-Global-Secure-Access/images/GSA-Overview.png"
+#image:      "/post/2024/Overview-to-Global-Secure-Access/images/GSA-Overview.png"
 tags:
     - Entra
     - Global Secure Access
@@ -31,7 +31,7 @@ In addition, broad platform support and good integration with both the identity 
 
 ***Global Secure Access has all these features and I would like to give you an overview of the various functions in this blog.***
 
-![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/GSA-Overview.png)
+![Untitled](/post/2024/Overview-to-Global-Secure-Access/images/GSA-Overview.png)
 
 >💡 Of course, Microsoft is keeping Microsoft Defender for Cloud Apps (MDA) as a CASB and is not building this function into Global Secure Access again. An integration between MDA and GSA has been announced but is not yet concrete at this time.
 
@@ -50,7 +50,7 @@ The different services are activated via traffic forwarding profiles. In additio
 Microsoft 365 access profile → Private access profile → Internet access profile
    
 
-![[https://learn.microsoft.com/en-us/entra/architecture/media/sse-deployment-guide-intro/traffic-forwarding-profile-enabled-expanded.png#lightbox](https://learn.microsoft.com/en-us/entra/architecture/media/sse-deployment-guide-intro/traffic-forwarding-profile-enabled-expanded.png#lightbox)](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Traffic-Forwarding.png)
+![[https://learn.microsoft.com/en-us/entra/architecture/media/sse-deployment-guide-intro/traffic-forwarding-profile-enabled-expanded.png#lightbox](https://learn.microsoft.com/en-us/entra/architecture/media/sse-deployment-guide-intro/traffic-forwarding-profile-enabled-expanded.png#lightbox)](/post/2024/Overview-to-Global-Secure-Access/images/Traffic-Forwarding.png)
 
 [https://learn.microsoft.com/en-us/entra/architecture/media/sse-deployment-guide-intro/traffic-forwarding-profile-enabled-expanded.png#lightbox](https://learn.microsoft.com/en-us/entra/architecture/media/sse-deployment-guide-intro/traffic-forwarding-profile-enabled-expanded.png#lightbox)
 
@@ -58,7 +58,7 @@ Which traffic is acquired for the Microsoft 365 profile is controlled via a (con
 
 After activating the Internet Access Traffic Forwarding Profile for a user, all HTTP/HTTPs packets are routed through Global Secure Access. Microsoft maintains a default bypass list with private IP ranges and some Microsoft FQDNs and it is possible to create your own entries. 
 
-![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/EIA-policies.png)
+![Untitled](/post/2024/Overview-to-Global-Secure-Access/images/EIA-policies.png)
 
 # Microsoft Entra Internet Access
 
@@ -85,7 +85,7 @@ In simple terms, this allows a client to be bound to a tenant as a data loss pre
 
 After setting up a policy (1), a login (3) with a user from a tenant that has not been authorized in the policy cannot be made from a managed device (2). Entra ID will block the requests while Token request at the authentication plane (4) and the M365 services will block copied external token from outside the network at the data plane (5).
 
-![Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-universal-tenant-restrictions/tenant-restrictions-v-2-universal-tenant-restrictions-flow.png](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-universal-tenant-restrictions/tenant-restrictions-v-2-universal-tenant-restrictions-flow.png)](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Tenant-Restriction.png)
+![Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-universal-tenant-restrictions/tenant-restrictions-v-2-universal-tenant-restrictions-flow.png](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-universal-tenant-restrictions/tenant-restrictions-v-2-universal-tenant-restrictions-flow.png)](/post/2024/Overview-to-Global-Secure-Access/images/Tenant-Restriction.png)
 
 Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-universal-tenant-restrictions/tenant-restrictions-v-2-universal-tenant-restrictions-flow.png](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-universal-tenant-restrictions/tenant-restrictions-v-2-universal-tenant-restrictions-flow.png)
 
@@ -129,7 +129,7 @@ In summary, this feature provides us with more detailed audit logs more quickly 
 
 Microsoft Private Access is an identity-centric, device-aware, cloud-delivered Zero Trust Network Access, which enables access to all non-public networks in data centers or IaaS/PaaS. Clients can only be connected via an agent on the user device.
 
-![Source: [https://techcommunity.microsoft.com/t5/image/serverpage/image-id/500458i7281440D06C510D1/image-size/large?v=v2&px=999](https://techcommunity.microsoft.com/t5/image/serverpage/image-id/500458i7281440D06C510D1/image-size/large?v=v2&px=999) ](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Entra-Private-Access.png)
+![Source: [https://techcommunity.microsoft.com/t5/image/serverpage/image-id/500458i7281440D06C510D1/image-size/large?v=v2&px=999](https://techcommunity.microsoft.com/t5/image/serverpage/image-id/500458i7281440D06C510D1/image-size/large?v=v2&px=999) ](/post/2024/Overview-to-Global-Secure-Access/images/Entra-Private-Access.png)
 
 Source: [https://techcommunity.microsoft.com/t5/image/serverpage/image-id/500458i7281440D06C510D1/image-size/large?v=v2&px=999](https://techcommunity.microsoft.com/t5/image/serverpage/image-id/500458i7281440D06C510D1/image-size/large?v=v2&px=999) 
 
@@ -163,7 +163,7 @@ Here is a non-exhaustive list of the differences:
 
 For Entra Private Access, Microsoft has defined a new type of Enterprise Application that contains network locations as app segments and can be used like all other Enterprise Apps for user assignment and can be used as a target in Conditional Access.
 
-![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Enterprise-Apps.png)
+![Untitled](/post/2024/Overview-to-Global-Secure-Access/images/Enterprise-Apps.png)
 
 Each tenant contains a special app called Quick Access. This is intended for a quick start (e.g. as a VPN replacement) in which all relevant networks are entered and the app segments are successively moved to dedicated enterprise apps in order to control access more granularly. An Application Discovery section has already been prepared in the portal to support this workflow and the Quick Access app is the only one allowed to overlap with other apps.
 
@@ -177,13 +177,13 @@ Not yet available, but definitely worth mentioning, is the version of Entra Priv
 
 For more information on this topic I can recommend this video: https://www.youtube.com/watch?v=_p4bzmPl7MY
 
-![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%206.png)
+![Untitled](/post/2024/Overview-to-Global-Secure-Access/images/Untitled%206.png)
 
 # Client Support
 
 Separate agents for Windows and Android are currently available for download, but you can already see in the Entra portal that agents for Mac and iOS will also be available soon.
 
-![Source: My lab Tenant](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%207.png)
+![Source: My lab Tenant](/post/2024/Overview-to-Global-Secure-Access/images/Untitled%207.png)
 
 Source: My lab Tenant
 
@@ -195,7 +195,7 @@ Here is an overview of the troubleshooting features:
 
 The client includes a detailed health status on configuration and connectivity. This allows you to easily detect connectivity or configuration problems. 
 
-![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%208.png)
+![Untitled](/post/2024/Overview-to-Global-Secure-Access/images/Untitled%208.png)
 
 >💡 If you install the client on a standard Windows client, you will immediately see some errors. The necessary steps to disable [IPv6 and secure DNS](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-install-windows-client#disable-ipv6-and-secure-dns) and [QUIC](https://learn.microsoft.com/en-us/troubleshoot/azure/entra/global-secure-access/troubleshoot-global-secure-access-client-windows-issues#:~:text=Disable%20QUIC%20in%20a%20web%20browser) can be found in the documentation.
 
@@ -205,7 +205,7 @@ The client includes a detailed health status on configuration and connectivity. 
 
 The separate configuration for every traffic/forwarding profile is full visible at the client. While this is a managed list for the Microsoft 365 and Internet profiles the Private Access rules are the summary of some builtin rules and all configured targets in the Quick Access and the Enterprise Apps.
 
-![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%209.png)
+![Untitled](/post/2024/Overview-to-Global-Secure-Access/images/Untitled%209.png)
 
 As you can see, each rule has a priority. These are processed in ascending order (to find the corresponding app) and the rules from Quick Access always come last. 
 
@@ -217,9 +217,9 @@ As you can see, each rule has a priority. These are processed in ascending order
 
 For interactive troubleshooting on the client, we can activate logging in Advanced Diagnostics for both hostname acquisition and network traffic and then filter or export them there. This makes it easy to see which packets were acquired by the GSA client and sent into the tunnel and which IP addresses (from the mysterious 6.6.x.x range) were used for this.
 
-![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%2010.png)
+![Untitled](/post/2024/Overview-to-Global-Secure-Access/images/Untitled%2010.png)
 
-![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%2011.png)
+![Untitled](/post/2024/Overview-to-Global-Secure-Access/images/Untitled%2011.png)
 
 ## Log-package collection
 
@@ -228,9 +228,9 @@ As the GSA admin is not always physically present at the client, it makes sense 
 - Via the "Collect logs" item in the context menu of the GSA client
 - In the " Advanced log collection" section of the advanced diagnostics tool
 
-![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%2012.png)
+![Untitled](/post/2024/Overview-to-Global-Secure-Access/images/Untitled%2012.png)
 
-![Untitled](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%2013.png)
+![Untitled](/post/2024/Overview-to-Global-Secure-Access/images/Untitled%2013.png)
 
 In a direct comparison, I noticed that the advanced logs contain some additional ETL and Wireshark files.
 
@@ -244,7 +244,7 @@ Nothing needs to be configured centrally, the user only needs to activate Global
 
 
 
-![Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-install-android-client/defender-global-secure-access-disabled.png](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-install-android-client/defender-global-secure-access-disabled.png)](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%2014.png)
+![Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-install-android-client/defender-global-secure-access-disabled.png](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-install-android-client/defender-global-secure-access-disabled.png)](/post/2024/Overview-to-Global-Secure-Access/images/Untitled%2014.png)
 
 Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-install-android-client/defender-global-secure-access-disabled.png](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-install-android-client/defender-global-secure-access-disabled.png)
 
@@ -252,7 +252,7 @@ Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-
 
 In addition to the client option, Global Secure Access offers the option of using a Site2Site IPSec VPN for Microsoft Entra Internet Access with your own routers (CPEs) with Remote Network Connectivity. Microsoft has an extensive list of [validated configurations with various vendors](https://learn.microsoft.com/en-us/entra/global-secure-access/reference-remote-network-configurations). Here is an example with a Virtual Network Gateway in Azure:
 
-![Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-simulate-remote-network/simulate-remote-network.png#lightbox](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-simulate-remote-network/simulate-remote-network.png#lightbox)](/post/2024-07-30-Overview-to-Global-Secure-Access/images/Untitled%2015.png)
+![Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-simulate-remote-network/simulate-remote-network.png#lightbox](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-simulate-remote-network/simulate-remote-network.png#lightbox)](/post/2024/Overview-to-Global-Secure-Access/images/Untitled%2015.png)
 
 Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-simulate-remote-network/simulate-remote-network.png#lightbox](https://learn.microsoft.com/en-us/entra/global-secure-access/media/how-to-simulate-remote-network/simulate-remote-network.png#lightbox)
 

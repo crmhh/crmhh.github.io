@@ -33,7 +33,7 @@ Since we are dealing with a compromised password in the case of a reported fraud
 - [ ]  Enable automatic blocking of users for further MFA attempts.
 - [ ]  Provide an email address of your SOC or identity operations team for notifications.
 
-![/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled.png](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled.png)
+![/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled.png](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled.png)
 
 However, this feature does have its weaknesses, which is why I am glad that Microsoft has recently made improvements.
 
@@ -53,7 +53,7 @@ The new feature "Report suspicious activity" addresses these weaknesses, along w
 - We have multiple options for generating alerts in Entra ID Protection, which can also be integrated into M365 Defender and MS Sentinel (and should be).
 - If only the new feature is used, fraud cannot be triggered during a self-service password reset.
 
-![/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%201.png](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%201.png)
+![/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%201.png](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%201.png)
 
 This means that the eager reader (who has enabled the policies for User Risk) can now stop reading and simply enable the new feature and disable the old one.
 
@@ -63,11 +63,11 @@ Entra ID Protection is a very powerful feature, and describing it in full detail
 
 First and foremost, the most important effect of the high-risk alert is that the user risk is set to high:
 
-![Risk Detection: User reported suspicious activity](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%202.png)
+![Risk Detection: User reported suspicious activity](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%202.png)
 
 Risk Detection: User reported suspicious activity
 
-![Risky User Details after a User reported suspicious activity alert](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%203.png)
+![Risky User Details after a User reported suspicious activity alert](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%203.png)
 
 Risky User Details after a User reported suspicious activity alert
 
@@ -82,7 +82,7 @@ For User Risk to have an impact on the issuance of new tokens in Entra ID, two t
 
 The Conditional Access policy to enforce a secure password change for a high-risk user may look like this:
 
-![/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%204.png](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%204.png)
+![/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%204.png](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%204.png)
 
 However, in heterogeneous environments, the impact of a high user risk status for a user depends heavily on the architecture and configuration of the environment. In short: The more modern your access management is and the better it is connected to Entra ID, the greater the impact!
 
@@ -128,7 +128,7 @@ Since the two settings of the old feature are dependent on each other, the follo
 
 And the graphical version: 
 
-![Untitled](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%205.png)
+![Untitled](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%205.png)
 
 # Detection
 
@@ -147,7 +147,7 @@ If these detections are not directly mitigated, they will increase the current u
 
 Identity Protection has a built-in notification feature that is automatically activated for some roles but can also have other email addresses from ticketing, monitoring, or SIEM systems added.
 
-![/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%206.png](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%206.png)
+![/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%206.png](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%206.png)
 
 ### Integration with M365D and Sentinel
 
@@ -163,9 +163,9 @@ It makes sense to integrate the alerts from Entra ID Protection into M365D and M
 
 In M365D, you can choose how many alerts from Identity Protection should be integrated. The default (and sensible value in most production environments) is *High-impact alerts only*.
 
-![/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%207.png](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%207.png)
+![/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%207.png](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%207.png)
 
-![/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%208.png](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%208.png)
+![/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%208.png](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%208.png)
 
 For this use case, I would like to point out that in the default configuration, automatic alert creation in M365D unfortunately does not occur because the list of alerts is not based on the risk level but curated by Microsoft: **High Impact ≠ High Severity**
 
@@ -306,7 +306,7 @@ let SSPRFraudEvent = FraudEvent
 union SignInFraudEvent, SSPRFraudEvent
 ```
 
-![Untitled](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%209.png)
+![Untitled](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%209.png)
 
 ## **Response**
 
@@ -335,4 +335,4 @@ In summary, I wanted to say:
 
 For a better understanding and as a future reference I’ve also created a graphical overview of the different alerting options:
 
-![Untitled](/post/2023-10-07-Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%2010.png)
+![Untitled](/post/2023/Microsoft-Entra-MFA-Fraud-Deep-Dive/images/Untitled%2010.png)

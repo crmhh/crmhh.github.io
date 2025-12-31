@@ -40,7 +40,7 @@ Cloud Kerberos Trust is not a GSA component, but it is such an important piece o
 
 During setup, Entra ID is registered as a read-only domain controller in the Active Directory and can therefore also issue (3) a rudimentary TGT for the user after authentication (1) based on the user's domain (2) with the PRT, which can then be exchanged for a new TGT with all SIDs at a domain controller (or a KDC proxy) (4+5). 
 
-![Cloud-Kerberos-Trust](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/Cloud-Kerberos-Trust.png)
+![Cloud-Kerberos-Trust](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/Cloud-Kerberos-Trust.png)
 
 This procedure also enables SSO against AD with Entra Joined Devices without logging in with a password - i.e. with Windows Hello for Business or FIDO2. 
 
@@ -51,7 +51,7 @@ Good comparison of both variants: [https://msendpointmgr.com/2023/03/04/cloud-ke
 
 For single sign-on via Kerberos against an Active Directory, in addition to the connection to the resource, access to at least one of the domain controllers is also required. To select a suitable DC, the DC Locator Process is used, in which a prioritized list of domain controllers is first queried via DNS (1), then the IP address of the preferred DC is queried (2) and then first a so-called LDAP ping and then a NetLogon query (3) is performed to check which domain controller is the closest.
 
-![DCLocator](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/DCLocator.png)
+![DCLocator](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/DCLocator.png)
 
 This results in the following requirements for SSO to work:
 
@@ -65,17 +65,17 @@ This results in the following requirements for SSO to work:
 
 Here is an example in which the DC(s) are made available as a separate app segment via Entra Private Access: 
 
-![DCPublish](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/DCPublish.png)
+![DCPublish](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/DCPublish.png)
 
 The configuration in the portal is really easy. Just create 2 new enterprise applications, give them proper names and select your connector group. For the application segments ensure that there is no overlapping in the IP ranges and configure the needed ports. 
 
-![NewApp](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/NewApp.png)
+![NewApp](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/NewApp.png)
 
-![App Segment for a Domain Controller](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/DCAppSegment.png)
+![App Segment for a Domain Controller](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/DCAppSegment.png)
 
 App Segment for a Domain Controller
 
-![App Segment for a Member/Web Server](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/WebAppSegment.png)
+![App Segment for a Member/Web Server](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/WebAppSegment.png)
 
 App Segment for a Member/Web Server
 
@@ -87,7 +87,7 @@ Instead of direct communication with a DC, the entire configuration can also run
 
 The KDC supports all common Kerberos scenarios, such as initial registration and issuance of a TGT (a), renewal of a TGT (b) or issuance of a TGS (c)
 
-![KDCProxy](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/KDCProxy.png)
+![KDCProxy](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/KDCProxy.png)
 
 1. To decide whether a KDC proxy is used, the client checks whether a proxy configuration is available.
 2. Then the client establishes a connection to the proxy via HTTPs (if it trusts the certificate) and
@@ -110,7 +110,7 @@ In the schematic representation of the functionality above, I have also describe
 
 The entire process is identical to the above, with the addition that the TGT issued by Entra ID is sent to the KDC proxy (4), which then establishes the connection to a suitable DC (5) and transmits the renewed TGT to the client (6). 
 
-![Cloud-Kerberos-Trust-KDC](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/Cloud-Kerberos-Trust-KDC.png)
+![Cloud-Kerberos-Trust-KDC](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/Cloud-Kerberos-Trust-KDC.png)
 
 >💡 In addition to the improved user experience, we also have the opportunity to massively increase security by making use of the DisallowUnprotectedPasswordAuth configuration parameter to restrict strong login methods!
 
@@ -120,13 +120,13 @@ The systems on which the Entra Private Network Connectors run are very suitable 
 
 Publishing can take place within Entra Private Access as a separate GSA app or as an app segment in an existing GSA app. This gives us the full control options of Conditional Access and can ensure, for example, that only compliant devices can establish a connection to the KDC proxy.   
 
-![KDCAppSegment](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/KDCAppSegment.png)
+![KDCAppSegment](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/KDCAppSegment.png)
 
 #1 KDC proxy in Entra Private Access
 
 Alternatively, a separate publication as an Entra App Proxy App is also possible. This must be done without pre-authentication, as the client component does not support this, but the disabling of password-based login described above means that there is only a very small attack surface. 
 
-![KDCAppProxy](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/KDCAppProxy.png)
+![KDCAppProxy](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/KDCAppProxy.png)
 
 #2 KDC published via App Proxy
 
@@ -136,7 +136,7 @@ Alternatively, a separate publication as an Entra App Proxy App is also possible
 - For option #1: Create an App Segment with the IPs of the KDC proxies and TCP/443
 - For option #2: Publish the KDC proxies (you should have two of them) via App Proxy following the guidance [here](https://learn.microsoft.com/en-us/entra/identity/app-proxy/application-proxy-add-on-premises-application#add-an-on-premises-app-to-microsoft-entra-id) and ensure to select “Passthrough” for Pre Authentication since your Kerberos client is not able to do Pre Authentication.
     
-    ![AppProxyConfig](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/AppProxyConfig.png)
+    ![AppProxyConfig](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/AppProxyConfig.png)
     
 - For the client config follow the guidance [here](https://cloudbrothers.info/windows-business-cloud-trust-kdc-proxy/#client) and use the (for #2 external) URLs of the KDC proxies. 
 The [proxy entries are just separated by a blank character](https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.Kerberos::KdcProxyServer), like:
@@ -157,7 +157,7 @@ First of all, by combining the features discussed, a solution can be implemented
 - No direct connection to a domain controller necessary
 
 
-![SecurityFeatures](/post/2024-09-14-Deep-Dive-SSO-in-Entra-Private-Access/images/SecurityFeatures.png)
+![SecurityFeatures](/post/2024/Deep-Dive-SSO-in-Entra-Private-Access/images/SecurityFeatures.png)
 
 >💡 Some of the features discussed here can also be implemented with hybrid-joined clients, but due to the various necessary connections to the Active Directory, Entra joined clients are required for the final step towards extensive separation in the sense of Zero Trust Network Access.
 

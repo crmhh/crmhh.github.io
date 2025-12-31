@@ -27,7 +27,7 @@ This is where **Microsoft Entra Private Access for Active Directory domain contr
 - Which service principal name is requested?
 - From which IP address is he requesting?
 
-| ![Picture 1: Overview from Microsoft](/post/2025-08-19-A-first-look-at-EPA4DC/images/Overview-from-Microsoft.png) |
+| ![Picture 1: Overview from Microsoft](/post/2025/A-first-look-at-EPA4DC/images/Overview-from-Microsoft.png) |
 |:--:|
 | *Picture 1: Overview from Microsoft* |
 
@@ -35,13 +35,13 @@ This is where **Microsoft Entra Private Access for Active Directory domain contr
 
 Let's start with how this ideally affects the user. In the following video you can see how the user Bert tries to access a web server in the local network from his client. As the web server requires a Kerberos login, EPA4DC is used and we can see that it is only possible to retrieve a ticket (TGS) if the GSA client is switched on.
 
-| ![Picture 2: Demo](/post/2025-08-19-A-first-look-at-EPA4DC/images/EPA4DCs-new.gif) |
+| ![Picture 2: Demo](/post/2025/A-first-look-at-EPA4DC/images/EPA4DCs-new.gif) |
 |:--:|
 | *Picture 2: Demo* |
 
 For this to be possible, all domain controllers involved must be published via Entra Private Access (from now referred as EPA), the Private Access Sensor must be installed on them and the Service Principal Names (SPNs) involved must be stored in the Quick Access App:
 
-| ![Picture 3: My test environment](/post/2025-08-19-A-first-look-at-EPA4DC/images/Test-Environment.png) |
+| ![Picture 3: My test environment](/post/2025/A-first-look-at-EPA4DC/images/Test-Environment.png) |
 |:--:|
 | *Picture 3: My test environment* |
 
@@ -59,13 +59,13 @@ Overall quite simple and well documented. Don't forget to set Edge as default br
 
 SPNs can only be configured in the Quick Access app.
 
-| ![Picture 4: SPNs in the Quick Access app](/post/2025-08-19-A-first-look-at-EPA4DC/images/SPNinQuickAccess.png) |
+| ![Picture 4: SPNs in the Quick Access app](/post/2025/A-first-look-at-EPA4DC/images/SPNinQuickAccess.png) |
 |:--:|
 | *Picture 4: SPNs in the Quick Access app* |
 
 We can then also view the result in the `cloudpolicy.json` file at the sensor installation path (on my DC it is: `C:\Program Files\Private Access Sensor`) on the domain controller: 
 
-| ![Picture 5: cloudpolicy.json](/post/2025-08-19-A-first-look-at-EPA4DC/images/cloudpolicy.png) |
+| ![Picture 5: cloudpolicy.json](/post/2025/A-first-look-at-EPA4DC/images/cloudpolicy.png) |
 |:--:|
 | *Picture 5: cloudpolicy.json* |
 
@@ -73,7 +73,7 @@ We can then also view the result in the `cloudpolicy.json` file at the sensor in
 
 Right next to the `cloudpolicy.json` is the file `localpolicy.json` in which we can store the IP addresses of the Entra Network Connectors in the `SourceIpAllowList`. Since every system in this list is excluded from the the requirement to use GSA to get a Kerberos ticket you can (and should) include other systems such as servers or terminal services here.
 
-| ![Picture 6: localpolicy.json](/post/2025-08-19-A-first-look-at-EPA4DC/images/localpolicy.png) |
+| ![Picture 6: localpolicy.json](/post/2025/A-first-look-at-EPA4DC/images/localpolicy.png) |
 |:--:|
 | *Picture 6: localpolicy.json* |
 
@@ -83,7 +83,7 @@ You can get a first impression of whether the Private Access Sensor is running c
 
 It doesn't include the username (SamAccountName, UPN, ObjectID,...) and it doesn't include the requesting client (device, IP) - so it doesn't help me to prepare the enforcement...
 
-| ![Picture 7: Block events](/post/2025-08-19-A-first-look-at-EPA4DC/images/Block-Event.png) |
+| ![Picture 7: Block events](/post/2025/A-first-look-at-EPA4DC/images/Block-Event.png) |
 |:--:|
 | *Picture 7: Block events* |
 
@@ -107,7 +107,7 @@ IdentityLogonEvents
 
 In this example you can clearly see that I first have to take care of the user Waldorf before I disable the audit mode (Bert had his appearance in the demo above):
 
-| ![Picture 8: sample output](/post/2025-08-19-A-first-look-at-EPA4DC/images/Sample-Output.png) |
+| ![Picture 8: sample output](/post/2025/A-first-look-at-EPA4DC/images/Sample-Output.png) |
 |:--:|
 | *Picture 8: sample output* |
 
@@ -115,7 +115,7 @@ In this example you can clearly see that I first have to take care of the user W
 
 The agent starts in audit mode and can be switched under HKLM:\SOFTWARE\Microsoft\PrivateAccessSensor. 
 
-| ![Picture 9: RegKeys](/post/2025-08-19-A-first-look-at-EPA4DC/images/RegKeys.png) |
+| ![Picture 9: RegKeys](/post/2025/A-first-look-at-EPA4DC/images/RegKeys.png) |
 |:--:|
 | *Picture 9: RegKeys* |
 
@@ -178,17 +178,17 @@ Okay now let's talk about the elephant in the room: NTLM
 
 In the prerequisites, there is this note that disabling NTLM in the environment would make a lot of sense for EPA4DCs to deliver the expected results:
 
-| ![Picture 10: The NTLM prereq](/post/2025-08-19-A-first-look-at-EPA4DC/images/NTLM-Prereq.png) |
+| ![Picture 10: The NTLM prereq](/post/2025/A-first-look-at-EPA4DC/images/NTLM-Prereq.png) |
 |:--:|
 | *Picture 10: The NTLM prereq* |
 
 The primary reason for this is that the sensor today only supports Kerberos and it is standard in Active Directory for systems to fall back to NTLM when Kerberos is unavailable. In my demo environment, I have configured the web server to only accept Kerberos (Picture 11). As soon as I also allow NTLM, I see a password prompt (Picture 12) and can log in. 
 
-| ![Picture 11: Kerberos-only at the IIS](/post/2025-08-19-A-first-look-at-EPA4DC/images/Kerberos-Only-IIS.png) |
+| ![Picture 11: Kerberos-only at the IIS](/post/2025/A-first-look-at-EPA4DC/images/Kerberos-Only-IIS.png) |
 |:--:|
 | *Picture 11: Kerberos-only at the IIS* |
 
-| ![Picture 12: NTLM password prompt](/post/2025-08-19-A-first-look-at-EPA4DC/images/NTLM-Prompt.png) |
+| ![Picture 12: NTLM password prompt](/post/2025/A-first-look-at-EPA4DC/images/NTLM-Prompt.png) |
 |:--:|
 | *Picture 12: NTLM password prompt* |
 
@@ -196,7 +196,7 @@ There are many good reasons to switch off NTLM today and if we take a look at ho
 
 However, since disabling NTLM is no easy task - as Steve Syfuhs explains [here](https://www.youtube.com/watch?v=zlhoAYsSd4c) - we will need a solution. I am excited to see how this turns out! 
 
-| ![Picture 13: NTLM auth flow](/post/2025-08-19-A-first-look-at-EPA4DC/images/NTLM-Auth-Flow.png) |
+| ![Picture 13: NTLM auth flow](/post/2025/A-first-look-at-EPA4DC/images/NTLM-Auth-Flow.png) |
 |:--:|
 | *Picture 13: NTLM auth flow*|
 
@@ -219,7 +219,7 @@ So it's worth taking a look at whether and how the two can be combined!
 
 For the KDC proxy to work in combination with EPA4DCs, all proxies must also be included in the `SourceIpAllowList`. If the KDC proxies are running on the Entra Network Connectors of the Quick Access Connector Group, this is already the case. My extended test environment looks like this:
 
-| ![Picture 14: My test environment with KDC proxy](/post/2025-08-19-A-first-look-at-EPA4DC/images/Test-Environment-KDC.png) |
+| ![Picture 14: My test environment with KDC proxy](/post/2025/A-first-look-at-EPA4DC/images/Test-Environment-KDC.png) |
 |:--:|
 | *Picture 14: My test environment with KDC proxy* |
 

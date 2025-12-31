@@ -38,7 +38,7 @@ And since both variants have their strengths in different scenarios, here is a b
 
 The App Proxy has been available for quite some time as part of the Entra ID Premium license. It is a reverse proxy like NGinx (or Microsoft WAP, Citrix Netscaler, Kemp LoadMaster,...) with the crucial difference that it includes a cloud component in addition to the component that is installed on one or more servers.
 
-![app-proxy-architecture](/post/2025-04-06-Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/app-proxy-architecture.png)
+![app-proxy-architecture](/post/2025/Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/app-proxy-architecture.png)
 
 Source: [https://learn.microsoft.com/en-us/entra/identity/app-proxy/media/what-is-application-proxy/azure-ad-application-proxy-architecture.png](https://learn.microsoft.com/en-us/entra/identity/app-proxy/media/what-is-application-proxy/azure-ad-application-proxy-architecture.png)
 
@@ -52,7 +52,7 @@ The strong integration in Entra ID and thus also Conditional Access results in s
 
 Entra Private Access is a fully-fledged Zero Trust Network Access solution and is part of the Microsoft Security Service Edge solution Global Secure Access. As it offers a transparent connection for all TCP and UDP-based protocols, it is ideally suited to replace existing VPN solutions and achieve a significantly higher level of security.
 
-![private access architecture](/post/2025-04-06-Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/private-access-architecture.png)
+![private access architecture](/post/2025/Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/private-access-architecture.png)
 
 Source: [https://learn.microsoft.com/en-us/entra/global-secure-access/media/concept-private-access/private-access-diagram.png](https://learn.microsoft.com/en-us/entra/global-secure-access/media/concept-private-access/private-access-diagram.png)
 
@@ -128,7 +128,7 @@ Currently, Entra Private Access does not support B2B accounts. So if I want to p
 
 Especially [in B2B scenarios](https://learn.microsoft.com/en-us/entra/external-id/hybrid-cloud-to-on-premises), I have seen (and built) environments in the past that used a combination of App Proxy, Kerberos Constrained Delegation and a script to sync B2B accounts into the OnPrem AD (https://github.com/Azure-Samples/B2B-to-AD-Sync) and thus achieved a high level of security and usability.
 
-![B2B-2-AD](/post/2025-04-06-Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/B2B-2-AD.png)
+![B2B-2-AD](/post/2025/Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/B2B-2-AD.png)
 
 >🚧In my opinion, access from unmanaged environments should be avoided as far as possible. So if you want to let guests access your environment (whether on-prem or in the cloud), take a look at one of my favorite features in Entra ID: the [cross-tenant access settings](https://learn.microsoft.com/en-us/entra/external-id/cross-tenant-access-settings-b2b-collaboration), which can be used to enforce device compliance for B2B access, for example.
 
@@ -144,7 +144,7 @@ If pre-authentication is configured, there are events in the Entra sign-in logs 
 
 Entra Private Access is still working on this topic, but it is already clear that the result will be good. There are various built-in dashboards and pre-built workbooks, for example for usage profiling, the top used destinations or the status of the devices to get a quick overview.
 
-![Client-Activity-Workbook](/post/2025-04-06-Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/Client-Activity-Workbook.png)
+![Client-Activity-Workbook](/post/2025/Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/Client-Activity-Workbook.png)
 
 In addition to the sign-in logs in Entra ID, Entra Private Access offers the [NetworkAccessTraffic](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/networkaccesstraffic) table, which can be [ingested](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-view-traffic-logs) with the Entra ID logs via the Diagnostic Settings to Log Analytics / Sentinel. The log provides us with a lot of additional information that can be used for the following evaluations, for example:
 
@@ -152,7 +152,7 @@ In addition to the sign-in logs in Entra ID, Entra Private Access offers the [Ne
 - Investigation of anomalies or suspicious behavior
 - Correlation with the MDE logs of client, connector and server
 
-![NetworkAccessTraffic-Table](/post/2025-04-06-Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/NetworkAccessTraffic-Table.png)
+![NetworkAccessTraffic-Table](/post/2025/Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/NetworkAccessTraffic-Table.png)
 
 ### Performance
 
@@ -162,7 +162,7 @@ The topic of performance is also interesting. While the app proxy uses HTTPs for
 
 On the other hand - at the time of writing this blog - unfortunately only the App Proxy has the feature of being able to [select a dedicated region for a connector group](https://learn.microsoft.com/en-us/entra/identity/app-proxy/application-proxy-network-topology#optimize-connector-groups-to-use-closest-application-proxy-cloud-service). In some scenarios, this can make a big difference. However, based on this roadmap slide from Ignite 2024, it can be assumed that this will soon also be possible for Entra Private Access.
 
-![Ignite-GSA-Roadmap](/post/2025-04-06-Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/Ignite-GSA-Roadmap.png)
+![Ignite-GSA-Roadmap](/post/2025/Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/Ignite-GSA-Roadmap.png)
 
 [Ignite 2024 - **Accelerate your Zero Trust Journey: Unify Identity and Network Access**](https://ignite.microsoft.com/en-US/sessions/BRK326)
 
@@ -193,7 +193,7 @@ Global Secure Access recently got CAE support, which means that it is able to in
 | Logging / Monitoring | only Entra Sign-In logs and local logging on the connector | additional dedicated logs, prebuild dashboards and alerts |
 | Continuous Access Evaluation | no | yes |
 
-![EPA-EAP-Comparison](/post/2025-04-06-Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/EPA-EAP-Comparison.png)
+![EPA-EAP-Comparison](/post/2025/Entra-Private-Access-and-the-future-of-the-Entra-App-Proxy/images/EPA-EAP-Comparison.png)
 
 ## Better together
 

@@ -5,7 +5,7 @@ subtitle:   "The blog discusses the integration of Global Secure Access in Condi
 date:       2024-08-06
 author:     "Chris Brumm"
 URL:        "/2024/08/06/Global-Secure-Access-in-Conditional-Access/"
-#image:      "/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/conditional-access-central-policy-engine-zero-trust.png"
+#image:      "/post/2024/Global-Secure-Access-in-Conditional-Access/images/conditional-access-central-policy-engine-zero-trust.png"
 tags:
     - Entra
     - Global Secure Access
@@ -39,7 +39,7 @@ Conditional Access can now use GSA as a Compliant Network Location Condition in 
 
 On this occasion, the network-relevant conditions were also moved from the Conditions section to the first level of the policy.
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled.png)
 
 ### Protection provided by the Compliant Network Control
 
@@ -65,9 +65,9 @@ At the moment, the following controls cannot be selected when Compliant Network 
 
 In the Target Resources, it is now possible to switch from Cloud Apps to Global Secure Access and then select one or more desired traffic profiles in order to define conditions - such as a compliant device - for access.
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%201.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%201.png)
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%202.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%202.png)
 
 The selection of Global Secure Access as a target is also necessary in order to use the security profiles described below in the session controls.
 
@@ -98,7 +98,7 @@ Security profiles are used in Global Secure Access to group policies together an
 
 Only one profile can be selected per Conditional Access Policy, but as it is possible for several CA policies with security profiles to affect the session, each profile also has a priority that decides in the event of a conflict. 
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%203.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%203.png)
 
 *As the use of Security Profiles requires scoping on Global Secure Access Traffic Profiles, the incompatibilities described there also apply here.*
 
@@ -128,7 +128,7 @@ Microsoft provides us with a flexible configuration tool in which rules with FQD
 
 The profiles are attached to Conditional Access Policies as described above and thus allow an extremely flexible configuration, e.g. to allow or block websites only depending on the device or location used.
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%204.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%204.png)
 
 >💡 **Baseline Security Profile**: As remote networks also allow devices without the GSA client and without user awareness to run through the solution, Microsoft has created a solution to enforce certain rules for everyone as a baseline. It makes sense to be economical with rules here, as these also apply to all devices with a client and would otherwise have to be overwritten in other profiles.
 
@@ -154,15 +154,15 @@ In addition to controlling which pages and categories should generally be access
 
 In this example, a compliant device is required to access M365 and Internet Access:
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%205.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%205.png)
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%206.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%206.png)
 
 ## Access to Entra Private Access resources
 
 As described above, we can use Private Access to group resources - i.e. the combination of IP/IP range/FQDN, protocol and port - into app segments and include or exclude them as targets in Conditional Access Policies, thereby setting different conditions for access to different app segments.
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%207.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%207.png)
 
 Like all other enterprise apps, these apps can also be selected in several Conditional Access policies and, because they are included in All Cloud Apps, this is very likely to be the case in every environment. This fact should also ensure good basic protection - consisting of Compliant Device and MFA - with a solid rule set.
 
@@ -174,7 +174,7 @@ Like all other enterprise apps, these apps can also be selected in several Condi
 
 Instead of direct selection in Conditional Access Policies, I also think it makes a lot of sense to use Custom Security Attributes for this, as this reduces the likelihood of misconfigurations and makes it easier to implement a separation of duties in administration.
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%208.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%208.png)
 
 In the example configuration shown here, I have created a new attribute set "GlobalSecureAccess" and created the two attributes "Criticality" and "Datacenter" with predefined values and the following rules: 
 
@@ -182,9 +182,9 @@ In the example configuration shown here, I have created a new attribute set "Glo
 - To avoid a gap, the behavior for an attribute that is not set and the default value is the same.
 - For the other values, additional tightenings are added to ensure (for Critical) Phishing Resistant Credentials or (for PAW-only) restrict the access to Admin Workstations.
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%209.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%209.png)
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%2010.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%2010.png)
 
 This procedure means that Global Secure Access and Conditional Access can be maintained by different people / teams with different rights and the creation of further apps or adaptation of criticality does not require any adaptation of the CA policies.
 
@@ -198,7 +198,7 @@ Unfortunately, relatively high rights are still required at the moment, e.g. to 
 
 The procedure for the assignment is described [here](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/assign-roles-different-scopes#assign-roles-scoped-to-an-app-registration).
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%2011.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%2011.png)
 
 
 
@@ -218,7 +218,7 @@ The last few months have been characterized by the increasing prevalence of AiTM
 
 The existing defense mechanisms of phishing-resistant authentication methods (caution: Evilginx can now automatically downgrade) and device compliance are now joined by the Compliant Networks Condition.
 
-![[https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023)](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%2012.png)
+![[https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023)](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%2012.png)
 
 [https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023)
 
@@ -234,7 +234,7 @@ Even if you have probably all read the blog, I would like to briefly summarize h
 
 This is a very powerful feature but - especially in modern environments - it has a crucial weakness: We don't want to route traffic from clients to cloud services through the data center and we don't want to use IP-based conditional access policies.
 
-![[https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow)](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%2013.png)
+![[https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow)](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%2013.png)
 
 [https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation#user-condition-change-flow)
 
@@ -244,7 +244,7 @@ And this is precisely where the strength of Global Secure Access lies. A Complia
 
 To integrate systems that do not support device compliance, the Trusted Network feature can be used for Microsoft 365 services (and I hope in the future for all cloud apps) to replace Trusted Locations.
 
-![Untitled](/post/2024-08-06-Global-Secure-Access-in-Conditional-Access/images/Untitled%2014.png)
+![Untitled](/post/2024/Global-Secure-Access-in-Conditional-Access/images/Untitled%2014.png)
 
 ## Access to Entra ID integrated apps
 

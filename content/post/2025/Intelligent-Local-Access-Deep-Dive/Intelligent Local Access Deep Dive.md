@@ -22,7 +22,7 @@ Microsoft now offers a middle ground with **Intelligent Local Access (ILA)**. IL
 
 ## How **Intelligent Local Access works**
 
-| ![Picture 1: Intelligent Local Access Overview](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-overview.png) |
+| ![Picture 1: Intelligent Local Access Overview](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-overview.png) |
 |:--:|
 | *Picture 1: Intelligent Local Access Overview* |
 
@@ -33,7 +33,7 @@ In short, the flow is as follows:
 3. If this is the case, the client attempts to obtain an access token and blocks the traffic if it does not receive one.
 4. The client then checks whether the resource is local. If so, the traffic is not sent to GSA via a tunnel but runs directly.
 
-| ![Picture 2: Intelligent Local Access Decision Flow](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-decisions.png) |
+| ![Picture 2: Intelligent Local Access Decision Flow](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-decisions.png) |
 |:--:|
 | *Picture 2: Intelligent Local Access Decision Flow* |
 
@@ -47,19 +47,19 @@ The following is defined for each private network:
 
 >💡The DNS server configured in the OS, e.g. via DHCP, is not used for the determination, but rather the one stored here.
 
-| ![Picture 3: Private Network Config](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-config.png) |
+| ![Picture 3: Private Network Config](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-config.png) |
 |:--:|
 | *Picture 3: Private Network Config* |
 
 Of course, multiple private networks can be configured, which can then contain different apps.
 
-| ![Picture 4: Mulitple Private Networks](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-multiple.png) |
+| ![Picture 4: Mulitple Private Networks](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-multiple.png) |
 |:--:|
 | *Picture 4: Mulitple Private Networks* |
 
 The DNS queries can be viewed (after removing the default filter on Tunneled) on the client in Advanced Diagnostics, starting from the `GlobalSecureAccessEngineService.exe` process. In the Microsoft `Global Secure Access Client/Operational` event log, event IDs 217 and 218 show which private networks the client is currently connected to.
 
-| ![Picture 5: ILA Network Traffic](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-traffic.png) | ![Picture 6: ILA Events](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-events.png) |
+| ![Picture 5: ILA Network Traffic](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-traffic.png) | ![Picture 6: ILA Events](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-events.png) |
 |:--:|:--:|
 | *Picture 5: ILA Network Traffic* | *Picture 6: ILA Events* |
 
@@ -75,7 +75,7 @@ In my flowchart above, I described that the client checks whether:
 
 This information (and much more) is contained in the registry key `forwarding-profile` under `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Global Secure Access Client`.
 
-| ![Picture 7: Forwarding-Profile in Registry](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-registry.png) |
+| ![Picture 7: Forwarding-Profile in Registry](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-registry.png) |
 |:--:|
 | *Picture 7: Forwarding-Profile in Registry* |
 
@@ -167,7 +167,7 @@ And here is an example of an EPA app, including its Application segments (matchi
 
 Each private network has a list of apps that are directly accessed when the client successfully detects the private network. 
 
-| ![Picture 8: Private Network Structure](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-PrivateNetworks.png) |
+| ![Picture 8: Private Network Structure](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-PrivateNetworks.png) |
 |:--:|
 | *Picture 8: Private Network Structure* |
 
@@ -189,19 +189,19 @@ When I saw that I could create multiple private networks, I immediately started 
 
 The simplest scenario is to create just one private network for all locations:
 
-| ![Picture 9: Single Private Network](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-SinglePrivateNetwork.png) |
+| ![Picture 9: Single Private Network](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-SinglePrivateNetwork.png) |
 |:--:|
 | *Picture 9: Single Private Network* |
 
 In this case, it makes sense to configure multiple DNS servers:
 
-| ![Picture 10: Single Private Network with multiple DNS](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-SinglePrivateNetworkMultiDNS.png) |
+| ![Picture 10: Single Private Network with multiple DNS](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-SinglePrivateNetworkMultiDNS.png) |
 |:--:|
 | *Picture 10: Single Private Network with multiple DNS* |
 
 Alternatively, you can also set up a separate private network for each location. However, it makes sense to have a separate DNS server at each location for this purpose.
 
-| ![Picture 11: Multiple Private Networks](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-MultiPrivateNetworks.png) |
+| ![Picture 11: Multiple Private Networks](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-MultiPrivateNetworks.png) |
 |:--:|
 | *Picture 11: Multiple Private Networks* |
 
@@ -223,7 +223,7 @@ After the rollout and with the introduction of ILA, it makes sense to restrict u
 
 Based on the ILA configuration, I think it makes sense to either hide both buttons or set [RestrictNonPrivilegedUsers](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-install-windows-client#restrict-nonprivileged-users) (and hide the Disable Private Access button) to prevent Entra authentication and conditional access from being bypassed.
 
-| ![Picture 12: Client Hardening](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ClientHardening.png) |
+| ![Picture 12: Client Hardening](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ClientHardening.png) |
 |:--:|
 | *Picture 12: Client Hardening* |
 
@@ -233,7 +233,7 @@ Based on the ILA configuration, I think it makes sense to either hide both butto
 
 We can see the traffic in the Advanced Diagnostic tool (look for Action: local) and there are events in the `Microsoft-Global Secure Access Client/Operational` log:
 
-| ![Picture 13: ILA logging](/post/2025-11-19-Intelligent-Local-Access-Deep-Dive/images/ILA-logging.png) |
+| ![Picture 13: ILA logging](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-logging.png) |
 |:--:|
 | *Picture 13: ILA logging* |
 
