@@ -99,7 +99,7 @@ home = ["HTML", "RSS", "Algolia"]
   href =  "https://ericonidentity.com/"
   [[params.friend_link]]
   title = "Ugur"
-  href =  "  https://ugurkoc.de/"
+  href =  "https://ugurkoc.de/"
 
   [[params.bookmark_link]]
   title =  "Chris on Sessionize"
