@@ -94,6 +94,12 @@ home = ["HTML", "RSS", "Algolia"]
   [[params.friend_link]]
   title = "Thomas"
   href =  "https://www.cloud-architekt.net/"
+  [[params.friend_link]]
+  title = "Eric"
+  href =  "https://ericonidentity.com/"
+  [[params.friend_link]]
+  title = "Ugur"
+  href =  "  https://ugurkoc.de/"
 
   [[params.bookmark_link]]
   title =  "Chris on Sessionize"

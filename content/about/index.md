@@ -5,7 +5,7 @@ multilingual: false
 
 ## About Me
 
-👋 Hi, I’m Chris - I am a big fan of Microsoft Cloud Security products because there my two favorite topics Identity and Security work together in a unique way. I've been working in IT for quite a while and have almost 15 years of experience in IT security in various roles. At the moment I am a Cybersecurity Architect at glueckkanja AG and help our customers with my favorite topics. I am 44 years old and live with my family in Hamburg.
+👋 Hi, I’m Chris - I am a big fan of Microsoft Cloud Security products because there my two favorite topics Identity and Security work together in a unique way. I've been working in IT for quite a while and have over 15 years of experience in IT security in various roles. At the moment I am a Cybersecurity Architect at glueckkanja AG and help our customers with my favorite topics. I am 45 years old and live with my family in Hamburg.
 
 In January 2025, I was also [awarded Microsoft MVP](https://mvp.microsoft.com/en-US/MVP/profile/cad9c18c-40fe-475d-b9d9-dbec9bce58c3) in the Security category and the Identity & Access Management technology area.
 
