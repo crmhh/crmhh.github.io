@@ -126,6 +126,9 @@ home = ["HTML", "RSS", "Algolia"]
 
   
   [[params.addtional_menus]]
+  title =  "SPEAKING"
+  href =  "/speaking/"
+  [[params.addtional_menus]]
   title =  "ARCHIVE"
   href =  "/archive/"
   #[[params.addtional_menus]]
@@ -134,6 +137,7 @@ home = ["HTML", "RSS", "Algolia"]
   [[params.addtional_menus]]
   title =  "ABOUT"
   href =  "/about/"
+
 
 [outputFormats.Algolia]
 baseName = "algolia"
