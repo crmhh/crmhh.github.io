@@ -277,5 +277,7 @@ Nevertheless, I would like to point out that the use of ILA weakens security pos
 ## **Attribution and References**
 
 https://learn.microsoft.com/en-us/entra/global-secure-access/enable-intelligent-local-access
+https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-view-traffic-logs
+https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/networkaccessconnectionevents
 
 >🙏 Big thanks to [Peter Lenzke](https://www.linkedin.com/in/peter-lenzke-bb95813a/) for proofreading this blog.
