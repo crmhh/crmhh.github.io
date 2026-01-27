@@ -241,7 +241,32 @@ We can see the traffic in the Advanced Diagnostic tool (look for Action: local) 
 
 ### Logging and Reporting in Entra and Sentinel/XDR
 
-At the time of the writing we don’t have any centralized logging or reporting, but I’m looking forward to it and will update this section when it is available.
+> 🆕 In the initial version of this blogpost we had no centralized logging and this was a very short section.
+
+Intelligent Local Access is usually enabled when performance issues arise, and it is particularly important in these situations to check whether ILA is in use and effective. Centralized logging is invaluable here, and Entra offers us two options:
+
+**Use of Traffic Logs in the Entra portal**
+
+- Requires at least the Global Secure Access Log Reader role
+
+| ![Picture 14: ILA in Traffic Logs](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-EntraLogs.png) |
+|:--:|
+| *Picture 14: ILA in Traffic Logs* |
+
+**Use of the NetworkAccessConnectionEvents table in Log Analytics / Sentinel**
+
+- Requires ingestion of the table into Log Analytics and at least the Log Analytics Data Reader role.
+
+```sql
+NetworkAccessConnectionEvents 
+	| where EventType == "ConnectionStarted"
+	| where TrafficType == "private"
+	| project TimeGenerated, UserPrincipalName, DestinationFqdn, DestinationIp, DestinationPort, ConnectionId, EventType, IsLocal
+```
+
+| ![Picture 15: NetworkAccessConnectionEvents in Sentinel](/post/2025/Intelligent-Local-Access-Deep-Dive/images/ILA-Sentinel.png) |
+|:--:|
+| *Picture 15: NetworkAccessConnectionEvents in Sentinel* |
 
 ## Summary
 
