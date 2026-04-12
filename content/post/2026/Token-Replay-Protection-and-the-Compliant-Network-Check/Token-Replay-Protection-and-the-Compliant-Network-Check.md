@@ -82,11 +82,13 @@ None of these controls is a silver bullet. Each closes different gaps:
 | | Compliant Device | Token Protection | Compliant Network + CAE | Universal CAE |
 |---|---|---|---|---|
 | Prevents AiTM (auth plane) | Yes | No | Yes | No |
-| Prevents PRT Cookie replay (auth plane) | No | Yes (WAM/Windows only) | Yes | No |
+| Prevents PRT Cookie replay (auth plane) | No | No | Yes | No |
 | Prevents RT replay (auth plane) | No | Yes (WAM/Windows only) | Yes | No |
 | Prevents AT replay (data plane) | No | No | Yes, via CAE (CAE-capable apps only) | Yes (GSA access tokens) |
 | Non-Windows support | Yes | Limited (preview) | Limited | Yes |
 | Requires GSA client | No | No | Yes | Yes |
+
+> 💡 This table measures coverage – which attack scenarios each control applies to – not strength of enforcement. Where Token Protection applies, its guarantee is cryptographic: a stolen token cannot be used without the device's private key, regardless of network location. Microsoft explicitly describes Token Protection as ["the most secure method of protecting sign-in session tokens"](https://learn.microsoft.com/en-us/entra/identity/devices/protecting-tokens-microsoft-entra-id#implement-network-based-enforcements). The Compliant Network check covers more scenarios and identities, but its enforcement is network-based rather than cryptographic. The two controls are complementary: Token Protection is stronger where it applies, Compliant Network is broader where it doesn't.
 
 Universal CAE is worth a separate note. It protects the GSA access tokens themselves – the short-lived tokens the GSA client uses to authenticate to the service tunnels – against theft and replay. If an attacker captures a GSA access token and replays it from a different IP address, Universal CAE's optional Strict Enforcement mode blocks the request. This is a different layer than the Compliant Network check: Compliant Network protects your Entra ID-integrated app tokens, Universal CAE protects the GSA service tokens. Both are worth enabling. The [Microsoft documentation on Universal CAE](https://learn.microsoft.com/en-us/entra/global-secure-access/concept-universal-continuous-access-evaluation) covers the configuration details.
 
