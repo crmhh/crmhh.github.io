@@ -57,7 +57,7 @@ Device compliance as a Conditional Access control therefore does not help here. 
 
 ## Where existing controls fall short
 
-Token Protection (formerly Token Binding) addresses part of this problem by cryptographically binding refresh tokens to the device on which they were issued, using Proof-of-Possession via WAM. This is a meaningful improvement for the RT scenario, but it comes with significant current limitations: it only works on Windows with WAM-enabled clients, browser sessions are not protected, and resource coverage is limited to Exchange Online, SharePoint Online, and Teams. The [ConsentFix post](https://www.glueckkanja.com/en/posts/2025-12-31-vulnerability-consentfix) – which Fabian Bader, Thomas Naunheim, and I put together at the end of 2025 – shows in concrete terms where Token Protection helps and where it does not, using the authorization code theft scenario as an example.
+Token Protection (formerly Token Binding) addresses part of this problem by cryptographically binding refresh tokens to the device on which they were issued, using Proof-of-Possession via WAM. This is a meaningful improvement for the RT scenario, but it comes with significant current limitations: it only works on Windows with WAM-enabled clients, **browser sessions are explicitly not covered**, and resource coverage is limited to Exchange Online, SharePoint Online, and Teams. The [ConsentFix post](https://www.glueckkanja.com/en/posts/2025-12-31-vulnerability-consentfix) – which Fabian Bader, Thomas Naunheim, and I put together at the end of 2025 – shows in concrete terms where Token Protection helps and where it does not, using the authorization code theft scenario as an example.
 
 Both device compliance and Token Protection share one structural limitation: they operate on the token issuance side. Neither of them can invalidate an access token that has already been issued and is being replayed elsewhere. This is the gap that Continuous Access Evaluation is designed to address – and the Compliant Network check is one of the signals that CAE can act on.
 
@@ -81,9 +81,10 @@ None of these controls is a silver bullet. Each closes different gaps:
 
 | | Compliant Device | Token Protection | Compliant Network + CAE | Universal CAE |
 |---|---|---|---|---|
+| Prevents AiTM (auth plane) | Yes | No | Yes | No |
+| Prevents PRT Cookie replay (auth plane) | No | Yes (WAM/Windows only) | Yes | No |
 | Prevents RT replay (auth plane) | No | Yes (WAM/Windows only) | Yes | No |
 | Prevents AT replay (data plane) | No | No | Yes, via CAE (CAE-capable apps only) | Yes (GSA access tokens) |
-| Protects browser sessions | No | No | Yes | No |
 | Non-Windows support | Yes | Limited (preview) | Limited | Yes |
 | Requires GSA client | No | No | Yes | Yes |
 
@@ -149,7 +150,7 @@ The Compliant Network check is configured as a network condition in CA. The reco
 Any authentication not coming through the GSA service is blocked. The automatic exclusion of GSA resources itself ensures the client can always reach the service to establish the compliant network signal – no circular dependency there.
 
 <!-- SCREENSHOT: post2-ca-policy-config.png -->
-| ![Picture 3: Compliant Network and PRT theft](/post/2026/Token-Replay-Protection-and-the-Compliant-Network-Check/images/ca-policy-config.png) |
+| ![Picture 4: Conditional Acces Policy config](/post/2026/Token-Replay-Protection-and-the-Compliant-Network-Check/images/ca-policy-config.png) |
 |:--:|
 | *CA policy "EIA 3 - Require Compliant Network" showing the key configuration elements – Network condition excluding All Compliant Network locations, Grant set to Block access, and Target resources excluding Microsoft Intune and Microsoft Intune Enrollment.*|
 
