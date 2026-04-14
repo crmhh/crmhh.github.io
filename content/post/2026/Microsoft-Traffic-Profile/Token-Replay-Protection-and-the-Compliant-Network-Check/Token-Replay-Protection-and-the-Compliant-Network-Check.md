@@ -218,7 +218,7 @@ A few practical points before enabling the policy:
 
 **Service accounts and non-interactive sign-ins.** Any user account configured as a service account that authenticates against Entra ID without a GSA client will be blocked. These should be identified during the report-only phase and either excluded from the policy or – where possible – migrated to managed identities which are not subject to user-facing CA policies. Workload identities – service principals and managed identities – are not affected as they are not included in user-scoped CA policies. 
 
-**Per-tenant control.** The Compliant Network check is enforced per tenant. In B2B scenarios where users from your tenant access resources in another tenant, the Compliant Network signal from your tenant does not automatically satisfy the Compliant Network requirement in the other tenant. This scenario is covered in the admin access section below in the context of PAW scenarios.
+**Per-tenant control.** The Compliant Network check is enforced per tenant. In B2B scenarios where users from your tenant access resources in another tenant, the Compliant Network signal from your tenant does not automatically satisfy the Compliant Network requirement in the other tenant. 
 
 ---
 
