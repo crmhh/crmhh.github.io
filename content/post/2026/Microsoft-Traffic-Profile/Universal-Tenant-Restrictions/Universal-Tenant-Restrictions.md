@@ -73,6 +73,18 @@ For a detailed migration guide from TRv1 to TRv2, Microsoft has published a [ded
 
 ---
 
+## How TRv2 works
+
+TRv2 moves the enforcement logic to the server side. Instead of embedding an allow list in proxy headers, the policy is configured once in Entra ID and referenced by a policy ID. The GSA client then tags authentication traffic at the device level with this policy identifier – no proxy, no TLS inspection required.
+
+When a user on a managed device attempts to authenticate against any Microsoft service, the GSA client injects the TRv2 policy signal into the request. Microsoft's authentication infrastructure reads this signal and enforces the policy: requests to tenants on the allowlist are permitted, requests to any other tenant are blocked before the sign-in completes. This applies regardless of which browser or application the user is using, and regardless of the device's network path.
+
+| ![Universal Tenant Restriction](/post/2026/Microsoft-Traffic-Profile/Universal-Tenant-Restrictions/images/Universal-Tenant-Restriction.png) |
+|:--:|
+| *Universal Tenant Restrictions via GSA: authentication traffic from managed devices is tagged with the TRv2 policy. Sign-ins to allowlisted tenants pass through; sign-ins to any other tenant are blocked at the authentication plane.* |
+
+---
+
 ## Configuration
 
 The configuration has two parts: the TRv2 policy in Cross-Tenant Access Settings, and enabling Universal TR enforcement in GSA.
@@ -83,13 +95,15 @@ Navigate to **Entra ID → External Identities → Cross-tenant access settings 
 
 Here you define the default behavior for all external tenants. The recommended starting point is to block all external users and applications by default, and then add explicit exceptions for tenants your organization has a legitimate need to access.
 
-<!-- SCREENSHOT: trv2-default-settings.png -->
-> 📸 *Screenshot: Default settings tab showing Tenant Restrictions section with "All blocked" for external users and applications*
+| ![Default settings – Tenant Restrictions](/post/2026/Microsoft-Traffic-Profile/Universal-Tenant-Restrictions/images/trv2-default-settings.png) |
+|:--:|
+| *Default settings tab showing Tenant Restrictions section with "All blocked" for external users and applications* |
 
 For each exception, navigate to **Organizational settings** and add the tenant. You can scope the exception to specific users, groups, or applications rather than allowing the entire tenant.
 
-<!-- SCREENSHOT: trv2-org-settings.png -->
-> 📸 *Screenshot: Organizational settings for a specific partner tenant – showing Tenant ID, Policy ID, and the option to scope access to specific users and groups*
+| ![Organizational settings for a partner tenant](/post/2026/Microsoft-Traffic-Profile/Universal-Tenant-Restrictions/images/trv2-org-settings.png) |
+|:--:|
+| *Organizational settings for a specific partner tenant – showing Tenant ID, Policy ID, and the option to scope access to specific users and groups* |
 
 > 💡 Always scope exceptions as narrowly as possible. If a consultant needs access to a specific external tenant, add that tenant to Organizational settings and restrict it to that user or their group – not to all users. This prevents a single exception request from opening the tenant up for everyone in the organization.
 
@@ -99,8 +113,9 @@ For each exception, navigate to **Organizational settings** and add the tenant. 
 
 Navigate to **Global Secure Access → Settings → Session management → Universal Tenant Restrictions** and enable the toggle **Enable Tenant Restrictions for Microsoft Entra ID and Microsoft Graph**.
 
-<!-- SCREENSHOT: universal-tr-toggle.png -->
-> 📸 *Screenshot: Universal Tenant Restrictions toggle in GSA Session Management*
+| ![Universal Tenant Restrictions toggle in GSA](/post/2026/Microsoft-Traffic-Profile/Universal-Tenant-Restrictions/images/universal-tr-toggle.png) |
+|:--:|
+| *Universal Tenant Restrictions toggle in GSA Session Management* |
 
 > 💡 The toggle can only be enabled once users, groups, and applications are configured in the TRv2 policy. If the policy is still empty, the portal will not allow activation.
 
@@ -225,12 +240,17 @@ Once Universal TR is active, the blocked sign-in attempt happens at the external
 
 The error code users will see is **AADSTS5000211** – the message is quite informative: *"A tenant restrictions policy added to this request by a device or network administrator does not allow access to '[tenant name]'."* Notably, the tenant name is shown in plain text, not just the ID, which helps users understand what was blocked and who to contact.
 
-<!-- SCREENSHOT: tr-blocked-screenshot.png -->
-> 📸 *Screenshot: User-facing block page showing AADSTS5000211 with tenant name and contact instructions*
+| ![User-facing block page – AADSTS5000211](/post/2026/Microsoft-Traffic-Profile/Universal-Tenant-Restrictions/images/tr-blocked-screenshot.png) |
+|:--:|
+| *User-facing block page showing AADSTS5000211 with tenant name and contact instructions* |
 
 Unfortunately, the GSA NetworkAccessTraffic logs do not surface blocked TR events either – meaning there is currently no straightforward way to see which sign-in attempts are being blocked after enforcement is active. This is a real limitation of Universal TR compared to the TRv1 proxy approach, where blocked sign-ins appeared in a dedicated **Tenant Restrictions report** in Entra ID (available under **Overview → Tenant restrictions**) when the `Restrict-Access-Context` header was configured with your own tenant ID.
 
 > 💡 This makes the pre-flight analysis described above all the more important – understanding the traffic landscape before enabling enforcement is the main tool available for impact assessment.
+
+The following demo shows the client-side experience of Universal Tenant Restrictions in action. The first part shows a guest access attempt being blocked – the user tries to accept an invitation from an unauthorized tenant using their corporate identity, and the outbound Cross-Tenant Access policy blocks it. The second part shows Universal TR itself: the user attempts to sign in to an external tenant that is not on the allowlist, and the GSA client enforces the block before the authentication completes.
+
+{{< video "https://github.com/crmhh/crmhh.github.io/raw/refs/heads/main/content/post/2026/Microsoft-Traffic-Profile/Universal-Tenant-Restrictions/videos/UniversalTenantRestrictions.mp4" >}}
 
 ---
 
