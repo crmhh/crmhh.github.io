@@ -2,9 +2,9 @@
 layout:     post 
 title:      "Why you should enable the Microsoft Traffic Forwarding Profile"
 subtitle:   "This blog post is the start of my series about the Microsoft Traffic Profile in GSA, covering overview, architecture and deployment"
-date:       2026-04-11
+date:       2026-04-15
 author:     "Chris Brumm"
-URL:        "/2026/04/11/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/"
+URL:         "/2026/04/11/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/"
 tags:
     - Entra
     - Global Secure Access
@@ -26,7 +26,7 @@ This post is part of a series on the Microsoft Traffic Forwarding Profile in Glo
 
 The Microsoft Traffic Forwarding Profile tends to get overlooked in two different situations. In organizations that are already running a GSA project – typically starting with Entra Private Access – it often gets deprioritized because the focus is on getting the connector infrastructure in place and migrating VPN users. In organizations that are not using GSA at all, it rarely gets considered because GSA is perceived as a larger platform commitment.
 
-Both assumptions are worth revisiting. The Microsoft Traffic Forwarding Profile does not require Private Network Connectors, additional licenses, or a full GSA rollout. For most organizations running Microsoft 365 E3, E5, or Business Premium, the entitlement is already included in Entra ID P1 or P2. The only requirements are enabling the profile in the Entra portal and deploying the GSA client to endpoints.
+Both assumptions are worth revisiting. The Microsoft Traffic Forwarding Profile does not require Private Network Connectors, additional licenses, or a full GSA rollout. For most organizations running Microsoft 365 E3, E5, or Business Premium, the relevant features are already included in Entra ID P1 or P2. The only requirements are enabling the profile in the Entra portal and deploying the GSA client to endpoints.
 
 This makes it the most accessible part of GSA, and for some scenarios it is a compelling standalone deployment. If you are running a third-party SWG and dealing with IP mismatch issues in your Entra logs, or if you want to enforce Tenant Restrictions without relying on browser extensions or MDM-based proxy configurations, the Microsoft Traffic Profile solves those problems without requiring anything else from the GSA stack.
 
@@ -37,6 +37,10 @@ For organizations that are already in a GSA project, the recommendation is simpl
 ## What the profile actually does
 
 The Microsoft Traffic Forwarding Profile intercepts traffic destined for Microsoft 365 and Entra endpoints and routes it through the GSA service. Microsoft maintains the list of covered endpoints, so you don't have to manage a URL list yourself.
+
+| ![Picture 1: Traffic Acquisition Rules](/post/2026/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/images/traffic-acquisition.png) |
+|:--:|
+| *The traffic acquisition rules for the Microsoft Traffic Forwarding Profile, showing the four service groups: Exchange Online, Skype for Business and Microsoft Teams, SharePoint Online and OneDrive for Business, and Microsoft 365 Common and Office Online. Each group defines FQDNs and IP subnets with their associated ports and actions (Forward or Bypass).* |
 
 The list is visible and partially configurable in the Entra portal under **Global Secure Access → Connect → Traffic forwarding → Microsoft profile**. Individual endpoints can be disabled if needed – for example when a specific service is already covered by a third-party SWG and you want to avoid double routing. Worth noting: when Microsoft adds new rules to the list, they automatically appear in Forward mode in your configuration. This means new Microsoft 365 services are covered without any manual action on your end, but it is worth keeping an eye on changes if you are running a selective configuration. The implications of that and how to approach it in a coexistence scenario are covered in detail in the fourth post of this series.
 
@@ -50,7 +54,7 @@ Beyond the routing itself, enabling the profile unlocks four capabilities that a
 Each of these topics gets its own post in this series.
 
 <!-- DIAGRAM: gsa-architecture-overview.png -->
-| ![Picture 1: Architecture Overview](/post/2026/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/images/gsa-architecture-overview.png) |
+| ![Picture 2: Architecture Overview](/post/2026/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/images/gsa-architecture-overview.png) |
 |:--:|
 | *The diagram shows the two traffic paths from the client: Microsoft 365 traffic tunneled via gRPC through the GSA service (blue arrow), and other traffic going directly to the internet (orange arrow). The Compliant Network signal originates at the GSA service and flows back to Entra ID via Conditional Access.* |
 
@@ -77,7 +81,7 @@ In the Entra admin center, navigate to **Global Secure Access → Connect → Tr
 If you prefer to manage the configuration as code or want to automate the rollout, the **Entra PowerShell Beta module** (`Microsoft.Graph.Entra`) includes GSA-specific cmdlets and is the cleanest option for scripting profile enablement and group assignment. For larger deployments or migrations from other SSE solutions, the **[Migrate2GSA](https://github.com/microsoft/Migrate2GSA)** toolkit – a community project maintained by Microsoft employees – provides a broader set of GSA provisioning tools worth knowing about.
 
 <!-- SCREENSHOT: Traffic Forwarding Profile aktiviert, Gruppenauswahl sichtbar -->
-| ![Picture 2: Traffic Forwarding in Entra Portal](/post/2026/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/images/traffic-forwarding-portal.png) |
+| ![Picture 3: Traffic Forwarding in Entra Portal](/post/2026/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/images/traffic-forwarding-portal.png) |
 |:--:|
 | *Traffic Forwarding Profile in the Entra portal – profile enabled with group assignment showing 0 users, 1 group assigned. The panel on the right shows the User and group assignments flyout where you can assign the profile to all users or a specific group.* |
 
@@ -94,14 +98,14 @@ Before rolling out the client, make sure the prerequisites are in place on the t
 Once the client is installed and the profile is assigned, you should see the Microsoft Traffic channel as connected in the client UI within a few minutes.
 
 <!-- SCREENSHOT: post1-gsa-client-connected.png -->
-| ![Picture 3: Connected Client](/post/2026/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/images/gsa-client-connected.png) |
+| ![Picture 4: Connected Client](/post/2026/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/images/gsa-client-connected.png) |
 |:--:|
 | *GSA client showing Entra and M365 channels as connected. Note that Private Access is not shown here – this is a deployment with only the Microsoft Traffic Profile enabled.* |
 
 For troubleshooting or verifying which rules are active, the **Advanced diagnostics** panel under the client's troubleshooting section shows the forwarding profile details including the active Microsoft 365 and Entra rules.
 
 <!-- SCREENSHOT: post1-gsa-client-diagnostics.png -->
-| ![Picture 4: Client Diagnostics](/post/2026/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/images/gsa-client-diagnostics.png) |
+| ![Picture 5: Client Diagnostics](/post/2026/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/images/gsa-client-diagnostics.png) |
 |:--:|
 | *GSA client Advanced diagnostics – Forwarding profile tab showing Microsoft 365 rules and Entra rules applied to this client.* |
 
