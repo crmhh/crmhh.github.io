@@ -159,7 +159,7 @@ Any authentication not coming through the GSA service is blocked. The automatic 
 
 > 💡 GSA resources themselves do not need to be manually excluded. When Compliant Network is enabled in a CA policy, Entra ID [automatically excludes the endpoints](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-compliant-network) the GSA client needs to reach the service. Without this automatic exclusion, the client could never establish the compliant network signal in the first place – a circular dependency that Microsoft has resolved in the backend. This is also confirmed by Fabian Bader's [Conditional Access Bypasses](https://cloudbrothers.info/en/conditional-access-bypasses/) research.
 
-> 💡 All experience in this post is based on Windows deployments. The GSA client is available for macOS, iOS, and Android as well, but I have not yet validated the behavior on those platforms in production. Treat any non-Windows statements here as directional rather than confirmed.
+> 💡 All experience in this post is mainly based on Windows deployments. The GSA client is available for macOS, iOS, and Android as well, but I'm still validating the behavior on those platforms in production. Treat any non-Windows statements here as directional rather than confirmed.
 
 ---
 

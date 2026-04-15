@@ -129,5 +129,9 @@ If you are unsure about your current licensing, the Entra admin center shows the
 
 The next post in this series covers Token Replay Protection and the Compliant Network Check – including the threat landscape, how the different controls compare, and what to watch out for when rolling out the CA policy.
 
+## **Attribution and References**
+
+References for the series are [here](/post/2026/Microsoft-Traffic-Profile/microsoft-traffic-profile-series-references/)
+
 ---
 
