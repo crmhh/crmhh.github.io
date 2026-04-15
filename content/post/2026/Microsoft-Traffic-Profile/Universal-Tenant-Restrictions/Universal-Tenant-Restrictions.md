@@ -2,9 +2,10 @@
 layout:     post 
 title:      "Universal Tenant Restrictions"
 subtitle:   "In this part of the series about the Microsoft Traffic Profile in GSA we discuss we discuss the Universal Tenant Restriction feature"
-date:       2026-04-11
+date:       2026-04-29
+draft:      true
 author:     "Chris Brumm"
-URL:        "/2026/04/11/Universal-Tenant-Restrictions/"
+URL:        "/2026/04/Universal-Tenant-Restrictions/"
 tags:
     - Entra
     - Global Secure Access

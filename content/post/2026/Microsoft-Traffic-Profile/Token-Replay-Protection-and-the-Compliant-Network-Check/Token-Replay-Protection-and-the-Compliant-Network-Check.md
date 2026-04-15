@@ -2,9 +2,10 @@
 layout:     post 
 title:      "Token Replay Protection and the Compliant Network Check"
 subtitle:   "In this part of the series about the Microsoft Traffic Profile in GSA we discuss the Compliant Network check and token replay scenarios"
-date:       2026-04-11
+date:       2026-04-22
+draft:      true
 author:     "Chris Brumm"
-URL:        "/2026/04/11/Token-Replay-Protection-and-the-Compliant-Network-Check/"
+URL:        "/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/"
 tags:
     - Entra
     - Global Secure Access
@@ -93,12 +94,12 @@ None of these controls is a silver bullet. Each closes different gaps:
 Universal CAE is worth a separate note. It protects the GSA access tokens themselves – the short-lived tokens the GSA client uses to authenticate to the service tunnels – against theft and replay. If an attacker captures a GSA access token and replays it from a different IP address, Universal CAE's optional Strict Enforcement mode blocks the request. This is a different layer than the Compliant Network check: Compliant Network protects your Entra ID-integrated app tokens, Universal CAE protects the GSA service tokens. Both are worth enabling. The [Microsoft documentation on Universal CAE](https://learn.microsoft.com/en-us/entra/global-secure-access/concept-universal-continuous-access-evaluation) covers the configuration details.
 
 <!-- DIAGRAM: universal-cae-flow.png -->
-| ![Picture 1: Universal CAE Flow](/post/2026/Token-Replay-Protection-and-the-Compliant-Network-Check/images/universal-cae-flow.png) |
+| ![Picture 1: Universal CAE Flow](/post/2026/Microsoft-Traffic-Profile/Token-Replay-Protection-and-the-Compliant-Network-Check/images/universal-cae-flow.png) |
 |:--:|
 | *Universal CAE flow: the GSA client (1) uses a Refresh Token to obtain an Access Token from Entra ID, (2) Entra ID issues the Access Token, (3) Entra ID sends a revocation event to the GSA service, (4) the client attempts to use the Access Token at the resource provider, (5) the token is rejected in near real-time.* |
 
 <!-- DIAGRAM: universal-cae-triggers.png -->
-| ![Picture 2: Universal CAE Triggers](/post/2026/Token-Replay-Protection-and-the-Compliant-Network-Check/images/universal-cae-triggers.png) |
+| ![Picture 2: Universal CAE Triggers](/post/2026/Microsoft-Traffic-Profile/Token-Replay-Protection-and-the-Compliant-Network-Check/images/universal-cae-triggers.png) |
 |:--:|
 | *Trigger events for Universal CAE: user account deleted or disabled, password changed or reset, MFA enabled, administrator explicitly revokes all refresh tokens, high user risk detected by Entra ID Protection. The highlighted trigger – explicit token revocation by an administrator – is particularly relevant for incident response scenarios.* |
 
@@ -121,7 +122,7 @@ On both devices, BAADTokenBroker successfully extracts the PRT Cookie – the to
 - The token from **StadlerWin11** is blocked. Entra ID enforces the Compliant Network check at the authentication plane and rejects the token request because it does not originate from within the GSA service.
 
 <!-- GIF: EIA-Block-TokenTheft.gif -->
-| ![Picture 3: Compliant Network and PRT theft](/post/2026/Token-Replay-Protection-and-the-Compliant-Network-Check/images/EIA-Block-TokenTheft.gif) |
+| ![Picture 3: Compliant Network and PRT theft](/post/2026/Microsoft-Traffic-Profile/Token-Replay-Protection-and-the-Compliant-Network-Check/images/EIA-Block-TokenTheft.gif) |
 |:--:|
 | *BAADTokenBroker PRT Cookie extraction and replay – blocked by Compliant Network on StadlerWin11, successful on WaldorfWin11* |
 
@@ -152,7 +153,7 @@ The Compliant Network check is configured as a network condition in CA. The reco
 Any authentication not coming through the GSA service is blocked. The automatic exclusion of GSA resources itself ensures the client can always reach the service to establish the compliant network signal – no circular dependency there.
 
 <!-- SCREENSHOT: post2-ca-policy-config.png -->
-| ![Picture 4: Conditional Acces Policy config](/post/2026/Token-Replay-Protection-and-the-Compliant-Network-Check/images/ca-policy-config.png) |
+| ![Picture 4: Conditional Acces Policy config](/post/2026/Microsoft-Traffic-Profile/Token-Replay-Protection-and-the-Compliant-Network-Check/images/ca-policy-config.png) |
 |:--:|
 | *CA policy "EIA 3 - Require Compliant Network" showing the key configuration elements – Network condition excluding All Compliant Network locations, Grant set to Block access, and Target resources excluding Microsoft Intune and Microsoft Intune Enrollment.*|
 
