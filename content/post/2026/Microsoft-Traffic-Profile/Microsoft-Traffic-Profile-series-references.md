@@ -1,15 +1,6 @@
-# Microsoft Traffic Forwarding Profile – Series References & Overview
-
-## Series Structure
-
-| # | Title | Status |
-|---|---|---|
-| 1 | Why you should enable the Microsoft Traffic Forwarding Profile | Draft complete (missing screenshots + diagram) |
-| 2 | Token Replay Protection and the Compliant Network Check | Parts 1–3 complete (B2B section pending public preview) |
-| 3 | Universal Tenant Restrictions | Planned |
-| 4 | Coexistence with other Secure Web Gateways | Planned |
-| 5 | Logging | Planned (waiting for Thomas material) |
-
+---
+layout: page
+multilingual: false
 ---
 
 ## References
@@ -160,12 +151,3 @@
   *Post 2 – token theft growth statistics.*
 
 ---
-
-## Open Items Across Series
-
-- [ ] Thomas material for Post 5 (Logging) – NetworkAccessTraffic tables, Sentinel integration
-- [ ] Confirm which new log tables are relevant for the Microsoft Traffic Profile scenario
-- [ ] Post 2 Part 2: Exclusions list from practice (Intune, etc.)
-- [ ] Post 2 Part 3: Admin/PAW scenario details
-- [ ] Screenshots for Post 1 (Portal + Client)
-- [ ] Architecture diagram for Post 1
