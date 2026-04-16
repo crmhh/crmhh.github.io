@@ -61,6 +61,9 @@ multilingual: false
 - [Using Global Secure Access in Cross-Tenant scenarios](https://chris-brumm.com/2025/12/21/Cross-Tenant-Global-Secure-Access/)
   *B2B capabilities of GSA. Referenced in Post 2 Part 3 (Admin/PAW scenario) and Post 3 (Tenant Restrictions).*
 
+- [Advanced Workbooks for Conditional Access](https://chris-brumm.medium.com/advanced-workbooks-for-conditional-access-9efa73b4a575)
+  *Customized CA workbooks that extend the Microsoft-provided versions to also cover non-interactive sign-ins. Referenced in Post 2 rollout section.*
+
 ---
 
 ### Jan Bakker

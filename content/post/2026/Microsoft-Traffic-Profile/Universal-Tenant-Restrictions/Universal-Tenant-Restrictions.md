@@ -270,3 +270,9 @@ For details on configuring these options, see the [Microsoft documentation on se
 ## What's next
 
 The next post in this series covers coexistence with other Secure Web Gateways – including the source IP mismatch issue and how GSA resolves it.
+
+## **Attribution and References**
+
+References for the series are [here](/post/2026/microsoft-traffic-profile/microsoft-traffic-profile-series-references/)
+
+---

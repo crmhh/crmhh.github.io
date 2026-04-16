@@ -16,13 +16,13 @@ categories: [ Global Secure Access ]
 
 This post is part of a series on the Microsoft Traffic Forwarding Profile in Global Secure Access:
 
-1. [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/...)
+1. [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/2026/04/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/)
 2. Token Replay Protection and the Compliant Network Check *(this post)*
 3. Universal Tenant Restrictions
 4. Coexistence with other Secure Web Gateways
 5. Logging
 
-If you haven't read the first post yet, it covers the basics of the Microsoft Traffic Forwarding Profile, how to enable it, and what the four security benefits are: [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/...).
+If you haven't read the first post yet, it covers the basics of the Microsoft Traffic Forwarding Profile, how to enable it, and what the four security benefits are: [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/2026/04/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/).
 
 ---
 
@@ -213,11 +213,13 @@ A few practical points before enabling the policy:
 
 **Start in report-only mode.**
 
-> 💡 **Always start in report-only mode.** Before enabling the policy, run it in report-only for at least a week. A misconfigured Compliant Network policy can lock users out of all Entra ID-integrated apps. The report-only phase will surface unexpected blocks – service accounts, non-Windows devices, apps you forgot about – before they become incidents.
+**Always start in report-only mode.** Before enabling the policy, run it in report-only for at least a week. A misconfigured Compliant Network policy can lock users out of all Entra ID-integrated apps. The report-only phase will surface unexpected blocks – service accounts, non-Windows devices, apps you forgot about – before they become incidents.
+
+> 💡 As with all conditional access hardening measures, it is important to consider not only interactive sign-ins but also non-interactive sign-ins. All the workbooks Microsoft provides here focus only on interactive sign-ins (likely for performance reasons). A few years ago, I created [customized versions](https://chris-brumm.medium.com/advanced-workbooks-for-conditional-access-9efa73b4a575) on this topic that may be helpful here.
 
 **Use platform filters for a phased rollout.** Rather than rolling out the Compliant Network policy to all users at once, use device platform filters in your CA policy to target Windows devices first. This is the most straightforward approach since the Windows GSA client is the most mature and best-tested option. Other platforms can be added incrementally as the client deployment there is validated.
 
-**Service accounts and non-interactive sign-ins.** Any user account configured as a service account that authenticates against Entra ID without a GSA client will be blocked. These should be identified during the report-only phase and either excluded from the policy or – where possible – migrated to managed identities which are not subject to user-facing CA policies. Workload identities – service principals and managed identities – are not affected as they are not included in user-scoped CA policies. 
+**Take care for non-human indentities** Any user account configured as a service account that authenticates against Entra ID without a GSA client will be blocked. These should be identified during the report-only phase and either excluded from the policy or – where possible – migrated to managed identities which are not subject to user-facing CA policies. Workload identities – service principals and managed identities – are not affected as they are not included in user-scoped CA policies. 
 
 **Per-tenant control.** The Compliant Network check is enforced per tenant. In B2B scenarios where users from your tenant access resources in another tenant, the Compliant Network signal from your tenant does not automatically satisfy the Compliant Network requirement in the other tenant. 
 
@@ -276,3 +278,9 @@ The PAW scenario is the more complete answer, but it does not need to apply to e
 ## What's next
 
 The next post in this series covers Universal Tenant Restrictions – how to use the Microsoft Traffic Profile to enforce which external Entra tenants your users are permitted to authenticate against.
+
+## **Attribution and References**
+
+References for the series are [here](/post/2026/microsoft-traffic-profile/microsoft-traffic-profile-series-references/)
+
+---
