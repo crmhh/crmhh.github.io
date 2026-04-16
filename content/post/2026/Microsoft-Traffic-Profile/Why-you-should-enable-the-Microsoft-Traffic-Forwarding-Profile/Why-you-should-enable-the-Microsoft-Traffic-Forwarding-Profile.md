@@ -131,7 +131,7 @@ The next post in this series covers Token Replay Protection and the Compliant Ne
 
 ## **Attribution and References**
 
-References for the series are [here](/post/2026/Microsoft-Traffic-Profile/microsoft-traffic-profile-series-references/)
+References for the series are [here](/post/2026/microsoft-traffic-profile/microsoft-traffic-profile-series-references/)
 
 ---
 
