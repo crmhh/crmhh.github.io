@@ -121,13 +121,41 @@ multilingual: false
 
 ---
 
+### Vendor Coexistence Documentation
+
+- [Configure Microsoft and Zscaler for a Unified SASE Solution](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-zscaler-coexistence)
+  *Official Microsoft/Zscaler coexistence guide. Covers three deployment scenarios and required FQDN/IP exclusions. Post 4.*
+
+- [Security Service Edge Coexistence With Microsoft and Netskope](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-netskope-coexistence)
+  *Official Microsoft/Netskope coexistence guide. Netskope support added July 2024. Post 4.*
+
+- [Microsoft and Netskope SSE Coexistence (Netskope Docs)](https://docs.netskope.com/en/microsoft-and-netskope-sse-coexistence-1/)
+  *Netskope's own coexistence documentation – covers required exclusions from the Netskope side. Post 4.*
+
+- [Partner Ecosystem Overview](https://learn.microsoft.com/en-us/entra/global-secure-access/partner-ecosystems-overview)
+  *Overview of all GSA partner integrations. Post 4.*
+
+---
+
 ### Official Microsoft Documentation
 
 - [Enable Compliant Network Check with Conditional Access](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-compliant-network)
   *Post 2 – configuration reference.*
 
 - [Learn about the Microsoft Traffic Profile](https://learn.microsoft.com/en-us/entra/global-secure-access/concept-microsoft-traffic-profile)
-  *Post 1 – endpoint list, rule behavior, forward/bypass mode.*
+  *Post 1 – endpoint list, rule behavior, forward/bypass mode. Post 4 – Forward/Bypass configuration.*
+
+- [Enable Source IP Restoration with Global Secure Access](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-source-ip-restoration)
+  *Post 4 – core reference for Source IP Restoration mechanism, configuration, and P2 licensing requirement.*
+
+- [Microsoft 365 Network Connectivity Principles](https://learn.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-network-connectivity-principles)
+  *Post 4 – Microsoft's own guidance on M365 traffic categories (Optimize/Allow/Default) and bypass recommendations for SWGs.*
+
+- [Microsoft Global Secure Access deployment guide for Microsoft Traffic](https://learn.microsoft.com/en-us/entra/architecture/gsa-deployment-guide-microsoft-traffic)
+  *Post 4 – coexistence architecture, LWF driver priority, deployment guidance.*
+
+- [Global Secure Access Windows client release history](https://learn.microsoft.com/en-us/entra/global-secure-access/reference-windows-client-release-history)
+  *Post 4 – reference for Netskope coexistence support added July 2024.*
 
 - [Traffic forwarding profiles](https://learn.microsoft.com/en-us/entra/global-secure-access/concept-traffic-forwarding)
   *Post 1 – profile overview and processing order.*
@@ -142,7 +170,16 @@ multilingual: false
   *Post 2 – Universal CAE for GSA access tokens, Strict Enforcement mode.*
 
 - [Universal Tenant Restrictions](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-universal-tenant-restrictions)
-  *Post 3.*
+  *Post 3 – configuration reference for Universal TR via GSA.*
+
+- [Tenant Restrictions v2 – Setup and Migration from TRv1](https://learn.microsoft.com/en-us/entra/external-id/tenant-restrictions-v2)
+  *Post 3 – TRv2 policy configuration, migration guide from TRv1, and alternative enforcement mechanisms (proxy, GPO).*
+
+- [Cross-Tenant Access Settings – B2B Collaboration](https://learn.microsoft.com/en-us/entra/external-id/cross-tenant-access-settings-b2b-collaboration)
+  *Post 3 – Outbound Cross-Tenant Access Settings as complement to Universal TR.*
+
+- [Microsoft Edge – TenantRestrictionsEnabled policy](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies#tenantrestrictionsenabled)
+  *Post 3 – GPO-based enforcement via Edge for non-GSA environments.*
 
 - [GSA Client for Windows](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-install-windows-client)
   *Post 1 – client prerequisites (IPv6, Secure DNS, QUIC).*

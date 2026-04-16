@@ -15,9 +15,9 @@ categories: [ Global Secure Access ]
 
 This post is part of a series on the Microsoft Traffic Forwarding Profile in Global Secure Access:
 
-1. [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/...)
-2. [Token Replay Protection and the Compliant Network Check](https://chris-brumm.com/...)
-3. [Universal Tenant Restrictions](https://chris-brumm.com/...)
+1. [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/2026/04/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/)
+2. [Token Replay Protection and the Compliant Network Check](https://chris-brumm.com/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/)
+3. [Universal Tenant Restrictions](https://chris-brumm.com/2026/04/Universal-Tenant-Restrictions/)
 4. Coexistence with other Secure Web Gateways *(this post)*
 5. Logging
 
@@ -55,17 +55,17 @@ Beyond the active security controls, the sign-in logs themselves lose their valu
 
 There is a second, less obvious consequence that connects directly to the previous post. SWGs can enforce Tenant Restrictions v1 by injecting a custom HTTP header on Microsoft login traffic. This requires TLS inspection on the Microsoft login endpoints, which is operationally expensive and brings its own problems – particularly on Android, where SSL certificate handling for non-system trusted roots creates persistent issues.
 
-More importantly, this approach only covers the authentication path. It does not protect against token infiltration or anonymous access scenarios at the data path. The Universal Tenant Restrictions via GSA that Post 3 covered provides both authentication plane and data plane coverage – but that capability requires the Microsoft Traffic Profile to be active. If M365 authentication is flowing through the SWG instead, Universal TR cannot do its job.
+More importantly, this approach only covers the authentication path. It does not protect against token infiltration or anonymous access scenarios at the data path. The Universal Tenant Restrictions via GSA that [Post 3](https://chris-brumm.com/2026/04/Universal-Tenant-Restrictions/) covered provides both authentication plane and data plane coverage – but that capability requires the Microsoft Traffic Profile to be active. If M365 authentication is flowing through the SWG instead, Universal TR cannot do its job.
 
 ---
 
 ## Why the Microsoft Traffic Profile solves this
 
-The GSA client uses a Lightweight Filter (LWF) driver to intercept traffic at the network stack level, before VPN tunnels or SWG tunnel adapters see it. This means when both a SWG client and the GSA client are installed on the same device, the GSA client captures M365 traffic first. The SWG sees what's left.
+The GSA client uses a Lightweight Filter (LWF) driver to intercept traffic at the network stack level, before VPN tunnels or SWG tunnel adapters see it. This means when both a SWG client and the GSA client are installed on the same device, the GSA client captures M365 traffic first. The SWG sees what's left. The [Microsoft documentation on the GSA deployment guide for Microsoft Traffic](https://learn.microsoft.com/en-us/entra/architecture/gsa-deployment-guide-microsoft-traffic) covers the coexistence architecture in more detail.
 
 For M365 traffic that goes through GSA, Microsoft's services see the user's actual source IP – restored and verified by the GSA service. This is not just the traffic reaching Microsoft 365 endpoints: it covers Entra ID authentication for M365 apps as well, which is what matters for Identity Protection, Named Locations, and CAE.
 
-The mechanism is called **Source IP Restoration**. The GSA client cryptographically communicates the original egress IP of the endpoint to the GSA service, which in turn passes it to Entra ID and Microsoft Graph. From Microsoft's perspective, the authentication and traffic appear to originate from the user's actual IP – not from a GSA or SWG datacenter.
+The mechanism is called **[Source IP Restoration](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-source-ip-restoration)**. The GSA client cryptographically communicates the original egress IP of the endpoint to the GSA service, which in turn passes it to Entra ID and Microsoft Graph. From Microsoft's perspective, the authentication and traffic appear to originate from the user's actual IP – not from a GSA or SWG datacenter.
 
 <!-- DIAGRAM: source-ip-restoration.png -->
 > 📸 *Diagram: Source IP Restoration flow – GSA client captures M365 traffic before the SWG tunnel, passes original source IP to GSA service, which communicates it to Entra ID*
@@ -80,7 +80,7 @@ Source IP Restoration is not enabled by default. It requires explicit configurat
 
 Beyond the security implications, there is a straightforward performance argument for routing M365 traffic through GSA rather than a third-party SWG.
 
-SWGs process traffic by decrypting it at their cloud nodes, inspecting it, and re-encrypting it before forwarding it to the destination. For Microsoft 365 traffic – which is already encrypted end-to-end and originates from endpoints that Microsoft operates with known, verifiable certificates – this inspection adds latency and CPU overhead without meaningful security benefit. Microsoft's own guidance has long recommended bypassing M365 traffic at the SWG for exactly this reason.
+SWGs process traffic by decrypting it at their cloud nodes, inspecting it, and re-encrypting it before forwarding it to the destination. For Microsoft 365 traffic – which is already encrypted end-to-end and originates from endpoints that Microsoft operates with known, verifiable certificates – this inspection adds latency and CPU overhead without meaningful security benefit. [Microsoft's own network connectivity principles](https://learn.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-network-connectivity-principles) have long recommended bypassing M365 traffic at the SWG for exactly this reason, categorizing M365 endpoints into Optimize, Allow, and Default tiers specifically to guide selective bypass decisions.
 
 When GSA handles M365 traffic instead, SSL termination happens at Microsoft's own Office front-door endpoints. The traffic takes the shortest path into Microsoft's global WAN from the nearest GSA point of presence, without additional decryption/re-encryption overhead. For latency-sensitive workloads like Teams calls or real-time collaboration in SharePoint, this difference is measurable.
 
@@ -95,7 +95,7 @@ The Microsoft Traffic Profile's rules have two possible actions: **Forward** and
 
 This is the primary configuration lever for coexistence. If you have a SWG and want it to continue handling specific M365 traffic while GSA handles the rest, you set the corresponding rules to Bypass in the Microsoft Traffic Profile.
 
-One behavior worth understanding: when Microsoft adds new rules to the profile – which happens automatically as new M365 services are onboarded – they appear in **Forward mode by default**. This means new services are automatically covered without manual action, but it also means that in a selective configuration where you are relying on Bypass for certain rules, newly added rules will start being acquired by GSA until you explicitly set them to Bypass. Monitoring the profile for rule additions is therefore relevant if you are running a selective coexistence setup.
+One behavior worth understanding: when Microsoft adds new rules to the profile – which happens automatically as new M365 services are onboarded – they appear in **Forward mode by default**. This means new services are automatically covered without manual action, but it also means that in a selective configuration where you are relying on Bypass for certain rules, newly added rules will start being acquired by GSA until you explicitly set them to Bypass. Monitoring the profile for rule additions is therefore relevant if you are running a selective coexistence setup. The [Microsoft Traffic Profile concept documentation](https://learn.microsoft.com/en-us/entra/global-secure-access/concept-microsoft-traffic-profile) describes the full rule set and the Forward/Bypass behavior in detail.
 
 ---
 
@@ -115,7 +115,7 @@ The Microsoft documentation on [Zscaler coexistence](https://learn.microsoft.com
 
 ## Coexistence with Netskope
 
-Support for Netskope coexistence was added to the GSA Windows client in July 2024. The coexistence approach follows the same logic as Zscaler: GSA's LWF driver takes priority for M365 traffic, and Netskope handles internet traffic that falls outside the Microsoft Traffic Profile scope.
+Support for Netskope coexistence was added to the GSA Windows client in [July 2024](https://learn.microsoft.com/en-us/entra/global-secure-access/reference-windows-client-release-history). The coexistence approach follows the same logic as Zscaler: GSA's LWF driver takes priority for M365 traffic, and Netskope handles internet traffic that falls outside the Microsoft Traffic Profile scope.
 
 Netskope publishes its own coexistence documentation alongside Microsoft's. The key configuration steps involve ensuring that Netskope's steering configuration does not capture the GSA service endpoints, and that M365 destinations are excluded from Netskope's SSL inspection policy to avoid conflicts with GSA's traffic acquisition.
 
@@ -137,7 +137,7 @@ What moves to GSA:
 
 - **Microsoft 365 traffic** – Exchange Online, SharePoint, Teams, and M365 Common endpoints
 - **Entra ID authentication for M365** – this is the critical piece for Source IP Restoration, Identity Protection, and Named Locations
-- **All Entra-integrated apps** if the Compliant Network check from Post 2 is enforced – since that requires all authentication to flow through GSA
+- **All Entra-integrated apps** if the [Compliant Network check from Post 2](https://chris-brumm.com/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/) is enforced – since that requires all authentication to flow through GSA
 
 The practical takeaway is that M365 already tends to be bypassed at the SWG in most well-configured environments. Enabling the Microsoft Traffic Profile means GSA picks up that bypassed traffic and adds the security capabilities described in this series, rather than having it go directly to Microsoft unmanaged.
 
