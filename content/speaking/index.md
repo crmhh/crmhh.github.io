@@ -26,3 +26,11 @@ multilingual: false
 |2024|Cologne|[Cloud Identity Summit](https://www.identitysummit.cloud/agenda-2024/)|[The End of Passwords: An Introduction to Passkeys in Entra ID (with Fabian Bader)](https://sessionize.com/s/ChrisBrumm/the-end-of-passwords-an-introduction-to-passkeys-i/92267)|[Slides](https://github.com/crmhh/meetups/blob/main/Cloud%20Identity%20Summit%2024%20-%20The%20End%20of%20Passwords.pdf)|
 |2024|Tallinn|[Cloud Technology Townhall Tallinn](https://cloudtechtallinn.com/)|[Walk the walk - explore ways to ensure strong authentication in real life scenarios](https://sessionize.com/s/ChrisBrumm/walk-the-walk-explore-ways-to-ensure-strong-authen/69436)|[Slides](https://github.com/crmhh/meetups/blob/main/CTTT%202024%20-%20Walk%20the%20walk%20-%20explore%20ways%20to%20ensure%20strong%20authentication%20in%20real%20life%20scenarios.pdf)|
 |2024|Hamburg|Azure Saturday Hamburg|[1st AID for EID - how to prevent lateral movement to Entra ID when your Active Directory has fallen](https://sessionize.com/s/ChrisBrumm/1st-aid-for-eid-how-to-prevent-lateral-movement-to/84065)|[Slides](https://github.com/crmhh/meetups/blob/main/Azure%20Saturday%20Hamburg%202024%20-%201st%20AID%20for%20EID.pdf)|
+
+## Podcasts
+|Year       |Podcast    |Title      |Link       |
+|-----------|-----------|-----------|-----------|
+|2025|Cloud Inspires Podcast|SASE, SSE, GSA und Microsoft Entra|[LINK](https://podcasts.apple.com/de/podcast/30-sase-sse-gsa-und-microsoft-entra-mit-chris-brumm/id1571989723?i=1000705390944)|
+|2025|WPNinjas Podcast|Demystifying Global Secure Access: Zero Trust in the Real World (with Peter Lenzke)|[LINK](https://www.youtube.com/watch?v=XgFe5ajDm2w)|
+|2025|Hybrid Identity Protection (HIP) Podcast|Fixing Legacy AD Risk in a Hybrid World|[LINK](https://youtu.be/C75OJiYSYWA)|
+|2026|Microsoft Cloud IT Pro Podcast|Non-Human Identities in Microsoft Entra (with Eric Woodruff)|[LINK](https://www.msclouditpropodcast.com/episode423/)|
