@@ -16,13 +16,13 @@ categories: [ Global Secure Access ]
 
 This post is part of a series on the Microsoft Traffic Forwarding Profile in Global Secure Access:
 
-1. [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/...)
+1. [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/2026/04/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/)
 2. Token Replay Protection and the Compliant Network Check *(this post)*
 3. Universal Tenant Restrictions
 4. Coexistence with other Secure Web Gateways
 5. Logging
 
-If you haven't read the first post yet, it covers the basics of the Microsoft Traffic Forwarding Profile, how to enable it, and what the four security benefits are: [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/...).
+If you haven't read the first post yet, it covers the basics of the Microsoft Traffic Forwarding Profile, how to enable it, and what the four security benefits are: [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/2026/04/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/).
 
 ---
 
@@ -30,7 +30,7 @@ If you haven't read the first post yet, it covers the basics of the Microsoft Tr
 
 For a long time, the dominant attack vector against Microsoft 365 environments was credential phishing – steal the password, log in as the user. MFA adoption has made this significantly harder, and attackers have adapted accordingly. The focus has shifted to post-authentication attacks: instead of stealing credentials, steal the tokens that are issued after a successful authentication. A valid token already satisfies MFA and device compliance requirements at the time of issuance, so replaying it from a different location or device can bypass both controls entirely.
 
-Microsoft's Digital Defense Report has tracked this shift. Token theft attacks roughly doubled between 2022 and 2023, and AiTM phishing – which captures tokens in transit rather than stealing them from storage – has grown by over 140% year-over-year. Thomas Naunheim and Sami Lamppu have documented the technical detail of these attack scenarios extensively in the [Entra ID Attack & Defense Playbook](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense), which is the best reference I know of for understanding how these attacks work in practice.
+[Microsoft's Digital Defense Report](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2024) has tracked this shift. Token theft attacks roughly doubled between 2022 and 2023, and AiTM phishing – which captures tokens in transit rather than stealing them from storage – has grown by over 140% year-over-year. Thomas Naunheim and Sami Lamppu have documented the technical detail of these attack scenarios extensively in the [Entra ID Attack & Defense Playbook](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense), which is the best reference I know of for understanding how these attacks work in practice.
 
 ---
 
@@ -58,9 +58,9 @@ Device compliance as a Conditional Access control therefore does not help here. 
 
 ## Where existing controls fall short
 
-Token Protection (formerly Token Binding) addresses part of this problem by cryptographically binding refresh tokens to the device on which they were issued, using Proof-of-Possession via WAM. This is a meaningful improvement for the RT scenario, but it comes with significant current limitations: it only works on Windows with WAM-enabled clients, **browser sessions are explicitly not covered**, and resource coverage is limited to Exchange Online, SharePoint Online, and Teams. The [ConsentFix post](https://www.glueckkanja.com/en/posts/2025-12-31-vulnerability-consentfix) – which Fabian Bader, Thomas Naunheim, and I put together at the end of 2025 – shows in concrete terms where Token Protection helps and where it does not, using the authorization code theft scenario as an example.
+[Token Protection](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-token-protection) (formerly Token Binding) addresses part of this problem by cryptographically binding refresh tokens to the device on which they were issued, using Proof-of-Possession via WAM. This is a meaningful improvement for the RT scenario, but it comes with significant current limitations: it only works on Windows with WAM-enabled clients, **browser sessions are explicitly not covered**, and resource coverage is limited to Exchange Online, SharePoint Online, and Teams. The [ConsentFix post](https://www.glueckkanja.com/en/posts/2025-12-31-vulnerability-consentfix) – which Fabian Bader, Thomas Naunheim, and I put together at the end of 2025 – shows in concrete terms where Token Protection helps and where it does not, using the authorization code theft scenario as an example.
 
-Both device compliance and Token Protection share one structural limitation: they operate on the token issuance side. Neither of them can invalidate an access token that has already been issued and is being replayed elsewhere. This is the gap that Continuous Access Evaluation is designed to address – and the Compliant Network check is one of the signals that CAE can act on.
+Both device compliance and Token Protection share one structural limitation: they operate on the token issuance side. Neither of them can invalidate an access token that has already been issued and is being replayed elsewhere. This is the gap that [Continuous Access Evaluation](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation) is designed to address – and the Compliant Network check is one of the signals that CAE can act on.
 
 ---
 
@@ -130,7 +130,7 @@ On both devices, BAADTokenBroker successfully extracts the PRT Cookie – the to
 
 > 💡 Two notes on BAADTokenBroker that are relevant for the threat assessment:
 >
-> First, the `Request-PRTCookie` command – which extracts the PRT Cookie of the currently logged-in user by calling lsass directly – **does not require administrative rights**. Standard user context is sufficient. This significantly lowers the bar for exploitation, as an attacker with only user-level code execution on a device can extract the token. This has been confirmed independently for the Windows implementation and was also demonstrated for macOS at user-level permissions at TROOPERS 2025.
+> First, the `Request-PRTCookie` command – which extracts the PRT Cookie of the currently logged-in user by calling lsass directly – **does not require administrative rights**. Standard user context is sufficient. This significantly lowers the bar for exploitation, as an attacker with only user-level code execution on a device can extract the token. This has been [confirmed independently for the Windows implementation](https://ballpoint.fr/en/blog/pass-the-prt) and was also demonstrated for macOS at user-level permissions at [TROOPERS 2025](https://troopers.de/troopers25/talks/ap8zxs/).
 >
 > Second, **Microsoft Defender now detects and blocks BAADTokenBroker** in its current form. This is worth noting as context for the demo – the tool as published is no longer a silent threat on Defender-protected endpoints. However, the underlying technique is well-documented and has been ported into other offensive tooling (including C2 frameworks), so the conceptual threat remains valid.
 
@@ -213,11 +213,13 @@ A few practical points before enabling the policy:
 
 **Start in report-only mode.**
 
-> 💡 **Always start in report-only mode.** Before enabling the policy, run it in report-only for at least a week. A misconfigured Compliant Network policy can lock users out of all Entra ID-integrated apps. The report-only phase will surface unexpected blocks – service accounts, non-Windows devices, apps you forgot about – before they become incidents.
+**Always start in report-only mode.** Before enabling the policy, run it in report-only for at least a week. A misconfigured Compliant Network policy can lock users out of all Entra ID-integrated apps. The report-only phase will surface unexpected blocks – service accounts, non-Windows devices, apps you forgot about – before they become incidents.
+
+> 💡 As with all conditional access hardening measures, it is important to consider not only interactive sign-ins but also non-interactive sign-ins. All the workbooks Microsoft provides here focus only on interactive sign-ins (likely for performance reasons). A few years ago, I created [customized versions](https://chris-brumm.medium.com/advanced-workbooks-for-conditional-access-9efa73b4a575) on this topic that may be helpful here.
 
 **Use platform filters for a phased rollout.** Rather than rolling out the Compliant Network policy to all users at once, use device platform filters in your CA policy to target Windows devices first. This is the most straightforward approach since the Windows GSA client is the most mature and best-tested option. Other platforms can be added incrementally as the client deployment there is validated.
 
-**Service accounts and non-interactive sign-ins.** Any user account configured as a service account that authenticates against Entra ID without a GSA client will be blocked. These should be identified during the report-only phase and either excluded from the policy or – where possible – migrated to managed identities which are not subject to user-facing CA policies. Workload identities – service principals and managed identities – are not affected as they are not included in user-scoped CA policies. 
+**Take care for non-human indentities** Any user account configured as a service account that authenticates against Entra ID without a GSA client will be blocked. These should be identified during the report-only phase and either excluded from the policy or – where possible – migrated to managed identities which are not subject to user-facing CA policies. Workload identities – service principals and managed identities – are not affected as they are not included in user-scoped CA policies. 
 
 **Per-tenant control.** The Compliant Network check is enforced per tenant. In B2B scenarios where users from your tenant access resources in another tenant, the Compliant Network signal from your tenant does not automatically satisfy the Compliant Network requirement in the other tenant. 
 
@@ -276,3 +278,9 @@ The PAW scenario is the more complete answer, but it does not need to apply to e
 ## What's next
 
 The next post in this series covers Universal Tenant Restrictions – how to use the Microsoft Traffic Profile to enforce which external Entra tenants your users are permitted to authenticate against.
+
+## **Attribution and References**
+
+References for the series are [here](/post/2026/microsoft-traffic-profile/microsoft-traffic-profile-series-references/)
+
+---

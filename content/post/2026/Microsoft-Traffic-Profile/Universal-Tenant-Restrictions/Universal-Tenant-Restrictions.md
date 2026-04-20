@@ -15,8 +15,8 @@ categories: [ Global Secure Access ]
 
 This post is part of a series on the Microsoft Traffic Forwarding Profile in Global Secure Access:
 
-1. [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/...)
-2. [Token Replay Protection and the Compliant Network Check](https://chris-brumm.com/...)
+1. [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/2026/04/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/)
+2. [Token Replay Protection and the Compliant Network Check](https://chris-brumm.com/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/)
 3. Universal Tenant Restrictions *(this post)*
 4. Coexistence with other Secure Web Gateways
 5. Logging
@@ -37,9 +37,9 @@ This makes Universal Tenant Restrictions a foundational DLP control – not a re
 
 ## Two mechanisms, one DLP strategy
 
-Universal Tenant Restrictions work best when combined with the **Outbound Cross-Tenant Access Settings** in Entra External ID. The two controls operate at different layers and close different gaps:
+Universal Tenant Restrictions work best when combined with the **[Outbound Cross-Tenant Access Settings](https://learn.microsoft.com/en-us/entra/external-id/cross-tenant-access-settings-b2b-collaboration)** in Entra External ID. The two controls operate at different layers and close different gaps:
 
-**Universal Tenant Restrictions** control what external tenants your users can authenticate against using *any* identity – including personal Microsoft accounts and accounts from attacker-controlled tenants. This is enforced at the network level via the GSA client. A user who tries to sign in to an unauthorized external tenant from a managed device is blocked before the authentication completes.
+**[Universal Tenant Restrictions](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-universal-tenant-restrictions)** control what external tenants your users can authenticate against using *any* identity – including personal Microsoft accounts and accounts from attacker-controlled tenants. This is enforced at the network level via the GSA client. A user who tries to sign in to an unauthorized external tenant from a managed device is blocked before the authentication completes.
 
 **Outbound Cross-Tenant Access Settings** control whether your users are permitted to *be invited as guests* into external tenants using their corporate identity. By default, your users can accept guest invitations from any external tenant. With outbound settings, you can restrict this to a defined allowlist of trusted partner tenants.
 
@@ -133,7 +133,7 @@ Once enabled, the GSA client begins tagging authentication traffic with the TRv2
 
 ## Before you enable: understanding the impact
 
-Unlike the Compliant Network check covered in the previous post, Universal Tenant Restrictions has no report-only mode. Once enabled, it enforces immediately for all users with the GSA client active.
+Unlike the Compliant Network check covered in the [previous post](https://chris-brumm.com/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/), Universal Tenant Restrictions has no report-only mode. Once enabled, it enforces immediately for all users with the GSA client active.
 
 The good news is that you do not need to configure anything to start the analysis – Universal TR has no effect until you explicitly enable the toggle in GSA. This means you can deploy the GSA client, collect data, and build your allowlist before any enforcement happens.
 
@@ -245,7 +245,7 @@ The error code users will see is **AADSTS5000211** – the message is quite info
 |:--:|
 | *User-facing block page showing AADSTS5000211 with tenant name and contact instructions* |
 
-Unfortunately, the GSA NetworkAccessTraffic logs do not surface blocked TR events either – meaning there is currently no straightforward way to see which sign-in attempts are being blocked after enforcement is active. This is a real limitation of Universal TR compared to the TRv1 proxy approach, where blocked sign-ins appeared in a dedicated **Tenant Restrictions report** in Entra ID (available under **Overview → Tenant restrictions**) when the `Restrict-Access-Context` header was configured with your own tenant ID.
+Unfortunately, the GSA NetworkAccessTraffic logs do not surface blocked TR events either – meaning there is currently no straightforward way to see which sign-in attempts are being blocked after enforcement is active. This is a real limitation of Universal TR compared to the TRv1 proxy approach, where blocked sign-ins appeared in a dedicated **[Tenant Restrictions report](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-sign-in-log-activity-details#tenant-restriction)** in Entra ID (available under **Overview → Tenant restrictions**) when the `Restrict-Access-Context` header was configured with your own tenant ID.
 
 > 💡 This makes the pre-flight analysis described above all the more important – understanding the traffic landscape before enabling enforcement is the main tool available for impact assessment.
 
@@ -261,7 +261,7 @@ Universal Tenant Restrictions via the GSA client is the recommended approach for
 
 **Corporate proxy** – configure the proxy to inject the `sec-Restrict-Tenant-Access-Policy` header on all traffic to Microsoft Entra ID and Microsoft accounts. This provides authentication plane protection only, and requires TLS inspection on the Microsoft login endpoints.
 
-**Windows GPO** – enforce tenant restrictions directly on managed Windows devices via Group Policy. This provides both authentication and data plane protection without requiring a proxy, but is limited to Windows devices and Microsoft Edge for browser traffic.
+**Windows GPO** – enforce tenant restrictions directly on managed Windows devices via Group Policy. This provides both authentication and data plane protection without requiring a proxy, but is limited to Windows devices and [Microsoft Edge for browser traffic](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies#tenantrestrictionsenabled).
 
 For details on configuring these options, see the [Microsoft documentation on setting up tenant restrictions v2](https://learn.microsoft.com/en-us/entra/external-id/tenant-restrictions-v2).
 
@@ -270,3 +270,9 @@ For details on configuring these options, see the [Microsoft documentation on se
 ## What's next
 
 The next post in this series covers coexistence with other Secure Web Gateways – including the source IP mismatch issue and how GSA resolves it.
+
+## **Attribution and References**
+
+References for the series are [here](/post/2026/microsoft-traffic-profile/microsoft-traffic-profile-series-references/)
+
+---
