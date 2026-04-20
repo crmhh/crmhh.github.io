@@ -30,7 +30,9 @@ If you haven't read the first post yet, it covers the basics of the Microsoft Tr
 
 For a long time, the dominant attack vector against Microsoft 365 environments was credential phishing – steal the password, log in as the user. MFA adoption has made this significantly harder, and attackers have adapted accordingly. The focus has shifted to post-authentication attacks: instead of stealing credentials, steal the tokens that are issued after a successful authentication. A valid token already satisfies MFA and device compliance requirements at the time of issuance, so replaying it from a different location or device can bypass both controls entirely.
 
-[Microsoft's Digital Defense Report](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2024) has tracked this shift. Token theft attacks roughly doubled between 2022 and 2023, and AiTM phishing – which captures tokens in transit rather than stealing them from storage – has grown by over 140% year-over-year. Thomas Naunheim and Sami Lamppu have documented the technical detail of these attack scenarios extensively in the [Entra ID Attack & Defense Playbook](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense), which is the best reference I know of for understanding how these attacks work in practice.
+The [Microsoft Digital Defense Report 2024](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2024) tracked this shift: token theft attacks roughly doubled between 2022 and 2023, and AiTM phishing – which captures tokens in transit rather than stealing them from storage – grew by over 140% year-over-year. The [2025 edition](https://www.microsoft.com/en-us/security/security-insider/threat-landscape/microsoft-digital-defense-report-2025) adds a further dimension: infostealers – malware that silently extracts cached tokens from browser profiles and application stores without requiring any network-level intercept – are increasingly the primary delivery mechanism for stolen tokens. <!-- TODO: add infostealer stat from MDDR 2025 here --> Microsoft's [analysis of the token theft attack chain](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/how-to-break-the-token-theft-cyber-attack-chain/4062700) documents 147,000 detected token replay attacks, a 111% increase year-over-year, with infostealer-sourced tokens accounting for a growing share. 
+
+[Thomas Naunheim](https://www.linkedin.com/in/thomasnaunheim/) and [Sami Lamppu](https://www.linkedin.com/in/sami-lamppu/) have documented the technical detail of token attack scenarios extensively in the [Entra ID Attack & Defense Playbook](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense), which is the best reference I know of for understanding how these attacks work in practice.
 
 ---
 
@@ -210,8 +212,6 @@ The recommended approach is a **separate CA policy** that targets these apps spe
 ## Rollout considerations
 
 A few practical points before enabling the policy:
-
-**Start in report-only mode.**
 
 **Always start in report-only mode.** Before enabling the policy, run it in report-only for at least a week. A misconfigured Compliant Network policy can lock users out of all Entra ID-integrated apps. The report-only phase will surface unexpected blocks – service accounts, non-Windows devices, apps you forgot about – before they become incidents.
 

@@ -30,7 +30,7 @@ multilingual: false
 ## Podcasts
 |Year       |Podcast    |Title      |Link       |
 |-----------|-----------|-----------|-----------|
-|2025|Cloud Inspires Podcast|SASE, SSE, GSA und Microsoft Entra|[LINK](https://podcasts.apple.com/de/podcast/30-sase-sse-gsa-und-microsoft-entra-mit-chris-brumm/id1571989723?i=1000705390944)|
-|2025|WPNinjas Podcast|Demystifying Global Secure Access: Zero Trust in the Real World (with Peter Lenzke)|[LINK](https://www.youtube.com/watch?v=XgFe5ajDm2w)|
-|2025|Hybrid Identity Protection (HIP) Podcast|Fixing Legacy AD Risk in a Hybrid World|[LINK](https://youtu.be/C75OJiYSYWA)|
 |2026|Microsoft Cloud IT Pro Podcast|Non-Human Identities in Microsoft Entra (with Eric Woodruff)|[LINK](https://www.msclouditpropodcast.com/episode423/)|
+|2025|Hybrid Identity Protection (HIP) Podcast|Fixing Legacy AD Risk in a Hybrid World|[LINK](https://youtu.be/C75OJiYSYWA)|
+|2025|WPNinjas Podcast|Demystifying Global Secure Access: Zero Trust in the Real World (with Peter Lenzke)|[LINK](https://www.youtube.com/watch?v=XgFe5ajDm2w)|
+|2025|Cloud Inspires Podcast|SASE, SSE, GSA und Microsoft Entra|[LINK](https://podcasts.apple.com/de/podcast/30-sase-sse-gsa-und-microsoft-entra-mit-chris-brumm/id1571989723?i=1000705390944)|

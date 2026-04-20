@@ -2,7 +2,7 @@
 layout:     post 
 title:      "Coexistence with other Secure Web Gateways"
 subtitle:   "In this part of the series about the Microsoft Traffic Profile in GSA we discuss how to run GSA alongside a third-party SWG and what breaks if you don't"
-date:       2026-04-29
+date:       2026-05-06
 draft:      true
 author:     "Chris Brumm"
 URL:        "/2026/04/Coexistence-with-other-Secure-Web-Gateways/"
