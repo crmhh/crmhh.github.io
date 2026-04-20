@@ -188,6 +188,12 @@ multilingual: false
   *Post 5 – logging.*
 
 - [Microsoft Digital Defense Report 2024](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2024)
-  *Post 2 – token theft growth statistics.*
+  *Post 2 – token theft doubled 2022→2023, AiTM +140% YoY.*
+
+- [Microsoft Digital Defense Report 2025](https://www.microsoft.com/en-us/security/security-insider/threat-landscape/microsoft-digital-defense-report-2025)
+  *Post 2 – infostealer growth as primary token delivery mechanism.*
+
+- [How to break the token theft cyber-attack chain](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/how-to-break-the-token-theft-cyber-attack-chain/4062700)
+  *Microsoft Entra Blog. 147,000 detected token replay attacks, 111% YoY increase. Covers infostealer → browser cache → token replay chain. Post 2.*
 
 ---
