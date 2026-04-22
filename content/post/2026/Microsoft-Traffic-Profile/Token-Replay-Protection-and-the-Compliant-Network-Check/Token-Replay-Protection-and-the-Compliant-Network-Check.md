@@ -2,7 +2,7 @@
 layout:     post 
 title:      "Token Replay Protection and the Compliant Network Check"
 subtitle:   "In this part of the series about the Microsoft Traffic Profile in GSA we discuss the Compliant Network check and token replay scenarios"
-date:       2026-04-22
+date:       2026-04-24
 draft:      true
 author:     "Chris Brumm"
 URL:        "/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/"
