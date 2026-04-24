@@ -3,7 +3,7 @@ layout:     post
 title:      "Token Replay Protection and the Compliant Network Check"
 subtitle:   "In this part of the series about the Microsoft Traffic Profile in GSA we discuss the Compliant Network check and token replay scenarios"
 date:       2026-04-24
-draft:      true
+draft:      false
 author:     "Chris Brumm"
 URL:        "/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/"
 tags:
@@ -60,7 +60,7 @@ Device compliance as a Conditional Access control therefore does not help here. 
 
 ## Where existing controls fall short
 
-[Token Protection](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-token-protection) addresses part of this problem by cryptographically binding refresh tokens to the device on which they were issued, using Proof-of-Possession via WAM. This is a meaningful improvement for the RT scenario, but it comes with significant current limitations: it only works on Windows with WAM-enabled clients or Apple with Enterprise SSO, **browser sessions are explicitly not covered**, and resource coverage is limited to Apps like Exchange Online, SharePoint Online, and Teams. The [ConsentFix post](https://www.glueckkanja.com/en/posts/2025-12-31-vulnerability-consentfix) – which Fabian Bader, Thomas Naunheim, and I put together at the end of 2025 – shows in concrete terms where Token Protection helps and where it does not, using the authorization code theft scenario as an example.
+[Token Protection](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-token-protection) addresses part of this problem by cryptographically binding refresh tokens to the device on which they were issued, using Proof-of-Possession via WAM. This is a meaningful improvement for the RT scenario, but it comes with significant current limitations: it only works on Windows with WAM-enabled clients or Apple with Enterprise SSO, **browser sessions are explicitly not covered**, and resource coverage is limited to Apps like Exchange Online, SharePoint Online, and Teams. The [ConsentFix post](https://www.glueckkanja.com/en/posts/2025-12-31-vulnerability-consentfix) – which [Fabian Bader](https://www.linkedin.com/in/fabianbader/), [Thomas Naunheim](https://www.linkedin.com/in/thomasnaunheim/), and I put together at the end of 2025 – shows in concrete terms where Token Protection helps and where it does not, using the authorization code theft scenario as an example.
 
 Both device compliance and Token Protection share one structural limitation: they operate on the token issuance side. Neither of them can invalidate an access token that has already been issued and is being replayed elsewhere. This is the gap that [Continuous Access Evaluation](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation) is designed to address – and the Compliant Network check is one of the signals that CAE can act on.
 
@@ -159,7 +159,7 @@ Any authentication not coming through the GSA service is blocked. The automatic 
 |:--:|
 | *CA policy "EIA 3 - Require Compliant Network" showing the key configuration elements – Network condition excluding All Compliant Network locations, Grant set to Block access, and Target resources excluding Microsoft Intune and Microsoft Intune Enrollment.*|
 
-> 💡 GSA resources themselves do not need to be manually excluded. When Compliant Network is enabled in a CA policy, Entra ID [automatically excludes the endpoints](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-compliant-network) the GSA client needs to reach the service. Without this automatic exclusion, the client could never establish the compliant network signal in the first place – a circular dependency that Microsoft has resolved in the backend. This is also confirmed by Fabian Bader's [Conditional Access Bypasses](https://cloudbrothers.info/en/conditional-access-bypasses/) research.
+> 💡 GSA resources themselves do not need to be manually excluded. When Compliant Network is enabled in a CA policy, Entra ID [automatically excludes the endpoints](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-compliant-network) the GSA client needs to reach the service. Without this automatic exclusion, the client could never establish the compliant network signal in the first place – a circular dependency that Microsoft has resolved in the backend. This is also confirmed by [Fabian Bader](https://www.linkedin.com/in/fabianbader/)'s [Conditional Access Bypasses](https://cloudbrothers.info/en/conditional-access-bypasses/) research.
 
 > 💡 All experience in this post is mainly based on Windows deployments. The GSA client is available for macOS, iOS, and Android as well, but I'm still validating the behavior on those platforms in production. Treat any non-Windows statements here as directional rather than confirmed.
 
@@ -175,7 +175,7 @@ The automatic backend exclusions cover the GSA service itself, but several other
 
 This is the most important exclusion and the one most likely to cause problems if missed. Devices need to communicate with Intune before the GSA client is deployed – and in some enrollment scenarios, before the device is even registered in Entra ID. Both **Microsoft Intune** and **Microsoft Intune Enrollment** must be excluded from the Compliant Network policy.
 
-This exclusion carries a security implication worth understanding: it creates the same type of chicken-egg bypass that exists for device compliance policies. The [Compliant Device Bypass post](https://www.glueckkanja.com/en/posts/2025-01-14-compliant-device-bypass) that Fabian Bader, Thomas Naunheim and I wrote covers the broader context of this issue in detail. The short version: the exclusion is necessary and by design, but it means that Intune enrollment flows are not protected by the Compliant Network check.
+This exclusion carries a security implication worth understanding: it creates the same type of chicken-egg bypass that exists for device compliance policies. The [Compliant Device Bypass post](https://www.glueckkanja.com/en/posts/2025-01-14-compliant-device-bypass) that [Fabian Bader](https://www.linkedin.com/in/fabianbader/), [Thomas Naunheim](https://www.linkedin.com/in/thomasnaunheim/) and I wrote covers the broader context of this issue in detail. The short version: the exclusion is necessary and by design, but it means that Intune enrollment flows are not protected by the Compliant Network check.
 
 **Emergency Access Accounts**
 
