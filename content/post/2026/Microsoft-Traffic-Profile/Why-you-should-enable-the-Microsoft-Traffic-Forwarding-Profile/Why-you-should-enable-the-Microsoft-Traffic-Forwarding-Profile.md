@@ -15,7 +15,7 @@ categories: [ Global Secure Access ]
 This post is part of a series on the Microsoft Traffic Forwarding Profile in Global Secure Access:
 
 1. Why you should enable the Microsoft Traffic Forwarding Profile *(this post)*
-2. Token Replay Protection and the Compliant Network Check
+2. [Token Replay Protection and the Compliant Network Check](https://chris-brumm.com/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/)
 3. Universal Tenant Restrictions
 4. Coexistence with other Secure Web Gateways
 5. Logging

@@ -2,8 +2,8 @@
 layout:     post 
 title:      "Token Replay Protection and the Compliant Network Check"
 subtitle:   "In this part of the series about the Microsoft Traffic Profile in GSA we discuss the Compliant Network check and token replay scenarios"
-date:       2026-04-22
-draft:      true
+date:       2026-04-24
+draft:      false
 author:     "Chris Brumm"
 URL:        "/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/"
 tags:
@@ -30,7 +30,7 @@ If you haven't read the first post yet, it covers the basics of the Microsoft Tr
 
 For a long time, the dominant attack vector against Microsoft 365 environments was credential phishing – steal the password, log in as the user. MFA adoption has made this significantly harder, and attackers have adapted accordingly. The focus has shifted to post-authentication attacks: instead of stealing credentials, steal the tokens that are issued after a successful authentication. A valid token already satisfies MFA and device compliance requirements at the time of issuance, so replaying it from a different location or device can bypass both controls entirely.
 
-The [Microsoft Digital Defense Report 2024](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2024) tracked this shift: token theft attacks roughly doubled between 2022 and 2023, and AiTM phishing – which captures tokens in transit rather than stealing them from storage – grew by over 140% year-over-year. The [2025 edition](https://www.microsoft.com/en-us/security/security-insider/threat-landscape/microsoft-digital-defense-report-2025) adds a further dimension: infostealers – malware that silently extracts cached tokens from browser profiles and application stores without requiring any network-level intercept – are increasingly the primary delivery mechanism for stolen tokens. <!-- TODO: add infostealer stat from MDDR 2025 here --> Microsoft's [analysis of the token theft attack chain](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/how-to-break-the-token-theft-cyber-attack-chain/4062700) documents 147,000 detected token replay attacks, a 111% increase year-over-year, with infostealer-sourced tokens accounting for a growing share. 
+The [Microsoft Digital Defense Report 2024](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2024) tracked this shift: token theft attacks roughly doubled between 2022 and 2023, and AiTM phishing – which captures tokens in transit rather than stealing them from storage – grew by over 140% year-over-year. The [2025 edition](https://www.microsoft.com/en-us/security/security-insider/threat-landscape/microsoft-digital-defense-report-2025) adds a further dimension: infostealers – malware that silently extracts cached tokens from browser profiles and application stores without requiring any network-level intercept – are increasingly the primary delivery mechanism for stolen tokens.<!-- TODO: add infostealer stat from MDDR 2025 here --> Microsoft's [analysis of the token theft attack chain](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/how-to-break-the-token-theft-cyber-attack-chain/4062700) documents 147,000 detected token replay attacks, a 111% increase year-over-year, with infostealer-sourced tokens accounting for a growing share. 
 
 [Thomas Naunheim](https://www.linkedin.com/in/thomasnaunheim/) and [Sami Lamppu](https://www.linkedin.com/in/sami-lamppu/) have documented the technical detail of token attack scenarios extensively in the [Entra ID Attack & Defense Playbook](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense), which is the best reference I know of for understanding how these attacks work in practice.
 
@@ -40,17 +40,17 @@ The [Microsoft Digital Defense Report 2024](https://www.microsoft.com/en-us/secu
 
 Entra ID uses three types of tokens that are relevant here:
 
-The **Primary Refresh Token (PRT)** is issued to the device itself and used to silently obtain other tokens without requiring the user to re-authenticate. It is valid for 14 days. On Entra-joined or Hybrid-joined Windows devices, the PRT is protected by the TPM, which makes it significantly harder to extract. On devices without TPM, or on macOS where tokens are stored in the Keychain, the attack surface is considerably larger. Thomas has written in detail about the [macOS token storage scenario](https://www.cloud-architekt.net/abuse-and-replay-azuread-token-macos/) specifically. The [PRT replay chapter of the Attack & Defense Playbook](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense/blob/main/ReplayOfPrimaryRefreshToken.md) covers the full attack scenarios including TPM considerations, detection options and mitigations in depth – it is the most complete public documentation on this topic that I am aware of.
+The **Primary Refresh Token (PRT)** is issued to the device itself and used to silently obtain other tokens without requiring the user to re-authenticate. It has a maximum lifetime of 90 days, with a 14-day inactivity window — if unused for 14 consecutive days, it expires regardless of the 90-day limit. On Entra-joined, Hybrid-joined or registered Windows devices, the PRT is protected by the TPM (when the TPM module is available at attestation), which makes it significantly harder to extract. On devices without TPM, or on macOS where tokens are stored in the Keychain, the attack surface is considerably larger. Thomas has written in detail about the [macOS token storage scenario](https://www.cloud-architekt.net/abuse-and-replay-azuread-token-macos/) specifically. The [PRT replay chapter of the Attack & Defense Playbook](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense/blob/main/ReplayOfPrimaryRefreshToken.md) covers the full attack scenarios including TPM considerations, detection options and mitigations in depth – it is the most complete public documentation on this topic that I am aware of.
 
 The **Refresh Token (RT)** is issued to applications and used to obtain new access tokens. It is valid for up to 90 days. Unlike the PRT, it is not bound to a device by default, which makes it more portable and therefore more attractive for attackers. The [AiTM chapter of the Attack & Defense Playbook](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense/blob/main/Adversary-in-the-Middle.md) covers RT theft in the context of reverse-proxy phishing tools like Evilginx in detail – including detection approaches using GSA NetworkAccessTraffic logs.
 
-The **Access Token (AT)** is the short-lived bearer token that applications use to authorize requests. The default lifetime is 60–90 minutes, but CAE-enabled applications can issue long-lived tokens with a validity of up to 28 hours. Access tokens are the primary target in AiTM attacks because they are present in every authenticated session and can be replayed directly without requiring the original authentication flow.
+The **Access Token (AT)** is the short-lived bearer token that applications use to authorize requests. The default lifetime is 60–90 minutes, but CAE-enabled applications can issue long-lived tokens with a validity of up to 28 hours. Access tokens can be captured in AiTM attacks and replayed directly against resource APIs within their validity window – without repeating the original authentication flow. The Compliant Network check in combination with CAE is the only control in this list that can invalidate an already-issued access token before it expires.
 
 ---
 
 ## Why MFA and device compliance don't stop token replay
 
-When a user successfully authenticates against Entra ID, the resulting tokens carry claims that reflect the security controls that were satisfied at the time of issuance. This includes MFA claims, device compliance state, and authentication strength. These claims are embedded in the PRT and flow into subsequently issued refresh and access tokens.
+When a user successfully authenticates against Entra ID, the resulting tokens carry claims that reflect the security controls that were satisfied at the time of issuance. This includes MFA claims, the device id (which is used to lookup the device compliance state), and authentication strength. These claims are embedded in the PRT and flow into subsequently issued refresh and access tokens.
 
 This is precisely what makes token replay so effective as an attack vector. An attacker who obtains a valid refresh token does not need to bypass MFA or present a compliant device – those requirements were already satisfied by the legitimate user. The token is proof that they were. Replaying it from a different machine or location looks, from Entra's perspective, like a continuation of an already-authenticated session.
 
@@ -60,7 +60,7 @@ Device compliance as a Conditional Access control therefore does not help here. 
 
 ## Where existing controls fall short
 
-[Token Protection](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-token-protection) (formerly Token Binding) addresses part of this problem by cryptographically binding refresh tokens to the device on which they were issued, using Proof-of-Possession via WAM. This is a meaningful improvement for the RT scenario, but it comes with significant current limitations: it only works on Windows with WAM-enabled clients, **browser sessions are explicitly not covered**, and resource coverage is limited to Exchange Online, SharePoint Online, and Teams. The [ConsentFix post](https://www.glueckkanja.com/en/posts/2025-12-31-vulnerability-consentfix) – which Fabian Bader, Thomas Naunheim, and I put together at the end of 2025 – shows in concrete terms where Token Protection helps and where it does not, using the authorization code theft scenario as an example.
+[Token Protection](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-token-protection) addresses part of this problem by cryptographically binding refresh tokens to the device on which they were issued, using Proof-of-Possession via WAM. This is a meaningful improvement for the RT scenario, but it comes with significant current limitations: it only works on Windows with WAM-enabled clients or Apple with Enterprise SSO, **browser sessions are explicitly not covered**, and resource coverage is limited to Apps like Exchange Online, SharePoint Online, and Teams. The [ConsentFix post](https://www.glueckkanja.com/en/posts/2025-12-31-vulnerability-consentfix) – which [Fabian Bader](https://www.linkedin.com/in/fabianbader/), [Thomas Naunheim](https://www.linkedin.com/in/thomasnaunheim/), and I put together at the end of 2025 – shows in concrete terms where Token Protection helps and where it does not, using the authorization code theft scenario as an example.
 
 Both device compliance and Token Protection share one structural limitation: they operate on the token issuance side. Neither of them can invalidate an access token that has already been issued and is being replayed elsewhere. This is the gap that [Continuous Access Evaluation](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation) is designed to address – and the Compliant Network check is one of the signals that CAE can act on.
 
@@ -70,7 +70,7 @@ Both device compliance and Token Protection share one structural limitation: the
 
 The Compliant Network check in Conditional Access uses the GSA service as a network signal. When enforced, Entra ID requires that token requests originate from a device connected to the GSA service for your tenant. This operates at two levels:
 
-At the **authentication plane**, the check applies at the time of token issuance. If an attacker steals a refresh token and attempts to use it to obtain a new access token from outside the GSA network, Entra ID blocks the request immediately. This closes the RT replay scenario that device compliance and Token Protection alone cannot fully address across all platforms and client types.
+At the **authentication plane**, the check applies at the time of token issuance. If an attacker steals a refresh token and attempts to use it to obtain a new access token from outside the GSA network, Conditional Access evaluates the token issuance request and the condition can not be satisfied → the issuance will be blocked. This closes the RT replay scenario that device compliance and Token Protection alone cannot fully address across all platforms and client types.
 
 At the **data plane**, the Compliant Network check works in combination with Continuous Access Evaluation. CAE-capable applications – currently Exchange Online and SharePoint Online – treat a transition from a compliant network to a non-compliant network as a user condition change, which triggers immediate re-authentication even if the access token is still within its validity period. As I described in my [Global Secure Access in Conditional Access post](https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/), this combination provides meaningful protection against access token replay in CAE-capable applications.
 
@@ -80,16 +80,16 @@ The honest limitation is the same as for the other controls: the GSA client must
 
 ## A comparison of the different approaches
 
-None of these controls is a silver bullet. Each closes different gaps:
-
-| | Compliant Device | Token Protection | Compliant Network + CAE | Universal CAE |
+| | Compliant Device (or Hybrid-Join/Device State) | Token Protection | Compliant Network + CAE | Universal CAE |
 |---|---|---|---|---|
 | Prevents AiTM (auth plane) | Yes | No | Yes | No |
 | Prevents PRT Cookie replay (auth plane) | No | No | Yes | No |
-| Prevents RT replay (auth plane) | No | Yes (WAM/Windows only) | Yes | No |
+| Prevents RT replay (auth plane) | No | Limited (no Browser) | Yes | No |
 | Prevents AT replay (data plane) | No | No | Yes, via CAE (CAE-capable apps only) | Yes (GSA access tokens) |
-| Non-Windows support | Yes | Limited (preview) | Limited | Yes |
+| OS-Support | full (Windows, macOS iOS/Android, Linux) | Limited (Windows, macOS, iOS) | Limited (Windows, macOS, iOS, Android) | Limited (Windows, macOS) |
 | Requires GSA client | No | No | Yes | Yes |
+
+None of these controls is a silver bullet. Each closes different gaps:
 
 > 💡 This table measures coverage – which attack scenarios each control applies to – not strength of enforcement. Where Token Protection applies, its guarantee is cryptographic: a stolen token cannot be used without the device's private key, regardless of network location. Microsoft explicitly describes Token Protection as ["the most secure method of protecting sign-in session tokens"](https://learn.microsoft.com/en-us/entra/identity/devices/protecting-tokens-microsoft-entra-id#implement-network-based-enforcements). The Compliant Network check covers more scenarios and identities, but its enforcement is network-based rather than cryptographic. The two controls are complementary: Token Protection is stronger where it applies, Compliant Network is broader where it doesn't.
 
@@ -118,7 +118,7 @@ The setup uses two victim clients with different Conditional Access policies:
 - **WaldorfWin11** – protected by MFA and Device Compliance only
 - **StadlerWin11** – protected by MFA, Device Compliance, and Compliant Network (GSA)
 
-On both devices, BAADTokenBroker successfully extracts the PRT Cookie – the tool works regardless of the CA policy in place, since it operates at the OS level before any network controls apply. The difference becomes visible when the attacker attempts to replay the cookie from the unmanaged attacker system:
+On both devices, BAADTokenBroker successfully generates and extracts the PRT Cookie – the tool works regardless of the CA policy in place, since it operates at the OS level before any network controls apply. The difference becomes visible when the attacker attempts to replay the cookie from the unmanaged attacker system:
 
 - The token from **WaldorfWin11** works. The attacker lands in Office 365 because Device Compliance and MFA claims are already embedded in the token.
 - The token from **StadlerWin11** is blocked. Entra ID enforces the Compliant Network check at the authentication plane and rejects the token request because it does not originate from within the GSA service.
@@ -126,7 +126,7 @@ On both devices, BAADTokenBroker successfully extracts the PRT Cookie – the to
 <!-- GIF: EIA-Block-TokenTheft.gif -->
 | ![Picture 3: Compliant Network and PRT theft](/post/2026/Microsoft-Traffic-Profile/Token-Replay-Protection-and-the-Compliant-Network-Check/images/EIA-Block-TokenTheft.gif) |
 |:--:|
-| *BAADTokenBroker PRT Cookie extraction and replay – blocked by Compliant Network on StadlerWin11, successful on WaldorfWin11* |
+| *BAADTokenBroker PRT Cookie generation, extraction and replay – blocked by Compliant Network on StadlerWin11, successful on WaldorfWin11* |
 
 > 💡 This demo was recorded in January 2025 and reflects the behavior at that time. The attack technique itself remains valid. Since then, comparable PRT Cookie extraction techniques have also been demonstrated for macOS ([DEF CON 33, August 2025](https://infocondb.org/con/def-con/def-con-33/original-sin-of-sso-macos-prt-cookie-theft-entra-id-persistence-via-device-forgery)), which underlines the importance of platform-independent mitigations like the Compliant Network check.
 
@@ -159,7 +159,7 @@ Any authentication not coming through the GSA service is blocked. The automatic 
 |:--:|
 | *CA policy "EIA 3 - Require Compliant Network" showing the key configuration elements – Network condition excluding All Compliant Network locations, Grant set to Block access, and Target resources excluding Microsoft Intune and Microsoft Intune Enrollment.*|
 
-> 💡 GSA resources themselves do not need to be manually excluded. When Compliant Network is enabled in a CA policy, Entra ID [automatically excludes the endpoints](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-compliant-network) the GSA client needs to reach the service. Without this automatic exclusion, the client could never establish the compliant network signal in the first place – a circular dependency that Microsoft has resolved in the backend. This is also confirmed by Fabian Bader's [Conditional Access Bypasses](https://cloudbrothers.info/en/conditional-access-bypasses/) research.
+> 💡 GSA resources themselves do not need to be manually excluded. When Compliant Network is enabled in a CA policy, Entra ID [automatically excludes the endpoints](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-compliant-network) the GSA client needs to reach the service. Without this automatic exclusion, the client could never establish the compliant network signal in the first place – a circular dependency that Microsoft has resolved in the backend. This is also confirmed by [Fabian Bader](https://www.linkedin.com/in/fabianbader/)'s [Conditional Access Bypasses](https://cloudbrothers.info/en/conditional-access-bypasses/) research.
 
 > 💡 All experience in this post is mainly based on Windows deployments. The GSA client is available for macOS, iOS, and Android as well, but I'm still validating the behavior on those platforms in production. Treat any non-Windows statements here as directional rather than confirmed.
 
@@ -175,7 +175,7 @@ The automatic backend exclusions cover the GSA service itself, but several other
 
 This is the most important exclusion and the one most likely to cause problems if missed. Devices need to communicate with Intune before the GSA client is deployed – and in some enrollment scenarios, before the device is even registered in Entra ID. Both **Microsoft Intune** and **Microsoft Intune Enrollment** must be excluded from the Compliant Network policy.
 
-This exclusion carries a security implication worth understanding: it creates the same type of chicken-egg bypass that exists for device compliance policies. The [Compliant Device Bypass post](https://www.glueckkanja.com/en/posts/2025-01-14-compliant-device-bypass) that Fabian Bader, Thomas Naunheim and I wrote covers the broader context of this issue in detail. The short version: the exclusion is necessary and by design, but it means that Intune enrollment flows are not protected by the Compliant Network check.
+This exclusion carries a security implication worth understanding: it creates the same type of chicken-egg bypass that exists for device compliance policies. The [Compliant Device Bypass post](https://www.glueckkanja.com/en/posts/2025-01-14-compliant-device-bypass) that [Fabian Bader](https://www.linkedin.com/in/fabianbader/), [Thomas Naunheim](https://www.linkedin.com/in/thomasnaunheim/) and I wrote covers the broader context of this issue in detail. The short version: the exclusion is necessary and by design, but it means that Intune enrollment flows are not protected by the Compliant Network check.
 
 **Emergency Access Accounts**
 
@@ -219,59 +219,11 @@ A few practical points before enabling the policy:
 
 **Use platform filters for a phased rollout.** Rather than rolling out the Compliant Network policy to all users at once, use device platform filters in your CA policy to target Windows devices first. This is the most straightforward approach since the Windows GSA client is the most mature and best-tested option. Other platforms can be added incrementally as the client deployment there is validated.
 
-**Take care for non-human indentities** Any user account configured as a service account that authenticates against Entra ID without a GSA client will be blocked. These should be identified during the report-only phase and either excluded from the policy or – where possible – migrated to managed identities which are not subject to user-facing CA policies. Workload identities – service principals and managed identities – are not affected as they are not included in user-scoped CA policies. 
+**Take care for non-human identities** Any user account configured as a service account that authenticates against Entra ID without a GSA client will be blocked. These should be identified during the report-only phase and either excluded from the policy or – where possible – migrated to managed identities which are not subject to user-facing CA policies. Workload identities – service principals and managed identities – are not affected as they are not included in user-scoped CA policies.
 
-**Per-tenant control.** The Compliant Network check is enforced per tenant. In B2B scenarios where users from your tenant access resources in another tenant, the Compliant Network signal from your tenant does not automatically satisfy the Compliant Network requirement in the other tenant. 
+**Consider starting with privileged identities.** Rather than rolling out the Compliant Network policy to all users at once, it can make sense to start with your most sensitive accounts. The value the Compliant Network check provides is asymmetric: for a standard user it closes token replay scenarios that device compliance alone doesn't cover, but for a privileged identity a compromised token can lead to tenant-wide impact. Requiring compliant network for privileged roles is therefore a meaningful security improvement even before broad user rollout is complete — though it is not a substitute for a dedicated Privileged Access Workstation program where that is in scope.
 
----
-
-## Why admin access deserves a separate look
-
-The Compliant Network check applies to all users equally – but the value it provides is asymmetric. For a standard user, it closes token replay scenarios that device compliance alone doesn't cover. For an admin, the stakes are higher: a compromised admin token can lead to tenant takeover, and the existing controls – MFA, device compliance, phishing-resistant authentication – while necessary, each have limitations as described above.
-
-Adding Compliant Network to the controls required for access to administrative interfaces is therefore not just a marginal improvement. It means that even a stolen token from an admin session cannot be replayed from outside the GSA network.
-
----
-
-## Scenario 1: Privileged Access Workstations
-
-A PAW is a dedicated, hardened device used exclusively for administrative tasks. No email, no general web browsing, no productivity applications – only the tools required for privileged work. The clean-source principle ensures that an attacker who compromises the user's regular workstation cannot reach the admin credentials or sessions.
-
-For the PAW itself, the GSA client should always be deployed. Beyond the token replay protection covered in this series, the Microsoft Traffic Profile unlocks additional capabilities on the PAW that are worth having – but those deserve their own post.
-
-The CA policy design for PAW access to administrative interfaces typically combines:
-
-- Require compliant device (the PAW, enforced via device filter)
-- Require phishing-resistant authentication
-- Require compliant network
-
-> 💡 Rather than targeting specific admin portals in the CA policy, the cleaner approach is to scope the policy to privileged roles or a dedicated admin group and apply it to **All Cloud Apps**. This ensures coverage is automatic when new administrative interfaces are added, and avoids the maintenance overhead of keeping a portal list up to date.
-
-This combination means that accessing the Entra portal, Azure portal, or Microsoft 365 admin center requires a token that was issued on a managed, compliant device, with a phishing-resistant credential, from within the GSA network. A stolen token satisfying all three conditions simultaneously is significantly harder to achieve than compromising any single control.
-
----
-
-## Scenario 2: Admin access from a standard company device
-
-Not every organization has a PAW program in place. In practice, many admins perform administrative tasks from the same device they use for daily work – checking email, joining Teams calls, and accessing the Azure portal in the same session.
-
-The pragmatic step up from basic device compliance for these environments is to require both device compliance **and** compliant network for access to administrative interfaces. This is straightforward to implement as a CA policy scoped to privileged roles or specific admin portals.
-
-One observation worth sharing from practice:
-
-> 💡 The Compliant Network signal is device-wide, not user-specific. When the GSA client is active on a Windows device, the signal applies to all users authenticating from that device – including a separate admin account used in a different browser profile or Edge window. The admin account does not need to be the primary account registered with the GSA client. As long as the device has the client running and the Microsoft Traffic Profile active, the compliant network condition is satisfied for admin sign-ins on the same device.
-
-This is particularly useful in environments where the admin uses a separate Entra account for privileged tasks but works on the same physical machine as their regular user account. The GSA client runs under the regular user context, and the admin account benefits from the compliant network signal without any additional configuration.
-
-> 💡 This behavior also means that device-level controls and user-level controls are complementary here. Device compliance and compliant network are both device-level signals. They confirm that the request is coming from a known, managed device connected to the GSA service – regardless of which user account is performing the authentication.
-
----
-
-## A note on the relationship between the two scenarios
-
-These two scenarios are not mutually exclusive – they represent different points on the same maturity curve. Organizations without a PAW program can start with the company device approach: require compliant network in addition to device compliance for privileged roles, and use that as a forcing function to ensure GSA client deployment reaches admin devices.
-
-The PAW scenario is the more complete answer, but it does not need to apply to every admin in the organization. In practice, a PAW program typically starts with Tier 0 identities – Global Administrators, Privileged Role Administrators, and other roles that can cause tenant-wide impact if compromised. For Tier 1 and Tier 2 admins, the company device approach with Compliant Network and Device Compliance is often the right balance between security and operational overhead. This aligns with the [Microsoft Enterprise Access Model](https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-access-model) which recommends tiered controls based on the blast radius of each role rather than a one-size-fits-all approach.
+> 💡 One practical observation worth noting: the Compliant Network signal is device-wide, not user-specific. When the GSA client is active on a Windows device, the signal applies to all users authenticating from that device — including a separate admin account used in a different browser profile or Edge window. The admin account does not need to be the primary account registered with the GSA client. As long as the device has the client running and the Microsoft Traffic Profile active, the compliant network condition is satisfied for admin sign-ins on the same device.
 
 ---
 
@@ -280,6 +232,8 @@ The PAW scenario is the more complete answer, but it does not need to apply to e
 The next post in this series covers Universal Tenant Restrictions – how to use the Microsoft Traffic Profile to enforce which external Entra tenants your users are permitted to authenticate against.
 
 ## **Attribution and References**
+
+Huge thanks to [Thomas Naunheim](https://www.linkedin.com/in/thomasnaunheim/) for proofreading and discussing all the (token) details. I owe you some cookies 🍪
 
 References for the series are [here](/post/2026/microsoft-traffic-profile/microsoft-traffic-profile-series-references/)
 
