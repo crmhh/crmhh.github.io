@@ -2,10 +2,10 @@
 layout:     post
 title:      "When DNS Lookups Trigger MFA — Private DNS and Conditional Access in GSA"
 subtitle:   "Why a sign-in frequency on Quick Access can turn internal DNS lookups into unexpected MFA prompts – and how the profile/Quick-Access split explains it"
-date:       2099-01-01
-draft:      true
+date:       2026-07-29
+draft:      false
 author:     "Chris Brumm"
-URL:        "/2026/XX/When-DNS-Lookups-Trigger-MFA/"
+URL:        "/2026/07/When-DNS-Lookups-Trigger-MFA/"
 tags:
     - Entra
     - Global Secure Access
@@ -34,7 +34,7 @@ It is not. That single configuration surface fans out into three different plane
 
 **The name-resolution plane.** The connector resolves the FQDN, the client is handed the real internal IP, and the traffic is steered into the tunnel. That is the topic of the 2024 post, so I won't go into it again here.
 
-**The authentication plane.** The Quick Access app is also a Conditional Access target – you can scope CA policies to it like any other application. And here is the sentence from the Microsoft VPN-replacement tutorial that the entire first half of this post hangs on: Conditional Access applied to Quick Access ["will include DNS queries if Private DNS is configured"](https://learn.microsoft.com/entra/global-secure-access/tutorial-private-access-vpn-replacement). Read that twice. Your internal DNS lookups are evaluated by Conditional Access, against the Quick Access app.
+**The authentication plane.** The Quick Access app is also a Conditional Access target – you can scope CA policies to it like any other application. And here is the sentence from the Microsoft VPN-replacement tutorial that the entire first half of this post hangs on: Conditional Access applied to Quick Access ["will include DNS queries if Private DNS is configured"](https://learn.microsoft.com/entra/global-secure-access/tutorial-private-access-vpn-replacement). Read that twice. It is worth being precise about the mechanism, though: each of those lookups needs an *access token* for the Quick Access app. While a valid token is cached, the lookup resolves silently; only when the client has to fetch a new one – the old token expired, or there is none yet – does that token request run through Conditional Access. So CA is not consulted on every lookup, but it sits squarely in the path whenever a fresh Quick Access token is issued.
 
 So we have one configuration surface, and the pieces underneath it are governed separately. The **profile assignment** decides who *receives* the NRPT rule and therefore tunnels their DNS. Whether a given user's tunneled DNS query then gets *challenged* is a matter of **Conditional Access scoping** – which policies target the Quick Access app (or *All resources*), and who those policies apply to.
 
@@ -46,7 +46,7 @@ So we have one configuration surface, and the pieces underneath it are governed 
 
 ## A DNS lookup is an access to Quick Access
 
-Here is the claim the whole first half of this post rests on, and I will admit it took a lab to fully convince me it is *literally* true: with Private DNS configured, resolving an internal name is not something that happens quietly next to Global Secure Access. It **is** an access to the Quick Access app, and Entra treats it like any other application sign-in.
+Here is the claim the whole first half of this post rests on, and I will admit it took a lab to fully convince me it is *literally* true: with Private DNS configured, resolving an internal name is not something that happens quietly next to Global Secure Access. It **is** an access to the Quick Access app: resolving an internal name needs an access token for that app, exactly like any other application – and wherever a token has to be issued, Conditional Access is in the path.
 
 The cleanest way I found to show this is to take the authorization away and watch what breaks.
 
@@ -148,7 +148,11 @@ One rollout note that is easy to miss here:
 
 That is the authentication side of Private DNS. The other half of the story is what you feed *into* Quick Access in the first place – the DNS suffixes and the application segments – because there is more room to get that subtly wrong than you would expect. The next post is about segment and suffix hygiene: why the apex of a domain does not behave like its subdomains, why a `*.` in front of a suffix buys you nothing while a wildcard segment quietly stands in for the suffix you forgot, and what a single-label name does to Kerberos once the synthetic suffix steps in.
 
+And a little further out: ever since Private DNS first shipped, there has been steady feedback to make it more flexible – for instance, to use more than one connector group for different users or different domains, rather than routing all private name resolution through the single Quick Access app (a limitation I ran into back in my [2024 DNS deep dive](https://chris-brumm.com/2024/09/07/Deep-Dive-DNS-in-Entra-Private-Access/), where exactly one Quick Access app can host the integrated resolver). If Microsoft picks that up – and I very much hope it does – I will probably have to revisit this post. But I would wager that sign-in frequency will still have a part to play: the more places private name resolution can be authorized, the more places a Conditional Access session control can quietly attach itself to your DNS.
+
 ## Attribution and References
+
+Thanks to my GSA buddies [Peter Lenzke](https://www.linkedin.com/in/peter-lenzke-bb95813a/), [Samuel Eng](https://www.linkedin.com/in/samueleng/), [Viktor Grzebyk](https://www.linkedin.com/in/viktor-grzebyk/?locale=de) and [Patrick Samhaber](https://www.linkedin.com/in/patricksamhaber/) for input, discussion and proofreading.
 
 - [Microsoft Learn: Understand Microsoft Entra Private DNS](https://learn.microsoft.com/entra/global-secure-access/concept-private-name-resolution)
 - [Microsoft Learn: Tutorial – VPN replacement with Quick Access](https://learn.microsoft.com/entra/global-secure-access/tutorial-private-access-vpn-replacement)
