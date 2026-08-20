@@ -2,10 +2,10 @@
 layout:     post
 title:      "Private DNS Hygiene in GSA — Suffixes, Segments, and the Order Things Resolve In"
 subtitle:   "Why the apex isn't just another subdomain, why a *. in front of a suffix buys you nothing, why DNS suffixes live only on Quick Access, and what a single-label name does to Kerberos — all of it a story about the order name resolution and traffic steering happen in"
-date:       2099-01-01
-draft:      true
+date:       2026-08-20
+draft:      false
 author:     "Chris Brumm"
-URL:        "/2026/XX/Private-DNS-Suffix-and-Segment-Hygiene/"
+URL:        "/2026/08/Private-DNS-Suffix-and-Segment-Hygiene/"
 tags:
     - Entra
     - Global Secure Access
@@ -13,13 +13,13 @@ tags:
 categories: [ Global Secure Access ]
 ---
 
-The [previous post](/2026/XX/When-DNS-Lookups-Trigger-MFA/) was about what happens to a Private DNS lookup on the *authentication* plane – how, once Private DNS is configured, resolving an internal name becomes an access to the Quick Access app, and therefore something Conditional Access gets an opinion about. This one is about the other half: what you feed *into* Quick Access in the first place – the suffixes, the application segments, the FQDNs and IP ranges.
+The [previous post](/2026/07/When-DNS-Lookups-Trigger-MFA/) was about what happens to a Private DNS lookup on the *authentication* plane – how, once Private DNS is configured, resolving an internal name becomes an access to the Quick Access app, and therefore something Conditional Access gets an opinion about. This one is about the other half: what you feed *into* Quick Access in the first place – the suffixes, the application segments, the FQDNs and IP ranges.
 
 None of what follows is a bug. Every surprise is the configuration behaving exactly as designed – just not the way the person who typed it expected – and nearly all of them come back to one thing: **the order in which name resolution and traffic steering actually happen.** Get the order straight and the apex, the wildcard, the suffix and the single-label name stop being mysteries and turn into consequences.
 
 This is the second of two follow-ups to the 2024 [DNS deep dive](https://chris-brumm.com/2024/09/07/Deep-Dive-DNS-in-Entra-Private-Access/):
 
-1. [When DNS lookups trigger MFA – Private DNS and Conditional Access](/2026/XX/When-DNS-Lookups-Trigger-MFA/)
+1. [When DNS lookups trigger MFA – Private DNS and Conditional Access](/2026/07/When-DNS-Lookups-Trigger-MFA/)
 2. Private DNS suffix and segment hygiene *(this post)*
 
 ## The order things actually happen in
@@ -146,4 +146,4 @@ Private DNS is one configuration surface with two steps behind it, run in a fixe
 - [Microsoft Learn: Policy CSP – ADMX_DnsClient (DNS_SearchList, devolution)](https://learn.microsoft.com/windows/client-management/mdm/policy-csp-admx-dnsclient)
 - [Chris Brumm: Deep Dive DNS in Entra Private Access (2024)](https://chris-brumm.com/2024/09/07/Deep-Dive-DNS-in-Entra-Private-Access/)
 - [Chris Brumm: Deep Dive SSO in Entra Private Access (2024)](https://chris-brumm.com/2024/09/14/Deep-Dive-SSO-in-Entra-Private-Access/)
-- [When DNS Lookups Trigger MFA – Private DNS and Conditional Access (Part 1)](/2026/XX/When-DNS-Lookups-Trigger-MFA/)
+- [When DNS Lookups Trigger MFA – Private DNS and Conditional Access (Part 1)](/2026/07/When-DNS-Lookups-Trigger-MFA/)
