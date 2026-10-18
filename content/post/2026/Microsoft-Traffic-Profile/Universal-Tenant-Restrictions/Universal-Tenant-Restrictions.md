@@ -2,8 +2,8 @@
 layout:     post 
 title:      "Universal Tenant Restrictions"
 subtitle:   "In this part of the series about the Microsoft Traffic Profile in GSA we discuss we discuss the Universal Tenant Restriction feature"
-date:       2026-04-29
-draft:      true
+date:       2026-10-18
+draft:      false
 author:     "Chris Brumm"
 URL:        "/2026/04/Universal-Tenant-Restrictions/"
 tags:
@@ -20,6 +20,8 @@ This post is part of a series on the Microsoft Traffic Forwarding Profile in Glo
 3. Universal Tenant Restrictions *(this post)*
 4. Coexistence with other Secure Web Gateways
 5. Logging
+
+If you haven't read the first post yet, it covers the basics of the Microsoft Traffic Forwarding Profile, how to enable it, and what the four security benefits are: [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/2026/04/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/).
 
 ---
 
