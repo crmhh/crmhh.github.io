@@ -18,7 +18,7 @@ This post is part of a series on the Microsoft Traffic Forwarding Profile in Glo
 
 1. [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/2026/04/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/)
 2. Token Replay Protection and the Compliant Network Check *(this post)*
-3. Universal Tenant Restrictions
+3. [Universal Tenant Restrictions](https://chris-brumm.com/2026/10/Universal-Tenant-Restrictions/)
 4. Coexistence with other Secure Web Gateways
 5. Logging
 

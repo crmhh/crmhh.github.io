@@ -5,7 +5,7 @@ subtitle:   "In this part of the series about the Microsoft Traffic Profile in G
 date:       2026-10-18
 draft:      false
 author:     "Chris Brumm"
-URL:        "/2026/04/Universal-Tenant-Restrictions/"
+URL:        "/2026/10/Universal-Tenant-Restrictions/"
 tags:
     - Entra
     - Global Secure Access
