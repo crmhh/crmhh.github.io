@@ -1,7 +1,7 @@
 ---
 layout:     post 
 title:      "Universal Tenant Restrictions"
-subtitle:   "In this part of the series about the Microsoft Traffic Profile in GSA we discuss we discuss the Universal Tenant Restriction feature"
+subtitle:   "In this part of the series about the Microsoft Traffic Profile in GSA we discuss the Universal Tenant Restrictions feature"
 date:       2026-10-18
 draft:      false
 author:     "Chris Brumm"
