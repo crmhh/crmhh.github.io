@@ -2,8 +2,8 @@
 layout:     post
 title:      "Device Code Phishing: Prevention, Detection and Response"
 subtitle:   "How device code phishing works, what Microsoft detects by now, and what you still have to build yourself."
-date:       2026-10-23
-draft:      true
+date:       2026-10-24
+draft:      false
 author:     "Chris Brumm"
 URL:        "/2026/10/Device-Code-Phishing/"
 tags:
