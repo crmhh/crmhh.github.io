@@ -2,10 +2,10 @@
 layout:     post
 title:      "A second look at AuthCodeFix (ConsentFix)"
 subtitle:   "How to see OAuth authorization code phishing against Entra ID in the logs, and why the Compliant Network check stops it."
-date:       2026-11-01
+date:       2026-10-31
 draft:      false
 author:     "Chris Brumm"
-URL:        "/2026/11/A-second-look-at-AuthCodeFix/"
+URL:        "/2026/10/A-second-look-at-AuthCodeFix/"
 tags:
     - Entra
     - Global Secure Access

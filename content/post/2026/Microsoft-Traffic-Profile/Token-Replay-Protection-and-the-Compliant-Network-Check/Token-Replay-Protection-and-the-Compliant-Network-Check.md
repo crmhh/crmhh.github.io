@@ -24,7 +24,7 @@ This post is part of a series on the Microsoft Traffic Forwarding Profile in Glo
 
 If you haven't read the first post yet, it covers the basics of the Microsoft Traffic Forwarding Profile, how to enable it, and what the four security benefits are: [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/2026/04/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/).
 
-> 💡 **Update (November 2026):** Two statements in this post were outdated or too narrow and are corrected inline. Token Protection now covers browser sessions in preview, for Azure Resource Manager only. And the Compliant Network condition does not need the Microsoft Traffic Profile: any active traffic forwarding profile is enough, because the Entra authentication endpoints are carried by the always-on "Microsoft Entra traffic" system profile. Details and lab results in [A second look at AuthCodeFix (ConsentFix)](https://chris-brumm.com/2026/11/A-second-look-at-AuthCodeFix/).
+> 💡 **Update (October 2026):** Two statements in this post were outdated or too narrow and are corrected inline. Token Protection now covers browser sessions in preview, for Azure Resource Manager only. And the Compliant Network condition does not need the Microsoft Traffic Profile: any active traffic forwarding profile is enough, because the Entra authentication endpoints are carried by the always-on "Microsoft Entra traffic" system profile. Details and lab results in [A second look at AuthCodeFix (ConsentFix)](https://chris-brumm.com/2026/10/A-second-look-at-AuthCodeFix/).
 
 ---
 
