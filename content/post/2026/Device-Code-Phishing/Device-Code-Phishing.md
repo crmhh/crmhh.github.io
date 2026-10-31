@@ -15,7 +15,7 @@ categories: [ ITDR ]
 
 The trigger for this post is the session *"The 2026 state of advanced identity attacks"* that I presented together with [Eric Woodruff](https://www.linkedin.com/in/ericonidentity/) at the [Workplace Ninja Summit 2026](https://summit.wpninjas.global/sessions/) in September. The idea behind it: whenever one of these attacks makes the news, the same questions come up (are we vulnerable? has Microsoft fixed this? how likely is it really?), and a few weeks later they are forgotten because day-to-day business continues. So we checked where four recent Entra ID attacks stand today, from a red and a blue perspective.
 
-Device code phishing was one of them, next to AuthCodeFix (ConsentFix), the Device Compliance Bypass and Authentication Downgrade. My preparation for it got detailed enough for a post of its own, and since my day job is on the defender side, this post is about prevention, detection and response, not about the attack mechanics. (And yes, for once this is not about Global Secure Access.)
+Device code phishing was one of them, next to [AuthCodeFix (ConsentFix)](https://chris-brumm.com/2026/11/A-second-look-at-AuthCodeFix/), the Device Compliance Bypass and Authentication Downgrade. My preparation for it got detailed enough for a post of its own, and since my day job is on the defender side, this post is about prevention, detection and response, not about the attack mechanics. (And yes, for once this is not about Global Secure Access.)
 
 # How it works
 

@@ -24,6 +24,8 @@ This post is part of a series on the Microsoft Traffic Forwarding Profile in Glo
 
 If you haven't read the first post yet, it covers the basics of the Microsoft Traffic Forwarding Profile, how to enable it, and what the four security benefits are: [Why you should enable the Microsoft Traffic Forwarding Profile](https://chris-brumm.com/2026/04/Why-you-should-enable-the-Microsoft-Traffic-Forwarding-Profile/).
 
+> 💡 **Update (November 2026):** Two statements in this post were outdated or too narrow and are corrected inline. Token Protection now covers browser sessions in preview, for Azure Resource Manager only. And the Compliant Network condition does not need the Microsoft Traffic Profile: any active traffic forwarding profile is enough, because the Entra authentication endpoints are carried by the always-on "Microsoft Entra traffic" system profile. Details and lab results in [A second look at AuthCodeFix (ConsentFix)](https://chris-brumm.com/2026/11/A-second-look-at-AuthCodeFix/).
+
 ---
 
 ## Why token replay matters
@@ -60,7 +62,7 @@ Device compliance as a Conditional Access control therefore does not help here. 
 
 ## Where existing controls fall short
 
-[Token Protection](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-token-protection) addresses part of this problem by cryptographically binding refresh tokens to the device on which they were issued, using Proof-of-Possession via WAM. This is a meaningful improvement for the RT scenario, but it comes with significant current limitations: it only works on Windows with WAM-enabled clients or Apple with Enterprise SSO, **browser sessions are explicitly not covered**, and resource coverage is limited to Apps like Exchange Online, SharePoint Online, and Teams. The [ConsentFix post](https://www.glueckkanja.com/en/posts/2025-12-31-vulnerability-consentfix) – which [Fabian Bader](https://www.linkedin.com/in/fabianbader/), [Thomas Naunheim](https://www.linkedin.com/in/thomasnaunheim/), and I put together at the end of 2025 – shows in concrete terms where Token Protection helps and where it does not, using the authorization code theft scenario as an example.
+[Token Protection](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-token-protection) addresses part of this problem by cryptographically binding refresh tokens to the device on which they were issued, using Proof-of-Possession via WAM. This is a meaningful improvement for the RT scenario, but it comes with significant current limitations: it only works on Windows with WAM-enabled clients or Apple with Enterprise SSO, **browser sessions are not covered** (update: browser support is now in preview, but only for Azure Resource Manager), and resource coverage is limited to Apps like Exchange Online, SharePoint Online, and Teams. The [ConsentFix post](https://www.glueckkanja.com/en/posts/2025-12-31-vulnerability-consentfix) – which [Fabian Bader](https://www.linkedin.com/in/fabianbader/), [Thomas Naunheim](https://www.linkedin.com/in/thomasnaunheim/), and I put together at the end of 2025 – shows in concrete terms where Token Protection helps and where it does not, using the authorization code theft scenario as an example.
 
 Both device compliance and Token Protection share one structural limitation: they operate on the token issuance side. Neither of them can invalidate an access token that has already been issued and is being replayed elsewhere. This is the gap that [Continuous Access Evaluation](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation) is designed to address – and the Compliant Network check is one of the signals that CAE can act on.
 
@@ -74,7 +76,7 @@ At the **authentication plane**, the check applies at the time of token issuance
 
 At the **data plane**, the Compliant Network check works in combination with Continuous Access Evaluation. CAE-capable applications – currently Exchange Online and SharePoint Online – treat a transition from a compliant network to a non-compliant network as a user condition change, which triggers immediate re-authentication even if the access token is still within its validity period. As I described in my [Global Secure Access in Conditional Access post](https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/), this combination provides meaningful protection against access token replay in CAE-capable applications.
 
-The honest limitation is the same as for the other controls: the GSA client must be deployed on the endpoint, and the profile must be active for the user. The Compliant Network check applies to all Entra ID-integrated apps when configured accordingly – not just Microsoft 365 – but practical CAE coverage today is still limited to Exchange and SharePoint.
+The honest limitation is the same as for the other controls: the GSA client must be deployed on the endpoint, and a traffic forwarding profile must be active for the user. The Compliant Network check applies to all Entra ID-integrated apps when configured accordingly – not just Microsoft 365 – but practical CAE coverage today is still limited to Exchange and SharePoint.
 
 ---
 
@@ -84,7 +86,7 @@ The honest limitation is the same as for the other controls: the GSA client must
 |---|---|---|---|---|
 | Prevents AiTM (auth plane) | Yes | No | Yes | No |
 | Prevents PRT Cookie replay (auth plane) | No | No | Yes | No |
-| Prevents RT replay (auth plane) | No | Limited (no Browser) | Yes | No |
+| Prevents RT replay (auth plane) | No | Limited (Browser: ARM preview only) | Yes | No |
 | Prevents AT replay (data plane) | No | No | Yes, via CAE (CAE-capable apps only) | Yes (GSA access tokens) |
 | OS-Support | full (Windows, macOS iOS/Android, Linux) | Limited (Windows, macOS, iOS) | Limited (Windows, macOS, iOS, Android) | Limited (Windows, macOS) |
 | Requires GSA client | No | No | Yes | Yes |
@@ -223,7 +225,7 @@ A few practical points before enabling the policy:
 
 **Consider starting with privileged identities.** Rather than rolling out the Compliant Network policy to all users at once, it can make sense to start with your most sensitive accounts. The value the Compliant Network check provides is asymmetric: for a standard user it closes token replay scenarios that device compliance alone doesn't cover, but for a privileged identity a compromised token can lead to tenant-wide impact. Requiring compliant network for privileged roles is therefore a meaningful security improvement even before broad user rollout is complete — though it is not a substitute for a dedicated Privileged Access Workstation program where that is in scope.
 
-> 💡 One practical observation worth noting: the Compliant Network signal is device-wide, not user-specific. When the GSA client is active on a Windows device, the signal applies to all users authenticating from that device — including a separate admin account used in a different browser profile or Edge window. The admin account does not need to be the primary account registered with the GSA client. As long as the device has the client running and the Microsoft Traffic Profile active, the compliant network condition is satisfied for admin sign-ins on the same device.
+> 💡 One practical observation worth noting: the Compliant Network signal is device-wide, not user-specific. When the GSA client is active on a Windows device, the signal applies to all users authenticating from that device — including a separate admin account used in a different browser profile or Edge window. The admin account does not need to be the primary account registered with the GSA client. As long as the device has the client running and any traffic forwarding profile active (corrected, see the update at the top), the compliant network condition is satisfied for admin sign-ins on the same device.
 
 ---
 
