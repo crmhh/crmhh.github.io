@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "Has Enough Time Passed, or Has Something Changed?"
-subtitle:   "Sign-in frequency and Continuous Access Evaluation are two answers to the same question about the same token — and together they cover a span no VPN concentrator does"
+title:      "Next Steps Toward ZTNA — Sign-in Frequency Every Time and Universal CAE Device Signals"
+subtitle:   "What each of them improves, how they divide the work, and why Private Access needs both."
 date:       2099-01-01
 draft:      true
 author:     "Chris Brumm"
