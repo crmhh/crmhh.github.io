@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"
+     font-family="Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif">
+<title>Combined variant - SIF, CAE and the device signal on one slide</title>
+
+<!-- COMPARISON VARIANT: everything on one slide. Same theme and time axis as the two-slide version.
+     Five bar rows plus the MDE chain. Built so CB can judge the density against the split. -->
+
+<rect x="0" y="0" width="1920" height="1080" fill="#ffffff"/>
+
+<g id="frame">
+  <text x="90" y="94" font-family="Aptos Display, Segoe UI, Arial, sans-serif" font-size="48" font-weight="600" fill="#090C16">Ending a session: the clock, an event, and the device</text>
+  <text x="90" y="138" font-size="24" fill="#4F4961">Three ways to interrupt one access token &#8212; and when each of them takes effect.</text>
+
+  <text x="520"  y="206" font-size="19" fill="#8E8B99" text-anchor="middle">0</text>
+  <text x="717"  y="206" font-size="19" fill="#8E8B99" text-anchor="middle">15</text>
+  <text x="913"  y="206" font-size="19" fill="#8E8B99" text-anchor="middle">30</text>
+  <text x="1110" y="206" font-size="19" fill="#8E8B99" text-anchor="middle">45</text>
+  <text x="1307" y="206" font-size="19" fill="#8E8B99" text-anchor="middle">60</text>
+  <text x="1503" y="206" font-size="19" fill="#8E8B99" text-anchor="middle">75</text>
+  <text x="1700" y="206" font-size="19" fill="#8E8B99" text-anchor="middle">90 min</text>
+
+  <line x1="520"  y1="222" x2="520"  y2="850" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="717"  y1="222" x2="717"  y2="850" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="913"  y1="222" x2="913"  y2="850" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1110" y1="222" x2="1110" y2="850" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1307" y1="222" x2="1307" y2="850" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1503" y1="222" x2="1503" y2="850" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1700" y1="222" x2="1700" y2="850" stroke="#E6E4EA" stroke-width="1"/>
+</g>
+
+<!-- === sign-in frequency === -->
+<g id="build-1">
+  <text x="90" y="272" font-size="24" font-weight="600" fill="#2E3092">Sign-in frequency</text>
+  <text x="90" y="300" font-size="20" font-style="italic" fill="#4F4961">"Has enough time passed?"</text>
+  <text x="90" y="326" font-size="18" fill="#8E8B99">Walls from the left.</text>
+  <text x="90" y="350" font-size="18" font-weight="600" fill="#2E3092">Checked when a token is requested.</text>
+
+  <rect x="520"  y="244" width="852" height="34" rx="5" fill="#37A37E"/>
+  <rect x="1372" y="238" width="9"   height="46" fill="#2E3092"/>
+  <rect x="1387" y="244" width="313" height="34" rx="5" fill="#37A37E"/>
+  <text x="1715" y="258" font-size="18" font-weight="600" fill="#2E3092">periodic (1 h)</text>
+  <text x="1715" y="280" font-size="17" fill="#8E8B99">~62&#8211;70 min</text>
+
+  <rect x="520.0"  y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="585.6"  y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="651.1"  y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="716.7"  y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="782.2"  y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="847.8"  y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="913.3"  y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="978.9"  y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="1044.4" y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="1110.0" y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="1175.6" y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="1241.1" y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="1306.7" y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="1372.2" y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="1437.8" y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="1503.3" y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="1568.9" y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <rect x="1634.4" y="300" width="59" height="34" rx="4" fill="#37A37E"/>
+  <g fill="#2E3092">
+    <rect x="579.6"  y="294" width="6" height="46"/><rect x="645.1"  y="294" width="6" height="46"/>
+    <rect x="710.7"  y="294" width="6" height="46"/><rect x="776.2"  y="294" width="6" height="46"/>
+    <rect x="841.8"  y="294" width="6" height="46"/><rect x="907.3"  y="294" width="6" height="46"/>
+    <rect x="972.9"  y="294" width="6" height="46"/><rect x="1038.4" y="294" width="6" height="46"/>
+    <rect x="1104.0" y="294" width="6" height="46"/><rect x="1169.6" y="294" width="6" height="46"/>
+    <rect x="1235.1" y="294" width="6" height="46"/><rect x="1300.7" y="294" width="6" height="46"/>
+    <rect x="1366.2" y="294" width="6" height="46"/><rect x="1431.8" y="294" width="6" height="46"/>
+    <rect x="1497.3" y="294" width="6" height="46"/><rect x="1562.9" y="294" width="6" height="46"/>
+    <rect x="1628.4" y="294" width="6" height="46"/>
+  </g>
+  <text x="1715" y="314" font-size="18" font-weight="600" fill="#2E3092">every time</text>
+  <text x="1715" y="336" font-size="17" fill="#8E8B99">~5 min</text>
+</g>
+
+<!-- === Universal CAE, user events === -->
+<g id="build-2">
+  <text x="90" y="448" font-size="24" font-weight="600" fill="#7340D3">Universal CAE</text>
+  <text x="90" y="476" font-size="20" font-style="italic" fill="#4F4961">"Has something changed?"</text>
+
+  <text x="979" y="372" font-size="19" font-weight="600" fill="#7340D3" text-anchor="middle">user disabled &#183; password reset &#183; tokens revoked</text>
+  <line x1="979" y1="384" x2="979" y2="416" stroke="#7340D3" stroke-width="4"/>
+  <path d="M 979 430 L 971 414 L 987 414 Z" fill="#7340D3"/>
+
+  <rect x="520" y="430" width="459" height="34" rx="5" fill="#37A37E"/>
+  <rect x="979" y="430" width="721" height="34" rx="5" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1" stroke-dasharray="7 6"/>
+  <text x="1340" y="453" font-size="17" fill="#8E8B99" text-anchor="middle">token not expired &#8212; but rejected</text>
+  <g stroke="#E7382B" stroke-width="4" stroke-linecap="round">
+    <line x1="969" y1="437" x2="989" y2="457"/>
+    <line x1="989" y1="437" x2="969" y2="457"/>
+  </g>
+  <text x="1715" y="444" font-size="18" font-weight="600" fill="#7340D3">one event</text>
+  <text x="1715" y="466" font-size="17" fill="#8E8B99">~2 min</text>
+</g>
+
+<!-- === the device chain === -->
+<g id="build-3">
+  <rect x="172" y="506" width="210" height="56" rx="7" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1"/>
+  <text x="277" y="530" font-size="15" font-weight="600" fill="#090C16" text-anchor="middle">Defender for Endpoint</text>
+  <text x="277" y="550" font-size="13" fill="#8E8B99" text-anchor="middle">threat detected</text>
+
+  <rect x="406" y="506" width="210" height="56" rx="7" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1"/>
+  <text x="511" y="530" font-size="15" font-weight="600" fill="#090C16" text-anchor="middle">Machine risk score</text>
+  <text x="511" y="550" font-size="13" fill="#8E8B99" text-anchor="middle">Clear &#183; Low &#183; Medium &#183; High</text>
+
+  <rect x="640" y="506" width="210" height="56" rx="7" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1"/>
+  <text x="745" y="530" font-size="15" font-weight="600" fill="#090C16" text-anchor="middle">Intune compliance</text>
+  <text x="745" y="550" font-size="13" fill="#8E8B99" text-anchor="middle">at or under risk score</text>
+
+  <rect x="874" y="506" width="210" height="56" rx="7" fill="#FDECEA" stroke="#E7382B" stroke-width="2"/>
+  <text x="979" y="530" font-size="15" font-weight="600" fill="#090C16" text-anchor="middle">Entra device state</text>
+  <text x="979" y="550" font-size="13" font-weight="600" fill="#E7382B" text-anchor="middle">non-compliant</text>
+
+  <g fill="#8E8B99">
+    <path d="M 386 526 L 402 534 L 386 542 Z"/>
+    <path d="M 620 526 L 636 534 L 620 542 Z"/>
+    <path d="M 854 526 L 870 534 L 854 542 Z"/>
+  </g>
+  <line x1="979" y1="566" x2="979" y2="784" stroke="#E6E4EA" stroke-width="3"/>
+</g>
+
+<!-- === device state today === -->
+<g id="build-4">
+  <text x="90" y="648" font-size="24" font-weight="600" fill="#E7382B">Device state, before Oct 2026</text>
+  <text x="90" y="676" font-size="19" fill="#8E8B99">Nothing reaches the open session.</text>
+
+  <line x1="979" y1="578" x2="979" y2="604" stroke="#E7382B" stroke-width="4" stroke-dasharray="8 7"/>
+  <line x1="957" y1="610" x2="1001" y2="610" stroke="#E7382B" stroke-width="5" stroke-linecap="round"/>
+  <text x="1016" y="616" font-size="17" font-style="italic" fill="#E7382B">no signal exists</text>
+
+  <rect x="520" y="626" width="1180" height="34" rx="5" fill="#37A37E"/>
+  <rect x="1697" y="620" width="9" height="46" fill="#E7382B"/>
+  <text x="1715" y="640" font-size="18" font-weight="600" fill="#E7382B">blocked at the</text>
+  <text x="1715" y="660" font-size="17" fill="#8E8B99">next token request</text>
+
+  <path d="M 979 674 L 979 684 L 1700 684 L 1700 674" fill="none" stroke="#E7382B" stroke-width="2"/>
+  <text x="1340" y="706" font-size="18" font-weight="600" fill="#E7382B" text-anchor="middle">up to a full token lifetime</text>
+</g>
+
+<!-- === device state with the new signal === -->
+<g id="build-5">
+  <text x="90" y="806" font-size="24" font-weight="600" fill="#7340D3">Device state, since Oct 2026</text>
+  <text x="90" y="834" font-size="19" fill="#8E8B99">The open session is revoked.</text>
+
+  <line x1="979" y1="740" x2="979" y2="772" stroke="#7340D3" stroke-width="4"/>
+  <path d="M 979 784 L 971 768 L 987 768 Z" fill="#7340D3"/>
+
+  <rect x="520" y="784" width="459" height="34" rx="5" fill="#37A37E"/>
+  <rect x="979" y="784" width="721" height="34" rx="5" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1" stroke-dasharray="7 6"/>
+  <g stroke="#E7382B" stroke-width="4" stroke-linecap="round">
+    <line x1="969" y1="791" x2="989" y2="811"/>
+    <line x1="989" y1="791" x2="969" y2="811"/>
+  </g>
+  <path d="M 979 828 L 979 838 L 1005 838 L 1005 828" fill="none" stroke="#7340D3" stroke-width="2"/>
+  <text x="1018" y="845" font-size="18" font-weight="600" fill="#7340D3">~2 min from prompt to disconnect</text>
+  <text x="1715" y="798" font-size="18" font-weight="600" fill="#7340D3">in-session</text>
+  <text x="1715" y="818" font-size="17" fill="#8E8B99">revocation</text>
+
+  <rect x="90" y="890" width="9" height="42" fill="#CFE120"/>
+  <text x="118" y="908" font-size="23" font-weight="600" fill="#090C16">The detection already existed. What is new is that it reaches a session that is already running.</text>
+  <text x="118" y="934" font-size="19" fill="#4F4961">Same access token, three different ways of deciding it is no longer good.</text>
+</g>
+
+<text x="1830" y="1038" font-size="16" fill="#B4B1BC" text-anchor="end">sign-in frequency time-based values measured in lab &#183; every-time, CAE and MDE chain from Microsoft Learn</text>
+</svg>

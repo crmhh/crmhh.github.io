@@ -305,6 +305,10 @@ Private Access the five-minute window caps that for you.
 Neither control is complete on its own, and together they are the first time a Private Access session
 is governed per application both when it starts and while it runs.
 
+| ![Three ways to interrupt one access token](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/sif-cae-combined.svg) |
+|:--:|
+| *One access token and three ways it stops being good: the clock, an identity event, and — since October — the device. The bottom two panels are the same policy and the same compliance state; what changed is where it takes effect.* |
+
 ## References
 
 Microsoft Learn: *Microsoft Entra Private Access sign-in every time (preview)*, *Configure sign-in every
