@@ -240,7 +240,7 @@ DeviceTvmSoftwareInventory
 > are replaced by readable ones. It is the fastest way to stop guessing what a code means, and it covers
 > far more than the canonical reference does.
 
-## Universal CAE and the device signal
+## The device signal in Universal CAE
 
 Universal CAE extends Continuous Access Evaluation to anything reached through Global Secure Access,
 without the application having to be CAE-aware — an SSH jump box or an old file share is never going to
