@@ -29,7 +29,7 @@ the network layer — for applications that know nothing about identity.
 ## Two controls on one access token
 
 In Private Access, access to a private application needs an access token. That is also why
-[a DNS lookup can trigger an MFA prompt](/2026/07/When-DNS-Lookups-Trigger-MFA/) — name resolution
+[a DNS lookup can trigger an MFA prompt](https://chris-brumm.com/2026/07/When-DNS-Lookups-Trigger-MFA/) — name resolution
 through the private DNS path needs a token just like a TCP connection does.
 
 Both features act on that token:
@@ -123,7 +123,7 @@ Microsoft now documents one more consequence:
 > may trigger a sign in frequency related authentication prompt without an explicit user action.
 
 Background traffic raising an authentication prompt is exactly the
-effect I described in [the DNS posts](/2026/08/Private-DNS-Suffix-and-Segment-Hygiene/), and it is now Microsoft's own
+effect I described in [the DNS posts](https://chris-brumm.com/2026/08/Private-DNS-Suffix-and-Segment-Hygiene/), and it is now Microsoft's own
 stated reason to prefer per-app segmentation over a broad Quick Access configuration. If you put this
 control on Quick Access, you have put it on name resolution.
 
@@ -250,7 +250,7 @@ Universal CAE extends Continuous Access Evaluation to anything reached through G
 without the application having to be CAE-aware — an SSH jump box or an old file share is never going to
 implement OIDC, and here it does not have to. Tokens live 60 to 90 minutes and support near-real-time
 revocation; the mechanics are in
-[Token Replay Protection and the Compliant Network Check](/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/).
+[Token Replay Protection and the Compliant Network Check](https://chris-brumm.com/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/).
 
 Until 30 October, it had no device signal — neither classic CAE nor Universal CAE listed a
 device event. A device that fell out of compliance, got disabled or got deleted did not touch a Global
@@ -309,13 +309,20 @@ is governed per application both when it starts and while it runs.
 |:--:|
 | *One access token and three ways it stops being good: the clock, an identity event, and — since October — the device. The bottom two panels are the same policy and the same compliance state; what changed is where it takes effect.* |
 
-## References
+## Attribution and References
 
-Microsoft Learn: *Microsoft Entra Private Access sign-in every time (preview)*, *Configure sign-in every
-time for Microsoft Entra Private Access (preview)*, *Conditional Access adaptive session lifetime
-policies*, *Universal Continuous Access Evaluation*, *Known limitations for Global Secure Access*.
+[THANKS] Thanks to … for input, discussion and proofreading.
 
-Earlier posts in this series: [When DNS Lookups Trigger MFA](/2026/07/When-DNS-Lookups-Trigger-MFA/),
-[Private DNS Hygiene](/2026/08/Private-DNS-Suffix-and-Segment-Hygiene/), Token Replay Protection and the Compliant Network
-Check, Global Secure Access in Conditional Access.
-
+- [Microsoft Learn: Microsoft Entra Private Access sign-in every time (preview)](https://learn.microsoft.com/entra/global-secure-access/concept-private-access-sign-in-every-time)
+- [Microsoft Learn: Configure sign-in every time for Microsoft Entra Private Access (preview)](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-sign-in-every-time)
+- [Microsoft Learn: Conditional Access adaptive session lifetime policies](https://learn.microsoft.com/entra/identity/conditional-access/concept-session-lifetime) — where **Every time strict (preview)** is specified
+- [Microsoft Learn: Configure adaptive session lifetime policies](https://learn.microsoft.com/entra/identity/conditional-access/howto-conditional-access-session-lifetime) — the older article, still carrying the Known issue
+- [Microsoft Learn: Universal Continuous Access Evaluation](https://learn.microsoft.com/entra/global-secure-access/concept-universal-continuous-access-evaluation)
+- [Microsoft Learn: Known limitations for Global Secure Access](https://learn.microsoft.com/entra/global-secure-access/reference-current-known-limitations)
+- [Microsoft Learn: Conditional Access device platform conditions](https://learn.microsoft.com/entra/identity/conditional-access/concept-conditional-access-conditions#device-platforms)
+- [Microsoft Learn: NetworkAccessTraffic table reference](https://learn.microsoft.com/azure/azure-monitor/reference/tables/networkaccesstraffic) — the traffic-log columns used in the queries above
+- [Fabian Bader: Other Entra ID / Azure AD SignIn errors](https://cloudbrothers.info/en/entra-id-azure-ad-signin-errors/) and [f-bader/EntraID-ErrorCodes](https://github.com/f-bader/EntraID-ErrorCodes)
+- [Chris Brumm: When DNS Lookups Trigger MFA (2026)](https://chris-brumm.com/2026/07/When-DNS-Lookups-Trigger-MFA/)
+- [Chris Brumm: Private DNS Suffix and Segment Hygiene (2026)](https://chris-brumm.com/2026/08/Private-DNS-Suffix-and-Segment-Hygiene/)
+- [Chris Brumm: Token Replay Protection and the Compliant Network Check (2026)](https://chris-brumm.com/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/)
+- [Chris Brumm: Global Secure Access in Conditional Access (2024)](https://chris-brumm.com/2024/08/06/Global-Secure-Access-in-Conditional-Access/)
