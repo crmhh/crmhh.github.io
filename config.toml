@@ -6,8 +6,10 @@ languageCode = "en-us"
 disqusShortname = ""
 googleAnalytics = ""
 preserveTaxonomyNames = true
-paginate = 5 #frontpage pagination
 hasCJKLanguage = false
+
+[pagination]
+  pagerSize = 5 #frontpage pagination
 
 [outputs]
 home = ["HTML", "RSS", "Algolia"]
