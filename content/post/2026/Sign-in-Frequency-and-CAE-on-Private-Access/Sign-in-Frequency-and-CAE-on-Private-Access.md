@@ -243,13 +243,12 @@ DeviceTvmSoftwareInventory
 ## Universal CAE and the device signal
 
 Universal CAE extends Continuous Access Evaluation to anything reached through Global Secure Access,
-without the application having to be CAE-aware. That is the part I keep coming back to: an SSH jump box
-or an old file share is never going to implement OIDC, and here it does not have to. Tokens live 60 to
-90 minutes and support near-real-time revocation. I wrote about the mechanics in
-[Token Replay Protection and the Compliant Network Check](/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/) and will
-not repeat the diagrams.
+without the application having to be CAE-aware — an SSH jump box or an old file share is never going to
+implement OIDC, and here it does not have to. Tokens live 60 to 90 minutes and support near-real-time
+revocation; the mechanics are in
+[Token Replay Protection and the Compliant Network Check](/2026/04/Token-Replay-Protection-and-the-Compliant-Network-Check/).
 
-Until 30 October, CAE had never had a device signal — neither classic CAE nor Universal CAE listed a
+Until 30 October, it had no device signal — neither classic CAE nor Universal CAE listed a
 device event. A device that fell out of compliance, got disabled or got deleted did not touch a Global
 Secure Access session that was already running. Device state was enforced at issuance, which meant the *next* token request was blocked while
 the current one ran to expiry. That was the gap in the "ZTNA replaces the VPN" story:
@@ -295,9 +294,8 @@ exactly what it says. Microsoft's own warning still holds: prompting too often "
 productivity and increase the risk of users approving MFA requests they didn't initiate" — though on
 Private Access the five-minute window caps that for you.
 
-Together they cover a span a concentrator does not: authentication freshness scoped to a single
-application and enforced by the network layer, plus identity and posture changes propagating into a
-session that is already running, in about two minutes.
+Neither control is complete on its own, and together they are the first time a Private Access session
+is governed per application both when it starts and while it runs.
 
 ## References
 
