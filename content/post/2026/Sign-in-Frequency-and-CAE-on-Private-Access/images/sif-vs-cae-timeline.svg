@@ -89,7 +89,7 @@
     <rect x="1628.4" y="554" width="6" height="54"/>
   </g>
   <text x="1715" y="574" font-size="20" font-weight="600" fill="#2E3092">every time</text>
-  <text x="1715" y="600" font-size="19" fill="#8E8B99">~5 min (documented)</text>
+  <text x="1715" y="600" font-size="19" fill="#8E8B99">~5 min</text>
 </g>
 
 <!-- ============================== BUILD 3 - Universal CAE ============================== -->
@@ -118,7 +118,7 @@
   <text x="1124" y="837" font-size="19" fill="#8E8B99">~2 min to disconnect</text>
   <text x="1715" y="772" font-size="20" font-weight="600" fill="#7340D3">one event</text>
   <text x="1715" y="798" font-size="19" fill="#8E8B99">2&#8211;5 min signal,</text>
-  <text x="1715" y="822" font-size="19" fill="#8E8B99">then then ~2 min grace</text>
+  <text x="1715" y="822" font-size="19" fill="#8E8B99">then ~2 min grace</text>
 
   <!-- the line that carries the slide -->
   <rect x="90" y="930" width="9" height="46" fill="#CFE120"/>
