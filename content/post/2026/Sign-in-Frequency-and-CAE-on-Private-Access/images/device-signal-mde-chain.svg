@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"
+     font-family="Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif">
+<title>What the new device signal changes - MDE to Intune to Entra, before and after</title>
+
+<!-- Companion to sif-vs-cae-timeline.svg. Same theme, same time axis (x 520 = 0 min .. 1700 = 90 min).
+     Build groups: build-1 (the chain), build-2 (today), build-3 (with the new signal + punchline). -->
+
+<rect x="0" y="0" width="1920" height="1080" fill="#ffffff"/>
+
+<g id="frame">
+  <text x="90" y="100" font-family="Aptos Display, Segoe UI, Arial, sans-serif" font-size="54" font-weight="600" fill="#090C16">What the new device signal changes</text>
+  <text x="90" y="150" font-size="27" fill="#4F4961">Defender for Endpoint already marks the device non-compliant. The question is when the running session finds out.</text>
+</g>
+
+<!-- ============================== BUILD 1 - the chain that already exists ============================== -->
+<g id="build-1">
+  <rect x="172" y="215" width="210" height="76" rx="8" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1"/>
+  <text x="277" y="248" font-size="16" font-weight="600" fill="#090C16" text-anchor="middle">Defender for Endpoint</text>
+  <text x="277" y="270" font-size="14" fill="#8E8B99" text-anchor="middle">threat detected</text>
+
+  <rect x="406" y="215" width="210" height="76" rx="8" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1"/>
+  <text x="511" y="248" font-size="16" font-weight="600" fill="#090C16" text-anchor="middle">Machine risk score</text>
+  <text x="511" y="270" font-size="14" fill="#8E8B99" text-anchor="middle">Clear &#183; Low &#183; Medium &#183; High</text>
+
+  <rect x="640" y="215" width="210" height="76" rx="8" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1"/>
+  <text x="745" y="248" font-size="16" font-weight="600" fill="#090C16" text-anchor="middle">Intune compliance</text>
+  <text x="745" y="270" font-size="14" fill="#8E8B99" text-anchor="middle">at or under risk score</text>
+
+  <rect x="874" y="215" width="210" height="76" rx="8" fill="#FDECEA" stroke="#E7382B" stroke-width="2"/>
+  <text x="979" y="248" font-size="16" font-weight="600" fill="#090C16" text-anchor="middle">Entra device state</text>
+  <text x="979" y="270" font-size="14" font-weight="600" fill="#E7382B" text-anchor="middle">non-compliant</text>
+
+  <g fill="#8E8B99">
+    <path d="M 386 245 L 402 253 L 386 261 Z"/>
+    <path d="M 620 245 L 636 253 L 620 261 Z"/>
+    <path d="M 854 245 L 870 253 L 854 261 Z"/>
+  </g>
+
+  <text x="1110" y="248" font-size="19" fill="#8E8B99">this part has worked for years &#8212;</text>
+  <text x="1110" y="272" font-size="19" fill="#8E8B99">the question is only what happens next</text>
+
+  <!-- the state change descends into both scenarios -->
+  <line x1="979" y1="300" x2="979" y2="734" stroke="#E6E4EA" stroke-width="3"/>
+
+  <text x="520"  y="372" font-size="21" fill="#8E8B99" text-anchor="middle">0</text>
+  <text x="717"  y="372" font-size="21" fill="#8E8B99" text-anchor="middle">15</text>
+  <text x="913"  y="372" font-size="21" fill="#8E8B99" text-anchor="middle">30</text>
+  <text x="1110" y="372" font-size="21" fill="#8E8B99" text-anchor="middle">45</text>
+  <text x="1307" y="372" font-size="21" fill="#8E8B99" text-anchor="middle">60</text>
+  <text x="1503" y="372" font-size="21" fill="#8E8B99" text-anchor="middle">75</text>
+  <text x="1700" y="372" font-size="21" fill="#8E8B99" text-anchor="middle">90 min</text>
+
+  <line x1="520"  y1="390" x2="520"  y2="830" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="717"  y1="390" x2="717"  y2="830" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="913"  y1="390" x2="913"  y2="830" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1110" y1="390" x2="1110" y2="830" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1307" y1="390" x2="1307" y2="830" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1503" y1="390" x2="1503" y2="830" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1700" y1="390" x2="1700" y2="830" stroke="#E6E4EA" stroke-width="1"/>
+</g>
+
+<!-- ============================== BUILD 2 - today ============================== -->
+<g id="build-2">
+  <text x="90" y="506" font-size="27" font-weight="600" fill="#E7382B">Before Oct 2026</text>
+  <text x="90" y="538" font-size="21" fill="#4F4961">Nothing reaches the open session.</text>
+  <text x="90" y="568" font-size="20" fill="#8E8B99">Conditional Access still blocks &#8212;</text>
+  <text x="90" y="592" font-size="20" fill="#8E8B99">but only the next token request.</text>
+
+  <line x1="979" y1="398" x2="979" y2="462" stroke="#E7382B" stroke-width="4" stroke-dasharray="8 7"/>
+  <line x1="953" y1="468" x2="1005" y2="468" stroke="#E7382B" stroke-width="5" stroke-linecap="round"/>
+  <text x="1022" y="475" font-size="19" font-style="italic" fill="#E7382B">no signal exists</text>
+
+  <rect x="520" y="490" width="1180" height="44" rx="6" fill="#37A37E"/>
+  <rect x="1697" y="484" width="9" height="56" fill="#E7382B"/>
+  <text x="1720" y="504" font-size="20" font-weight="600" fill="#E7382B">blocked here:</text>
+  <text x="1720" y="528" font-size="19" fill="#8E8B99">at the NEXT</text>
+  <text x="1720" y="550" font-size="19" fill="#8E8B99">token request</text>
+
+  <path d="M 979 552 L 979 562 L 1700 562 L 1700 552" fill="none" stroke="#E7382B" stroke-width="2"/>
+  <text x="1340" y="586" font-size="20" font-weight="600" fill="#E7382B" text-anchor="middle">up to a full token lifetime</text>
+</g>
+
+<!-- ============================== BUILD 3 - with the new signal ============================== -->
+<g id="build-3">
+  <text x="90" y="750" font-size="27" font-weight="600" fill="#7340D3">With the new device signal</text>
+  <text x="90" y="782" font-size="21" fill="#4F4961">The open session is revoked.</text>
+  <text x="90" y="810" font-size="20" fill="#8E8B99">Generally available since Oct 2026.</text>
+
+  <line x1="979" y1="655" x2="979" y2="712" stroke="#7340D3" stroke-width="4"/>
+  <path d="M 979 726 L 969 706 L 989 706 Z" fill="#7340D3"/>
+  <text x="1000" y="684" font-size="19" font-weight="600" fill="#7340D3">CAE claims challenge</text>
+
+  <rect x="520" y="734" width="459" height="44" rx="6" fill="#37A37E"/>
+  <rect x="979" y="734" width="721" height="44" rx="6" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1" stroke-dasharray="7 6"/>
+  <text x="1340" y="762" font-size="19" fill="#8E8B99" text-anchor="middle">token not expired &#8212; but rejected</text>
+  <g stroke="#E7382B" stroke-width="5" stroke-linecap="round">
+    <line x1="967" y1="742" x2="991" y2="766"/>
+    <line x1="991" y1="742" x2="967" y2="766"/>
+  </g>
+
+  <path d="M 979 790 L 979 800 L 1005 800 L 1005 790" fill="none" stroke="#7340D3" stroke-width="2"/>
+  <text x="1018" y="807" font-size="20" font-weight="600" fill="#7340D3">~2 min from prompt to disconnect</text>
+
+  <text x="1715" y="750" font-size="20" font-weight="600" fill="#7340D3">in-session</text>
+  <text x="1715" y="774" font-size="19" fill="#8E8B99">revocation</text>
+
+  <rect x="90" y="858" width="9" height="46" fill="#CFE120"/>
+  <text x="118" y="878" font-size="25" font-weight="600" fill="#090C16">The detection already existed. What is new is that it reaches a session that is already running.</text>
+  <text x="118" y="906" font-size="21" fill="#4F4961">Same policy, same compliance state &#8212; the difference is where it takes effect.</text>
+</g>
+
+<text x="1830" y="1038" font-size="17" fill="#B4B1BC" text-anchor="end">MDE &#8594; Intune &#8594; Entra chain per Microsoft Learn &#183; revocation timing from own lab</text>
+</svg>

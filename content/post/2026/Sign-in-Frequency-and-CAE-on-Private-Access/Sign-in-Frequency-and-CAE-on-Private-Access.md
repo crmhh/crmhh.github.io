@@ -42,6 +42,10 @@ Both features act on that token:
 | Mode | **pulled** — runs when something asks for a token | **pushed** — does not wait to be asked |
 | Token lifetime | shortens it | lengthens it, and pays with near-real-time revocation |
 
+| ![Sign-in frequency and Universal CAE on the same access token](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/sif-vs-cae-timeline.svg) |
+|:--:|
+| *Sign-in frequency walls in from the left, driven by the clock and evaluated whenever a token is requested. Universal CAE arrives from above, when something changes. One shortens the token's life, the other revokes it mid-flight.* |
+
 ## Every time strict and the five-minute window
 
 The control to pick is **Every time strict (preview)**, and this is the part most people will get wrong.
@@ -260,6 +264,10 @@ machine risk score, through an Intune compliance policy that consumes it, into t
 and from there into CAE. In our lab the user-facing sequence was a toast in the Global Secure Access
 client followed by the tunnels disconnecting **2 minutes 3 seconds** later. For comparison, revoking a
 user's refresh tokens produced the same effect with a **2 minute 9 second** gap.
+
+| ![The MDE to Intune to Entra chain, and where it takes effect](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/device-signal-mde-chain.svg) |
+|:--:|
+| *The detection chain — Defender for Endpoint machine risk, an Intune compliance policy that consumes it, the Entra device state — has worked for years. What changed in October is that the result reaches a session that is already running.* |
 
 Two caveats worth knowing. A device with no registered owner does not get device-compliance revocation —
 that is a documented limitation and it will catch some Hybrid-joined estates. And Microsoft states that

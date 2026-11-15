@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"
+     font-family="Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif">
+<title>Sign-in Frequency vs Universal CAE - two controls on the same access token</title>
+
+<!-- WPNS 2026 deck theme: bg1 #FFFFFF, dk1 #090C16, accent1 #E7382B, accent2 #4F4961,
+     accent3 #2E3092, accent4 #7340D3, accent5 #37A37E, accent6 #CFE120. Fonts Aptos / Aptos Display.
+     Build groups: build-1 .. build-3 - animate each with Appear, in order.
+     Plot area: x 520 (0 min) .. 1700 (90 min), 13.111 px per minute.
+     The device story lives on the companion slide, device-signal-mde-chain.svg. -->
+
+<rect x="0" y="0" width="1920" height="1080" fill="#ffffff"/>
+
+<!-- ============================== title + axis (always visible) ============================== -->
+<g id="frame">
+  <text x="90" y="100" font-family="Aptos Display, Segoe UI, Arial, sans-serif" font-size="54" font-weight="600" fill="#090C16">Sign-in Frequency vs. Universal CAE</text>
+  <text x="90" y="150" font-size="27" fill="#4F4961">Two controls on the same access token: one watches the clock, the other waits for an event.</text>
+
+  <text x="520"  y="252" font-size="21" fill="#8E8B99" text-anchor="middle">0</text>
+  <text x="717"  y="252" font-size="21" fill="#8E8B99" text-anchor="middle">15</text>
+  <text x="913"  y="252" font-size="21" fill="#8E8B99" text-anchor="middle">30</text>
+  <text x="1110" y="252" font-size="21" fill="#8E8B99" text-anchor="middle">45</text>
+  <text x="1307" y="252" font-size="21" fill="#8E8B99" text-anchor="middle">60</text>
+  <text x="1503" y="252" font-size="21" fill="#8E8B99" text-anchor="middle">75</text>
+  <text x="1700" y="252" font-size="21" fill="#8E8B99" text-anchor="middle">90 min</text>
+
+  <line x1="520"  y1="270" x2="520"  y2="880" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="717"  y1="270" x2="717"  y2="880" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="913"  y1="270" x2="913"  y2="880" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1110" y1="270" x2="1110" y2="880" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1307" y1="270" x2="1307" y2="880" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1503" y1="270" x2="1503" y2="880" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1700" y1="270" x2="1700" y2="880" stroke="#E6E4EA" stroke-width="1"/>
+</g>
+
+<!-- ============================== BUILD 1 - the baseline ============================== -->
+<g id="build-1">
+  <text x="90" y="340" font-size="28" font-weight="600" fill="#090C16">No session control</text>
+  <text x="90" y="372" font-size="21" fill="#8E8B99">One token, 60&#8211;90 minutes.</text>
+
+  <rect x="520" y="310" width="1180" height="46" rx="6" fill="#37A37E"/>
+  <text x="1715" y="330" font-size="20" fill="#4F4961">expires,</text>
+  <text x="1715" y="356" font-size="20" fill="#4F4961">silent refresh</text>
+</g>
+
+<!-- ============================== BUILD 2 - sign-in frequency ============================== -->
+<g id="build-2">
+  <text x="90" y="500" font-size="28" font-weight="600" fill="#2E3092">Sign-in frequency</text>
+  <text x="90" y="534" font-size="23" font-style="italic" fill="#4F4961">"Has enough time passed?"</text>
+  <text x="90" y="566" font-size="21" fill="#8E8B99">Walls from the left. The clock</text>
+  <text x="90" y="592" font-size="21" fill="#8E8B99">drives it, nothing has to happen.</text>
+  <text x="90" y="620" font-size="21" font-weight="600" fill="#2E3092">Checked when a token is requested.</text>
+
+  <!-- row A: periodic, 1 hour - one ragged wall, aligned to token refresh -->
+  <rect x="520"  y="470" width="852" height="42" rx="5" fill="#37A37E"/>
+  <rect x="1372" y="464" width="9"   height="54" fill="#2E3092"/>
+  <rect x="1387" y="470" width="313" height="42" rx="5" fill="#37A37E"/>
+  <text x="1715" y="484" font-size="20" font-weight="600" fill="#2E3092">periodic (1 h)</text>
+  <text x="1715" y="510" font-size="19" fill="#8E8B99">~62&#8211;70 min, ragged</text>
+
+  <!-- row B: every time - the 5-minute comb -->
+  <rect x="520.0"  y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="585.6"  y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="651.1"  y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="716.7"  y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="782.2"  y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="847.8"  y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="913.3"  y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="978.9"  y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="1044.4" y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="1110.0" y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="1175.6" y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="1241.1" y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="1306.7" y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="1372.2" y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="1437.8" y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="1503.3" y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="1568.9" y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <rect x="1634.4" y="560" width="59" height="42" rx="4" fill="#37A37E"/>
+  <g fill="#2E3092">
+    <rect x="579.6"  y="554" width="6" height="54"/><rect x="645.1"  y="554" width="6" height="54"/>
+    <rect x="710.7"  y="554" width="6" height="54"/><rect x="776.2"  y="554" width="6" height="54"/>
+    <rect x="841.8"  y="554" width="6" height="54"/><rect x="907.3"  y="554" width="6" height="54"/>
+    <rect x="972.9"  y="554" width="6" height="54"/><rect x="1038.4" y="554" width="6" height="54"/>
+    <rect x="1104.0" y="554" width="6" height="54"/><rect x="1169.6" y="554" width="6" height="54"/>
+    <rect x="1235.1" y="554" width="6" height="54"/><rect x="1300.7" y="554" width="6" height="54"/>
+    <rect x="1366.2" y="554" width="6" height="54"/><rect x="1431.8" y="554" width="6" height="54"/>
+    <rect x="1497.3" y="554" width="6" height="54"/><rect x="1562.9" y="554" width="6" height="54"/>
+    <rect x="1628.4" y="554" width="6" height="54"/>
+  </g>
+  <text x="1715" y="574" font-size="20" font-weight="600" fill="#2E3092">every time</text>
+  <text x="1715" y="600" font-size="19" fill="#8E8B99">~5 min (documented)</text>
+</g>
+
+<!-- ============================== BUILD 3 - Universal CAE ============================== -->
+<g id="build-3">
+  <text x="90" y="772" font-size="28" font-weight="600" fill="#7340D3">Universal CAE</text>
+  <text x="90" y="806" font-size="23" font-style="italic" fill="#4F4961">"Has something changed?"</text>
+  <text x="90" y="838" font-size="21" fill="#8E8B99">An arrow from above. You do not</text>
+  <text x="90" y="864" font-size="21" fill="#8E8B99">schedule it, something happens.</text>
+
+  <!-- the event, coming down from Entra ID -->
+  <text x="979" y="690" font-size="22" font-weight="600" fill="#7340D3" text-anchor="middle">user disabled &#183; password reset &#183; tokens revoked</text>
+  <line x1="979" y1="704" x2="979" y2="746" stroke="#7340D3" stroke-width="4"/>
+  <path d="M 979 760 L 969 740 L 989 740 Z" fill="#7340D3"/>
+
+  <!-- session alive, then rejected mid-flight; the token itself would still be valid -->
+  <rect x="520" y="758" width="459" height="46" rx="6" fill="#37A37E"/>
+  <rect x="979" y="758" width="721" height="46" rx="6" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1" stroke-dasharray="7 6"/>
+  <text x="1340" y="787" font-size="19" fill="#8E8B99" text-anchor="middle">token not expired &#8212; but rejected</text>
+  <g stroke="#E7382B" stroke-width="5" stroke-linecap="round">
+    <line x1="967" y1="769" x2="991" y2="793"/>
+    <line x1="991" y1="769" x2="967" y2="793"/>
+  </g>
+
+  <!-- the documented latency chain -->
+  <path d="M 979 820 L 979 830 L 1110 830 L 1110 820" fill="none" stroke="#8E8B99" stroke-width="2"/>
+  <text x="1124" y="837" font-size="19" fill="#8E8B99">~2 min to disconnect</text>
+  <text x="1715" y="772" font-size="20" font-weight="600" fill="#7340D3">one event</text>
+  <text x="1715" y="798" font-size="19" fill="#8E8B99">2&#8211;5 min signal,</text>
+  <text x="1715" y="822" font-size="19" fill="#8E8B99">then then ~2 min grace</text>
+
+  <!-- the line that carries the slide -->
+  <rect x="90" y="930" width="9" height="46" fill="#CFE120"/>
+  <text x="118" y="950" font-size="25" font-weight="600" fill="#090C16">Sign-in frequency costs prompts on a schedule. CAE costs nothing until something happens.</text>
+  <text x="118" y="978" font-size="21" fill="#4F4961">Same access token: one shortens its life, the other extends it and revokes on an event.</text>
+</g>
+
+<!-- provenance -->
+<text x="1830" y="1038" font-size="17" fill="#B4B1BC" text-anchor="end">sign-in frequency values time-based values measured in lab &#183; every-time and CAE timings from Microsoft Learn</text>
+</svg>
