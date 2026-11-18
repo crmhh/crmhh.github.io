@@ -81,10 +81,10 @@ the terminal at 09:01:55, reopens it at 09:03:45 and is *not* prompted. At 09:10
 more than five minutes have passed since 09:01:15. Note what the clock runs from — the sign-in, not the
 connection.
 
-In my lab the client's next token request came **five minutes and twenty-three seconds** after the
-previous token was issued, and was refused with `70043`. A connection opened **twenty-six seconds** after
-the replacement token was issued produced no request at all — no sign-in row of any kind. So the
-documented five minutes is what you get, and no policy setting shortens it.
+In my lab a connection opened a little over five minutes after the previous token was issued was refused
+with `70043` and prompted; one opened **twenty-six seconds** after a token was issued produced no request
+at all — no sign-in row of any kind. I did not probe the boundary itself, so the five minutes is
+Microsoft's figure rather than mine. What the measurements do show is that no policy setting moves it.
 
 > 💡 The older session-lifetime article still lists "Microsoft Entra Private Access doesn't support
 > setting sign-in frequency to every time" under Known issues. Microsoft shipped a second, parallel
