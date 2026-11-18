@@ -372,11 +372,12 @@ state of the documentation, so of the "new signals" only the device one is genui
 > 💡 The known-limitations page — edited two days *after* this feature shipped — still says Conditional
 > Access policies for Private Access traffic are not supported. Its account of the CAE disconnect,
 > three prompts and a six-minute grace period, reads like a contradiction of the concept page's two
-> minutes. Both are right: **the two minutes are per channel.** With the Private Access and Microsoft
-> 365 profiles connected — two user channels, plus the always-on Entra one — a token revoke produced
-> three prompts, at 1:18, 3:13 and 5:17 after the trigger. Steps of 1:54 and 2:04. Three channels, three
-> prompts, a little over five minutes, and the disconnect time therefore scales with the number of
-> traffic forwarding profiles you run — which is the part neither page states.
+> minutes. Both are right: **the two minutes are per channel.** On a client with the Private Access and
+> Microsoft 365 profiles connected, a token revoke produced three prompts, at 1:18, 3:13 and 5:17 after
+> the trigger. Across runs I measured that step three times — 1:54, 2:04, 1:48 — so the disconnect
+> stretches with the number of traffic forwarding profiles you run, which is the part neither page
+> states. Which prompt belongs to which channel I could not establish, so the count is a count and not
+> an inventory.
 
 ## Summary
 
