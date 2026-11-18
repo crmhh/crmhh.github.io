@@ -133,6 +133,10 @@ So sign-in frequency governs *starting* work on an application; Continuous Acces
 work already in progress. That is the real answer to the question I get every time I show this: why
 would I still need CAE if I have re-authentication every time?
 
+| ![Picture 3: the sign-in log beside a running session, with nothing in it](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/signin-log-empty-while-session-runs.png) |
+|:--:|
+| *Picture 3: the sign-in log for the RDP session above, which ran from 16:09 to 18:32. Seven rows at the moment it was established — four refusals, the prompt, the token — and nothing for the two and a half hours it then stayed open. There is no error-code filter on that query: those are all the rows there are.* |
+
 Microsoft now documents one more consequence:
 
 > Windows devices joined to an on-premises domain periodically check in with a domain controller, which
@@ -353,9 +357,9 @@ and from there into CAE. In our lab the user-facing sequence was a toast in the 
 client followed by the tunnels disconnecting **2 minutes 3 seconds** later. For comparison, revoking a
 user's refresh tokens produced the same effect with a **2 minute 9 second** gap.
 
-| ![Picture 3: the MDE to Intune to Entra chain, and where it takes effect](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/device-signal-mde-chain.svg) |
+| ![Picture 4: the MDE to Intune to Entra chain, and where it takes effect](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/device-signal-mde-chain.svg) |
 |:--:|
-| *Picture 3: the detection chain — Defender for Endpoint machine risk, an Intune compliance policy that consumes it, the Entra device state — has worked for years. What changed in October is that the result reaches a session that is already running.* |
+| *Picture 4: the detection chain — Defender for Endpoint machine risk, an Intune compliance policy that consumes it, the Entra device state — has worked for years. What changed in October is that the result reaches a session that is already running.* |
 
 Two caveats worth knowing. A device with no registered owner does not get device-compliance revocation —
 that is a documented limitation and it will catch some Hybrid-joined estates. And Microsoft states that
@@ -394,9 +398,9 @@ Private Access the five-minute window caps that for you.
 Neither control is complete on its own, and together they are the first time a Private Access session
 is governed per application both when it starts and while it runs.
 
-| ![Picture 4: three ways to interrupt one access token](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/sif-cae-combined.svg) |
+| ![Picture 5: three ways to interrupt one access token](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/sif-cae-combined.svg) |
 |:--:|
-| *Picture 4: one access token and three ways it stops being good: the clock, an identity event, and — since October — the device. The bottom two panels are the same policy and the same compliance state; what changed is where it takes effect.* |
+| *Picture 5: one access token and three ways it stops being good: the clock, an identity event, and — since October — the device. The bottom two panels are the same policy and the same compliance state; what changed is where it takes effect.* |
 
 ## Attribution and References
 
