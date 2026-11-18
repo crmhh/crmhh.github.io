@@ -197,7 +197,7 @@ token's identity and lifetime per transaction:
 ```kusto
 NetworkAccessTraffic
 | where TimeGenerated > ago(1d)
-| where AccessType == "PrivateAccess"
+| where TrafficType == "private"
 | where UserPrincipalName =~ "someone@contoso.com"
 | summarize Connections = dcount(ConnectionId),
             FirstSeen   = min(ConnectionCreatedTime),
