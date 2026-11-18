@@ -56,8 +56,8 @@ Microsoft's configuration guide is unusually direct about it:
 
 Read that as guidance on which control to configure, which is clearly how it is meant. I would not read
 it as a promise that a plain **Every time** policy pointed at a private application has no effect — those
-are different statements, and the documentation does not say which one it intends. [R8-1b] If you still
-have such a policy lying around from earlier experiments, the safe assumption is that it may still be
+are different statements, and the documentation does not say which one it intends. If you still have
+such a policy lying around from earlier experiments, the safe assumption is that it may still be
 prompting people, and the cheap move is to check rather than to assume it went inert.
 
 `Every time strict` is a new, general-purpose Conditional Access control — you can use it without GSA
