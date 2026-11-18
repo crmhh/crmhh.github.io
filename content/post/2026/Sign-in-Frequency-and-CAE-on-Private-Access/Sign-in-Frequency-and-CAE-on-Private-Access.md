@@ -272,12 +272,28 @@ One `Token3PUniqueId` against many `ConnectionId` values is token reuse, visible
 is sign-in frequency not being consulted, because nothing asked for a token. `Token3PExpiry` minus
 `Token3PIssuedAt` also gives you the real token lifetime instead of the documented range.
 
-What you cannot do is tie any of it back to the sign-in that issued the token. The traffic log carries
-two token identifiers: `Token3PUniqueId`, for the token used against the private application, and a
-plain `UniqueTokenId`, documented in exactly the same words as the column of that name in the sign-in
-logs. The first has no counterpart on the sign-in side; the second was **empty on every Private Access
-row I looked at**. So you can watch a token being reused, and separately watch a token being issued, and
-nothing in either table joins the two events — which leaves correlating by user, application and time.
+The same rows also tie back to the sign-in that issued the token, though not on the column you would
+reach for first. `NetworkAccessTraffic` carries two token identifiers: `Token3PUniqueId`, the token used
+against the private application, and a plain `UniqueTokenId`, documented in exactly the same words as
+the sign-in column of that name. The identically named pair is the trap — `UniqueTokenId` was **empty on
+every Private Access row I looked at**. The join runs on `Token3PUniqueId`:
+
+```kusto
+NetworkAccessTraffic
+| where TimeGenerated > ago(1d)
+| where TrafficType == "private"
+| where UserPrincipalName =~ "someone@contoso.com"
+| summarize Connections = dcount(ConnectionId),
+            FirstSeen   = min(ConnectionCreatedTime),
+            LastSeen    = max(TimeGenerated)
+    by Token3PUniqueId, Token3PIssuedAt, Token3PExpiry
+| join kind=inner EntraIdSignInEvents on $left.Token3PUniqueId == $right.UniqueTokenId
+| order by Token3PIssuedAt asc
+```
+
+That gives every reused token the sign-in that minted it, which is the whole chain in one result set: the
+re-authentication, the token it produced, and the connections that then ran on it without any further
+evaluation.
 
 **Auditing client versions before you enable anything.** The configuration guide tells you, twice, to
 "use the Global Secure Access Traffic Logs to validate the versions of GSA client that these users are
