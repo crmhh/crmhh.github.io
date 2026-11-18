@@ -68,15 +68,24 @@ that it must not be applied to Office 365 apps.
 
 Then there is a detail you only find by reading the Conditional Access page against the Global Secure
 Access page. The control itself has a **ten-second** validity window; Private Access has a **five-minute
-reauthentication window**. So on a private application you do not get the ten-second freshness the
-control is built around — you get a five-minute floor, per application.
+reauthentication window**, per application. So on a private application you do not get the ten-second
+freshness the control is built around.
+
+It is tempting to call that the five minutes capping the ten seconds. That is not quite what happens,
+and the difference decides what you can promise. The ten seconds are not overridden — they are simply
+not consulted in between, because nothing asks. The client holds one access token per private
+application and reuses it, and the control is evaluated only when the client requests a new one. The
+interval that governs a private application is the client's, not the policy's.
 
 Microsoft's own worked example: a user authenticates at 09:01:15, closes
 the terminal at 09:01:55, reopens it at 09:03:45 and is *not* prompted. At 09:10:34 they are, because
 more than five minutes have passed since 09:01:15. Note what the clock runs from — the sign-in, not the
 connection.
 
-[R8] Our own cadence measurement goes here once the lab has run against the shipped control.
+In my lab the client's next token request came **five minutes and twenty-three seconds** after the
+previous token was issued, and was refused with `70043`. A connection opened **twenty-six seconds** after
+the replacement token was issued produced no request at all — no sign-in row of any kind. So the
+documented five minutes is what you get, and no policy setting shortens it.
 
 > 💡 The older session-lifetime article still lists "Microsoft Entra Private Access doesn't support
 > setting sign-in frequency to every time" under Known issues. Microsoft shipped a second, parallel
@@ -106,12 +115,15 @@ nothing reaches Conditional Access. The configuration guide concedes this in the
 instruction — when it walks you through validating the five-minute window, it tells you to close the
 connection and *"ensure that the application process which initiated the connection is completely
 closed (this ensures that the network flow is terminated)"*. You have to terminate the flow for the
-check to happen at all. [R8] Our own measurement of this goes here once the lab has run against the
-shipped control.
+check to happen at all. I measured this against the shipped control: an established RDP session stayed
+up across the five-minute boundary with no drop and no prompt, while a second connection opened moments
+later, to a different host in the same application, was gated. The live session is not what is being
+checked — and nothing about it exempts the next connection either.
 
-The second is why that ten-second window cannot bind here. The control only looks when a token is
-requested, and the client asks at most once per five minutes per application — a tighter bar cannot
-tighten anything it does not drive.
+The second is that the token is held **per application**, not per application segment — worth knowing
+if you segment finely. A connection to a host in a different segment of the same application reuses the
+same token, so it is never evaluated. Splitting an application into segments buys you no additional
+re-authentication: the application is the unit, and a separate gate needs a separate application.
 
 So sign-in frequency governs *starting* work on an application; Continuous Access Evaluation reaches
 work already in progress. That is the real answer to the question I get every time I show this: why
@@ -181,9 +193,33 @@ EntraIdSignInEvents
 ```
 
 Group by `CorrelationId` and you see one re-authentication as one flow rather than as four unrelated
-failures. If you only have the Entra diagnostic settings rather than the Defender XDR table, use
+failures. One gate looks the same every time: four `70043` rows, then a single `70046`, then a success.
+`LogonType` separates the two codes more reliably than the endpoint does — the `70043` rows are
+`nonInteractiveUser` and the `70046` row is `interactiveUser`. Watch for duplicates: I have seen the
+same `70046` row twice carrying an identical `UniqueTokenId`, so count prompts with
+`dcount(UniqueTokenId)` rather than by rows. End to end, from the first refused request to the
+connection being established, a gate cost between 25 and 29 seconds, about nine of which were the user
+approving.
+
+If you only have the Entra diagnostic settings rather than the Defender XDR table, use
 `ResultType` in `SigninLogs` — but include `AADNonInteractiveUserSignInLogs`, because the client's token
 requests are non-interactive and will otherwise be missing entirely.
+
+One caveat about that query, and it cost me a wrong conclusion before I noticed: **drop the error-code
+filter when you want to prove a negative.** The telling evidence for how this control behaves is usually
+a row that is *not* there, and filtering on 70043 and 70046 hides the difference between "Conditional
+Access evaluated this and allowed it" and "nothing ever asked for a token".
+
+```kusto
+EntraIdSignInEvents
+| where Timestamp > ago(1h)
+| where Application startswith "ZTNA Network Access Client"
+| project Timestamp, ResourceDisplayName, LogonType, ErrorCode, UniqueTokenId, SessionId
+| order by Timestamp asc
+```
+
+An empty stretch in that output, while connections are being opened, is the mechanism from
+*Token acquisition, not connections* in its most direct form.
 
 The same query answers a question the portal does not: whether Universal CAE is actually in effect.
 `Is CAE Token` is a readable field inside `AuthenticationProcessingDetails`, and on the Private Access
@@ -287,7 +323,8 @@ state of the documentation, so of the "new signals" only the device one is genui
 ## Summary
 
 Sign-in frequency is attached to token acquisition, so it gates starting work on an application rather
-than the work itself, at a five-minute granularity you cannot tighten. It is Windows-only, it needs the
+than the work itself, at a five-minute granularity you cannot tighten, and per application rather than
+per application segment. It is Windows-only, it needs the
 Global Secure Access client 2.34.222 or later, and it denies access below that — audit your client
 versions and decide the platform question before you enable anything, or the default decides it for you.
 
