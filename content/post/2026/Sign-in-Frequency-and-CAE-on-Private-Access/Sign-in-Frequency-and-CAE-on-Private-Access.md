@@ -224,11 +224,11 @@ NetworkAccessTraffic
 | order by AgentVersion asc
 ```
 
-One caveat, and I would rather flag it than pretend: `AgentVersion` is documented only as "the version
-of the agent connecting", and it sits among a group of fields that are clearly about AI agents. Check in
-your tenant that it carries the Global Secure Access client version before you rely on it for a go/no-go
-decision. If it does not, Defender for Endpoint's software inventory gives you the same answer from
-another direction:
+`AgentVersion` is documented only as "the version of the agent connecting", and it sits among a group of
+fields that are otherwise about AI agents, so I checked: it carries the Global Secure Access client
+version, matching the installed build exactly. If you would rather have a second source, or your users
+are not generating Private Access traffic yet, Defender for Endpoint's software inventory answers the
+same question from another direction:
 
 ```kusto
 DeviceTvmSoftwareInventory
