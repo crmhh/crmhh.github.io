@@ -272,6 +272,13 @@ One `Token3PUniqueId` against many `ConnectionId` values is token reuse, visible
 is sign-in frequency not being consulted, because nothing asked for a token. `Token3PExpiry` minus
 `Token3PIssuedAt` also gives you the real token lifetime instead of the documented range.
 
+What you cannot do is tie any of it back to the sign-in that issued the token. The traffic log carries
+two token identifiers: `Token3PUniqueId`, for the token used against the private application, and a
+plain `UniqueTokenId`, documented in exactly the same words as the column of that name in the sign-in
+logs. The first has no counterpart on the sign-in side; the second was **empty on every Private Access
+row I looked at**. So you can watch a token being reused, and separately watch a token being issued, and
+nothing in either table joins the two events — which leaves correlating by user, application and time.
+
 **Auditing client versions before you enable anything.** The configuration guide tells you, twice, to
 "use the Global Secure Access Traffic Logs to validate the versions of GSA client that these users are
 using" — but the documented portal view of those logs shows only a device *category*, not a version. The
