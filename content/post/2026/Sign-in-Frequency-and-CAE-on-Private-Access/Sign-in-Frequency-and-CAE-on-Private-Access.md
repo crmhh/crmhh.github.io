@@ -191,14 +191,37 @@ EntraIdSignInEvents
 | order by Timestamp asc
 ```
 
-Group by `CorrelationId` and you see one re-authentication as one flow rather than as four unrelated
-failures. One gate looks the same every time: four `70043` rows, then a single `70046`, then a success.
+One gate looks the same every time: four `70043` rows, then a single `70046`, then a success.
 `LogonType` separates the two codes more reliably than the endpoint does — the `70043` rows are
-`nonInteractiveUser` and the `70046` row is `interactiveUser`. Watch for duplicates: I have seen the
-same `70046` row twice carrying an identical `UniqueTokenId`, so count prompts with
-`dcount(UniqueTokenId)` rather than by rows. End to end, from the first refused request to the
-connection being established, a gate cost between 25 and 29 seconds, about nine of which were the user
-approving.
+`nonInteractiveUser` and the `70046` row is `interactiveUser`. End to end, from the first refused
+request to the connection being established, a gate cost between 25 and 29 seconds, about nine of which
+were the user approving.
+
+Assembling those rows into one event is harder than it looks, and `CorrelationId` is the trap. In my
+tenant 84 of these rows carried only **four** `CorrelationId` values, one of them spanning four hours
+and several unrelated re-authentications — it is stable per application, not per flow. `RequestId` and
+`UniqueTokenId` are per request, which makes them right for counting and for dropping duplicate rows (I
+have seen the same `70046` row twice under an identical `UniqueTokenId`), but they group nothing either.
+What delimits one gate is time: a burst inside about twenty seconds, with the next gate at least half a
+minute away.
+
+```kusto
+EntraIdSignInEvents
+| where Timestamp > ago(7d)
+| where Application startswith "ZTNA Network Access Client"
+| where ErrorCode in (70043, 70046)
+| distinct Timestamp, AccountUpn, ResourceDisplayName, EndpointCall, ErrorCode, UniqueTokenId
+| order by AccountUpn asc, ResourceDisplayName asc, Timestamp asc
+| extend Gate = row_window_session(Timestamp, 1h, 30s,
+      AccountUpn != prev(AccountUpn) or ResourceDisplayName != prev(ResourceDisplayName))
+| summarize Requests = dcount(UniqueTokenId), Codes = make_set(ErrorCode),
+            Start    = min(Timestamp),
+            Seconds  = datetime_diff('second', max(Timestamp), min(Timestamp))
+    by Gate, AccountUpn, ResourceDisplayName
+| order by Start asc
+```
+
+That gives one row per re-authentication, with the number of token requests it took to get through.
 
 If you only have the Entra diagnostic settings rather than the Defender XDR table, use
 `ResultType` in `SigninLogs` — but include `AADNonInteractiveUserSignInLogs`, because the client's token
