@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"
+     font-family="Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif">
+<title>RDP session to a domain controller - what sign-in frequency reaches and what it does not</title>
+
+<!-- Aligned to CB's PowerPoint rebuild (2026-09-02): chain moved to the bottom, one-line subtitle,
+     darker body text, no provenance footer, "Sign-in frequency" spelling. Semantic fix vs. that
+     rebuild: the chain now feeds the EVENT, and the event branches into both outcomes - up to
+     "today" (nothing happens) and down to "with the new device signal" (the session is cut).
+
+     Time axis: x 520 = 0 min .. x 1700 = 90 min, 13.111 px per minute. The event sits at t = 20.
+     Z-order note: the grey feed line is drawn early on purpose so the session bars cover it where
+     it passes behind them. Animate it together with the chain (build-4).
+     Build groups: build-1 gates, build-2 today, build-3 new signal, build-4 chain + closing line. -->
+
+<rect x="0" y="0" width="1920" height="1080" fill="#ffffff"/>
+
+<g id="frame">
+  <text x="90" y="100" font-family="Aptos Display, Segoe UI, Arial, sans-serif" font-size="54" font-weight="600" fill="#090C16">RDP session to a domain controller</text>
+  <text x="90" y="150" font-size="27" font-weight="600" fill="#090C16">Sign-in frequency gates new connections &#8212; at most once per five minutes, per application.</text>
+  <text x="90" y="184" font-size="27" font-weight="600" fill="#090C16">The session that is already open is reached only by CAE.</text>
+
+  <text x="520"  y="248" font-size="21" fill="#8E8B99" text-anchor="middle">0</text>
+  <text x="717"  y="248" font-size="21" fill="#8E8B99" text-anchor="middle">15</text>
+  <text x="913"  y="248" font-size="21" fill="#8E8B99" text-anchor="middle">30</text>
+  <text x="1110" y="248" font-size="21" fill="#8E8B99" text-anchor="middle">45</text>
+  <text x="1307" y="248" font-size="21" fill="#8E8B99" text-anchor="middle">60</text>
+  <text x="1503" y="248" font-size="21" fill="#8E8B99" text-anchor="middle">75</text>
+  <text x="1700" y="248" font-size="21" fill="#8E8B99" text-anchor="middle">90 min</text>
+
+  <line x1="520"  y1="266" x2="520"  y2="800" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="717"  y1="266" x2="717"  y2="800" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="913"  y1="266" x2="913"  y2="800" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1110" y1="266" x2="1110" y2="800" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1307" y1="266" x2="1307" y2="800" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1503" y1="266" x2="1503" y2="800" stroke="#E6E4EA" stroke-width="1"/>
+  <line x1="1700" y1="266" x2="1700" y2="800" stroke="#E6E4EA" stroke-width="1"/>
+</g>
+
+<!-- drawn early so the session bars cover it; belongs to build-4 when animating -->
+<g id="chain-feed">
+  <line x1="782" y1="820" x2="782" y2="580" stroke="#C9C6D1" stroke-width="3"/>
+  <path d="M 782 566 L 773 584 L 791 584 Z" fill="#C9C6D1"/>
+</g>
+
+<!-- === BUILD 1: what sign-in frequency actually reaches === -->
+<g id="build-1">
+  <text x="90" y="320" font-size="26" font-weight="600" fill="#2E3092">New connections</text>
+  <text x="90" y="350" font-size="20" fill="#2E2C36">A DNS lookup, a second RDP, a</text>
+  <text x="90" y="376" font-size="20" fill="#2E2C36">file share. Gated &#8212; but at most</text>
+  <text x="90" y="402" font-size="20" fill="#2E2C36">once per 5 min, per application.</text>
+
+  <line x1="520" y1="327" x2="1700" y2="327" stroke="#E6E4EA" stroke-width="2"/>
+  <g fill="#2E3092">
+    <rect x="582.6"  y="300" width="7" height="54"/><rect x="648.1"  y="300" width="7" height="54"/>
+    <rect x="713.7"  y="300" width="7" height="54"/><rect x="779.2"  y="300" width="7" height="54"/>
+    <rect x="844.8"  y="300" width="7" height="54"/><rect x="910.3"  y="300" width="7" height="54"/>
+    <rect x="975.9"  y="300" width="7" height="54"/><rect x="1041.4" y="300" width="7" height="54"/>
+    <rect x="1107.0" y="300" width="7" height="54"/><rect x="1172.6" y="300" width="7" height="54"/>
+    <rect x="1238.1" y="300" width="7" height="54"/><rect x="1303.7" y="300" width="7" height="54"/>
+    <rect x="1369.2" y="300" width="7" height="54"/><rect x="1434.8" y="300" width="7" height="54"/>
+    <rect x="1500.3" y="300" width="7" height="54"/><rect x="1565.9" y="300" width="7" height="54"/>
+    <rect x="1631.4" y="300" width="7" height="54"/>
+  </g>
+  <text x="1715" y="320" font-size="20" font-weight="600" fill="#2E3092">gated</text>
+  <text x="1715" y="344" font-size="19" fill="#8E8B99">by sign-in</text>
+  <text x="1715" y="366" font-size="19" fill="#8E8B99">frequency</text>
+</g>
+
+<!-- === BUILD 2: the session that is already open, today === -->
+<g id="build-2">
+  <text x="90" y="472" font-size="26" font-weight="600" fill="#E7382B">The open session, today</text>
+  <text x="90" y="502" font-size="20" fill="#2E2C36">No new token is requested, so</text>
+  <text x="90" y="528" font-size="20" fill="#2E2C36">nothing is ever evaluated.</text>
+
+  <rect x="520" y="450" width="1180" height="50" rx="6" fill="#37A37E"/>
+  <rect x="520" y="444" width="8" height="62" fill="#2E3092"/>
+  <text x="540" y="481" font-size="19" font-weight="600" fill="#ffffff">connect &#183; MFA</text>
+  <text x="1715" y="472" font-size="20" font-weight="600" fill="#E7382B">still up</text>
+  <text x="1715" y="496" font-size="19" fill="#8E8B99">no token</text>
+
+  <!-- the event, and the branch that goes nowhere -->
+  <text x="782" y="566" font-size="22" font-weight="600" fill="#E7382B" text-anchor="middle">device turns non-compliant</text>
+  <line x1="782" y1="546" x2="782" y2="524" stroke="#E7382B" stroke-width="4" stroke-dasharray="8 7"/>
+  <line x1="758" y1="518" x2="806" y2="518" stroke="#E7382B" stroke-width="5" stroke-linecap="round"/>
+  <text x="820" y="524" font-size="19" font-style="italic" fill="#E7382B">no signal exists</text>
+</g>
+
+<!-- === BUILD 3: the same session with the new device signal === -->
+<g id="build-3">
+  <text x="90" y="672" font-size="26" font-weight="600" fill="#7340D3">With the new device signal</text>
+  <text x="90" y="702" font-size="20" fill="#2E2C36">The same session is cut.</text>
+  <text x="90" y="728" font-size="20" fill="#8E8B99">Generally available since Oct 2026.</text>
+
+  <line x1="782" y1="580" x2="782" y2="632" stroke="#7340D3" stroke-width="4"/>
+  <path d="M 782 646 L 772 626 L 792 626 Z" fill="#7340D3"/>
+  <text x="802" y="614" font-size="19" font-weight="600" fill="#7340D3">CAE claims challenge</text>
+
+  <rect x="520" y="650" width="393" height="50" rx="6" fill="#37A37E"/>
+  <rect x="913" y="650" width="787" height="50" rx="6" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1" stroke-dasharray="7 6"/>
+  <rect x="520" y="644" width="8" height="62" fill="#2E3092"/>
+  <text x="1306" y="680" font-size="19" fill="#8E8B99" text-anchor="middle">tunnel down, session gone</text>
+  <g stroke="#E7382B" stroke-width="5" stroke-linecap="round">
+    <line x1="901" y1="658" x2="925" y2="682"/>
+    <line x1="925" y1="658" x2="901" y2="682"/>
+  </g>
+
+  <path d="M 782 716 L 782 726 L 913 726 L 913 716" fill="none" stroke="#7340D3" stroke-width="2"/>
+  <text x="927" y="733" font-size="19" font-weight="600" fill="#7340D3">~2 min: signal, then the grace period, then disconnect</text>
+  <text x="1715" y="672" font-size="20" font-weight="600" fill="#7340D3">session</text>
+  <text x="1715" y="696" font-size="19" fill="#8E8B99">ends</text>
+</g>
+
+<!-- === BUILD 4: where the state change comes from === -->
+<g id="build-4">
+  <rect x="94" y="820" width="176" height="60" rx="7" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1"/>
+  <text x="182" y="845" font-size="14" font-weight="600" fill="#090C16" text-anchor="middle">Defender for Endpoint</text>
+  <text x="182" y="865" font-size="12" fill="#8E8B99" text-anchor="middle">threat detected</text>
+
+  <rect x="294" y="820" width="176" height="60" rx="7" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1"/>
+  <text x="382" y="845" font-size="14" font-weight="600" fill="#090C16" text-anchor="middle">Machine risk score</text>
+  <text x="382" y="865" font-size="12" fill="#8E8B99" text-anchor="middle">Clear &#183; Low &#183; Medium &#183; High</text>
+
+  <rect x="494" y="820" width="176" height="60" rx="7" fill="#F0EDE9" stroke="#D8D5DE" stroke-width="1"/>
+  <text x="582" y="845" font-size="14" font-weight="600" fill="#090C16" text-anchor="middle">Intune compliance</text>
+  <text x="582" y="865" font-size="12" fill="#8E8B99" text-anchor="middle">at or under risk score</text>
+
+  <rect x="694" y="820" width="176" height="60" rx="7" fill="#FDECEA" stroke="#E7382B" stroke-width="2"/>
+  <text x="782" y="845" font-size="14" font-weight="600" fill="#090C16" text-anchor="middle">Entra device state</text>
+  <text x="782" y="865" font-size="12" font-weight="600" fill="#E7382B" text-anchor="middle">non-compliant</text>
+
+  <g fill="#8E8B99">
+    <path d="M 274 842 L 290 850 L 274 858 Z"/>
+    <path d="M 474 842 L 490 850 L 474 858 Z"/>
+    <path d="M 674 842 L 690 850 L 674 858 Z"/>
+  </g>
+
+  <rect x="912" y="822" width="9" height="56" fill="#CFE120"/>
+  <text x="940" y="845" font-size="24" font-weight="600" fill="#090C16">Sign-in frequency governs starting work on the domain controller.</text>
+  <text x="940" y="874" font-size="20" fill="#4F4961">Continuous Access Evaluation reaches work that is already in progress.</text>
+</g>
+</svg>

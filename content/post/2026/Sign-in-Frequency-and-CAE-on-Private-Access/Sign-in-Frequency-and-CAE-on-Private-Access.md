@@ -124,6 +124,10 @@ if you segment finely. A connection to a host in a different segment of the same
 same token, so it is never evaluated. Splitting an application into segments buys you no additional
 re-authentication: the application is the unit, and a separate gate needs a separate application.
 
+| ![What sign-in frequency reaches on an RDP session, and what it does not](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/rdp-session-sif-vs-cae.svg) |
+|:--:|
+| *An admin session to a domain controller. New connections are gated, but only when the client actually asks for a token — at most once every five minutes, per application. The session already running never asks, which is why until October nothing could end it.* |
+
 So sign-in frequency governs *starting* work on an application; Continuous Access Evaluation reaches
 work already in progress. That is the real answer to the question I get every time I show this: why
 would I still need CAE if I have re-authentication every time?
