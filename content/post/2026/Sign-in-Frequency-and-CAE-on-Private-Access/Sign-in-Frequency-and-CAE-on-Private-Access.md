@@ -42,9 +42,9 @@ Both features act on that token:
 | Mode | **pulled** — runs when something asks for a token | **pushed** — does not wait to be asked |
 | Token lifetime | shortens it | lengthens it, and pays with near-real-time revocation |
 
-| ![Sign-in frequency and Universal CAE on the same access token](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/sif-vs-cae-timeline.svg) |
+| ![Picture 1: sign-in frequency and Universal CAE on the same access token](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/sif-vs-cae-timeline.svg) |
 |:--:|
-| *Sign-in frequency walls in from the left, driven by the clock and evaluated whenever a token is requested. Universal CAE arrives from above, when something changes. One shortens the token's life, the other revokes it mid-flight.* |
+| *Picture 1: sign-in frequency walls in from the left, driven by the clock and evaluated whenever a token is requested. Universal CAE arrives from above, when something changes. One shortens the token's life, the other revokes it mid-flight.* |
 
 ## Every time strict and the five-minute window
 
@@ -124,9 +124,9 @@ if you segment finely. A connection to a host in a different segment of the same
 same token, so it is never evaluated. Splitting an application into segments buys you no additional
 re-authentication: the application is the unit, and a separate gate needs a separate application.
 
-| ![What sign-in frequency reaches on an RDP session, and what it does not](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/rdp-session-sif-vs-cae.svg) |
+| ![Picture 2: what sign-in frequency reaches on an RDP session, and what it does not](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/rdp-session-sif-vs-cae.svg) |
 |:--:|
-| *An admin session to a domain controller. New connections are gated, but only when the client actually asks for a token — at most once every five minutes, per application. The session already running never asks, which is why until October nothing could end it.* |
+| *Picture 2: an admin session to a domain controller. New connections are gated, but only when the client actually asks for a token — at most once every five minutes, per application. The session already running never asks, which is why until October nothing could end it.* |
 
 So sign-in frequency governs *starting* work on an application; Continuous Access Evaluation reaches
 work already in progress. That is the real answer to the question I get every time I show this: why
@@ -327,9 +327,9 @@ and from there into CAE. In our lab the user-facing sequence was a toast in the 
 client followed by the tunnels disconnecting **2 minutes 3 seconds** later. For comparison, revoking a
 user's refresh tokens produced the same effect with a **2 minute 9 second** gap.
 
-| ![The MDE to Intune to Entra chain, and where it takes effect](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/device-signal-mde-chain.svg) |
+| ![Picture 3: the MDE to Intune to Entra chain, and where it takes effect](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/device-signal-mde-chain.svg) |
 |:--:|
-| *The detection chain — Defender for Endpoint machine risk, an Intune compliance policy that consumes it, the Entra device state — has worked for years. What changed in October is that the result reaches a session that is already running.* |
+| *Picture 3: the detection chain — Defender for Endpoint machine risk, an Intune compliance policy that consumes it, the Entra device state — has worked for years. What changed in October is that the result reaches a session that is already running.* |
 
 Two caveats worth knowing. A device with no registered owner does not get device-compliance revocation —
 that is a documented limitation and it will catch some Hybrid-joined estates. And Microsoft states that
@@ -368,9 +368,9 @@ Private Access the five-minute window caps that for you.
 Neither control is complete on its own, and together they are the first time a Private Access session
 is governed per application both when it starts and while it runs.
 
-| ![Three ways to interrupt one access token](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/sif-cae-combined.svg) |
+| ![Picture 4: three ways to interrupt one access token](/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/images/sif-cae-combined.svg) |
 |:--:|
-| *One access token and three ways it stops being good: the clock, an identity event, and — since October — the device. The bottom two panels are the same policy and the same compliance state; what changed is where it takes effect.* |
+| *Picture 4: one access token and three ways it stops being good: the clock, an identity event, and — since October — the device. The bottom two panels are the same policy and the same compliance state; what changed is where it takes effect.* |
 
 ## Attribution and References
 
