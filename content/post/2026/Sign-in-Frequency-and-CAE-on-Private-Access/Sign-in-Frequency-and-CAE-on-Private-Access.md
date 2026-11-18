@@ -114,10 +114,11 @@ nothing reaches Conditional Access. The configuration guide concedes this in the
 instruction — when it walks you through validating the five-minute window, it tells you to close the
 connection and *"ensure that the application process which initiated the connection is completely
 closed (this ensures that the network flow is terminated)"*. You have to terminate the flow for the
-check to happen at all. I measured this against the shipped control: an established RDP session stayed
-up across the five-minute boundary with no drop and no prompt, while a second connection opened moments
-later, to a different host in the same application, was gated. The live session is not what is being
-checked — and nothing about it exempts the next connection either.
+check to happen at all. I measured this against the shipped control: an established RDP session stayed up
+for **more than two hours**, across better than twenty of those five-minute boundaries, with no drop and
+no prompt — while a second connection opened moments after one of them, to a different host in the same
+application, was gated. The live session is not what is being checked, and nothing about it exempts the
+next connection either.
 
 The second is that the token is held **per application**, not per application segment — worth knowing
 if you segment finely. A connection to a host in a different segment of the same application reuses the
