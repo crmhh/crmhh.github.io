@@ -71,11 +71,10 @@ Access page. The control itself has a **ten-second** validity window; Private Ac
 reauthentication window**, per application. So on a private application you do not get the ten-second
 freshness the control is built around.
 
-It is tempting to call that the five minutes capping the ten seconds. That is not quite what happens,
-and the difference decides what you can promise. The ten seconds are not overridden — they are simply
-not consulted in between, because nothing asks. The client holds one access token per private
-application and reuses it, and the control is evaluated only when the client requests a new one. The
-interval that governs a private application is the client's, not the policy's.
+The ten seconds are not overridden by the five minutes. They are only consulted when the client asks
+for a token, and the client holds one access token per private application and reuses it. The interval
+that governs a private application is therefore the client's, not the policy's — which is the difference
+between a control you can tighten and one you cannot.
 
 Microsoft's own worked example: a user authenticates at 09:01:15, closes
 the terminal at 09:01:55, reopens it at 09:03:45 and is *not* prompted. At 09:10:34 they are, because
