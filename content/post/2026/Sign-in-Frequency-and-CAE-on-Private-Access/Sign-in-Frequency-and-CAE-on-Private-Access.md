@@ -196,11 +196,13 @@ EntraIdSignInEvents
 | order by Timestamp asc
 ```
 
-One gate looks the same every time: four `70043` rows, then a single `70046`, then a success.
-`LogonType` separates the two codes more reliably than the endpoint does — the `70043` rows are
-`nonInteractiveUser` and the `70046` row is `interactiveUser`. End to end, from the first refused
-request to the connection being established, a gate cost between 25 and 29 seconds, about nine of which
-were the user approving.
+A gate has a constant head: four `70043` rows, then a `70046`. `LogonType` separates those two codes more
+reliably than the endpoint does — the `70043` rows are `nonInteractiveUser` and the `70046` is
+`interactiveUser`. The tail varies. Three of my gates ended in a single success, a `nonInteractiveUser`
+row carrying `ErrorCode 0`; a fourth ended in two, an `interactiveUser` success followed by the
+`nonInteractiveUser` one. Count gates on the head rather than on the success rows. End to end, from the
+first refused request to the connection being established, a gate cost between 25 and 29 seconds, about
+nine of which were the user approving.
 
 Assembling those rows into one event is harder than it looks, and `CorrelationId` is the trap. In my
 tenant 84 of these rows carried only **four** `CorrelationId` values, one of them spanning four hours
