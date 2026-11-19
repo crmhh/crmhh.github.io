@@ -361,6 +361,14 @@ user's refresh tokens produced the same effect with a **2 minute 9 second** gap.
 |:--:|
 | *Picture 4: the detection chain — Defender for Endpoint machine risk, an Intune compliance policy that consumes it, the Entra device state — has worked for years. What changed in October is that the result reaches a session that is already running.* |
 
+The demo below runs that chain end to end. The trigger is a custom detection rule rather than a test
+file, so nothing is simulated: Defender for Endpoint raises the machine risk, the Intune compliance
+policy consumes it, the device state changes in Entra, and the Global Secure Access client loses its
+tunnels. What is worth watching is the gap between the client's notification and the tunnels actually
+going down — the session keeps working across it.
+
+{{< video "https://github.com/crmhh/crmhh.github.io/raw/refs/heads/main/content/post/2026/Sign-in-Frequency-and-CAE-on-Private-Access/videos/CAE-DeviceRisk.mp4" >}}
+
 Two caveats worth knowing. A device with no registered owner does not get device-compliance revocation —
 that is a documented limitation and it will catch some Hybrid-joined estates. And Microsoft states that
 the signals are meant to be used together with the corresponding Conditional Access policy; without one,
